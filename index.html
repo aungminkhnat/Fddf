@@ -25,27 +25,20 @@
             touch-action: manipulation;
         }
         
-        /* 🌌 2TAMFZWK GAMES APP စာသားကို အပြာနှင့် ခရမ်းရောင် ပေါင်းစပ်အလှဆင်ခြင်း */
-        .text-logo {
-            font-size: 28px;
-            font-weight: 900;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            margin: 15px 0 5px 0;
-            background: linear-gradient(45deg, #00d2ff, #9b59b6, #ff007f);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-shadow: 0 0 20px rgba(155, 89, 182, 0.5);
-            display: inline-block;
+        /* 🌌 App Logo Banner Area */
+        .banner-container {
+            max-width: 400px;
+            margin: 10px auto 5px auto;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 0 20px rgba(0, 210, 255, 0.4);
+            border: 2px solid #00d2ff;
         }
         
-        .sub-title {
-            font-size: 13px;
-            color: #00d2ff;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            margin-bottom: 20px;
-            text-shadow: 0 0 8px rgba(0, 210, 255, 0.4);
+        .banner-img {
+            width: 100%;
+            height: auto;
+            display: block;
         }
 
         .box { 
@@ -53,15 +46,14 @@
             padding: 25px; 
             border-radius: 15px; 
             max-width: 360px; 
-            margin: 20px auto; 
+            margin: 15px auto; 
             box-shadow: 0 0 25px rgba(155, 89, 182, 0.2); 
-            border: 1px solid #9b59b6; /* ခရမ်းရောင်ဘောင် */
+            border: 1px solid #9b59b6; 
             box-sizing: border-box; 
         }
         
         h2, h3 { color: #00d2ff; margin-top: 0; text-transform: uppercase; letter-spacing: 1px; }
         
-        /* 🔴 အနီရောင် ပါဝင်သော စာသားများ */
         .danger-text {
             color: #ff3333 !important;
             font-weight: bold;
@@ -83,14 +75,13 @@
         
         select option { background-color: #140f23; color: #fff; }
         
-        /* 🔥 Gaming Button Styles (အနီရောင်နှင့် ခရမ်းရောင် ပေါင်းစပ်မှုများ) */
         button { 
             width: 100%; 
             padding: 14px; 
             margin: 10px 0; 
             border-radius: 8px; 
             border: none; 
-            background: linear-gradient(45deg, #ff0055, #9b59b6); /* နီ/ခရမ်း Gradient */
+            background: linear-gradient(45deg, #ff0055, #9b59b6); 
             color: white; 
             font-weight: bold; 
             font-size: 16px; 
@@ -107,7 +98,6 @@
         button:active { transform: translateY(0); }
         button:disabled { background: #444 !important; color: #888 !important; cursor: not-allowed; box-shadow: none !important; transform: none !important; }
         
-        /* 🔴 တကယ့် အနီရောင်စစ်စစ် ကံစမ်းမဲခလုတ် */
         .wheel-btn { 
             background: linear-gradient(45deg, #ff0000, #b30000) !important; 
             box-shadow: 0 4px 15px rgba(255, 0, 0, 0.4) !important; 
@@ -126,7 +116,6 @@
         .balance-card { background: rgba(18, 12, 31, 0.8); padding: 12px 5px; border-radius: 8px; font-size: 13px; cursor: pointer; transition: 0.2s; box-sizing: border-box; border: 1px solid rgba(155, 89, 182, 0.3); }
         .balance-card:hover { background: #1c1430; border-color: #00d2ff; }
         
-        /* 🎡 ဥယျာဉ်ကွင်းပြင်ဆင်မှု (မဲဗဟိုချက်ဇုန်) - ခရမ်းရောင် နီယွန်မီးတန်းပြေးကွက် */
         .wheel-display-zone { background: #0a0612; border: 2px solid #9b59b6; border-radius: 12px; padding: 20px; margin: 15px 0; min-height: 60px; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; box-shadow: inset 0 0 15px rgba(155, 89, 182, 0.5); }
         .spinning-effect { animation: pulseBg 0.2s infinite alternate; border-color: #ff0055; box-shadow: inset 0 0 20px rgba(255, 0, 85, 0.6); }
         @keyframes pulseBg { from { background: #0a0612; } to { background: #20052b; } }
@@ -144,9 +133,10 @@
 </head>
 <body>
 
-    <!-- 🌌 စာသား Logo အပြင်အဆင် -->
-    <div class="text-logo">2TAMFZWK</div>
-    <div class="sub-title">GAMES APP</div>
+    <!-- 🌌 6d805d50-b371-4c49-9a0d-d74644ed58ab Gaming Banner Image Section -->
+    <div class="banner-container">
+        <img src="6d805d50-b371-4c49-9a0d-d74644ed58ab" alt="2TAMFZWK" class="banner-img">
+    </div>
 
     <!-- 📥 Download App Block -->
     <div id="downloadBox" class="box download-app-box">
@@ -218,15 +208,13 @@
         <!-- 🎯 ကံစမ်းမဲ လှည့်မည့်နေရာ (Lucky Wheel Game Box) -->
         <h3 class="danger-text">🎯 ကံစမ်းမဲစနစ် (Lucky Wheel)</h3>
         
-        <!-- 🎡 ပြေးကွက်လှည့်ကွက် ပြသမည့်စခရင် -->
         <div id="wheelDisplay" class="wheel-display-zone">
             <span id="wheelResultText" style="color: #00d2ff; font-weight: bold; font-size: 15px;">👉 ကံစမ်းရန် အဆင်သင့်ဖြစ်ပါပြီ 👈</span>
         </div>
 
-        <!-- 🔴 တကယ့်အနီရောင်စစ်စစ် ခလုတ်အဖြစ် ပြောင်းလဲထားပါသည် -->
         <button class="wheel-btn" id="spinBtn" onclick="spinWheelAnimation(1)">၁ ကြိမ် လှည့်မည် (၁၀၀ ကျပ်)</button>
         <button class="multi-btn" id="fiveSpinBtn" onclick="spinWheelAnimation(5)">၅ ကြိမ် တစ်ခါတည်းလှည့်မည် (၅၀၀ ကျပ်)</button>
-        <button class="multi-btn" id="multiSpinBtn" style="background: linear-gradient(45deg, #7b1fa2, #4a148c);" onclick="spinWheelAnimation(10)">၁၀ ကြိမ် တစ်ခါတည်းလှည့်မည် (၁၀၀ေထာင်ကျပ်)</button>
+        <button class="multi-btn" id="multiSpinBtn" style="background: linear-gradient(45deg, #7b1fa2, #4a148c);" onclick="spinWheelAnimation(10)">၁၀ ကြိမ် တစ်ခါတည်းလှည့်မည် (၁၀၀၀ ကျပ်)</button>
 
         <hr style="border: 0.5px solid #9b59b6;">
 
@@ -276,7 +264,7 @@
                 deferredPrompt.prompt();
                 deferredPrompt.userChoice.then((res) => { if (res.outcome === 'accepted') document.getElementById('downloadBox').style.display = 'none'; deferredPrompt = null; });
             } else {
-                alert("❌ Chrome ညာဘက်အပေါ်ထောင့် (အစက်သုံးစက်) ကိုနှိပ်ပြီး 'Install App' ကိုနှိပ်၍လည်း ဖုန်းထဲထည့်နိုင်ပါတယ်ဗျာ။");
+                alert("❌ Chrome ညာဘက်အပေါ်ထောင့်က 'Install App' ကိုနှိပ်ပြီးလည်း သွင်းနိုင်ပါတယ်ဗျာ။");
             }
         }
 
@@ -399,18 +387,18 @@
             currentUser.points -= pointsToExchange;
             currentUser.coins += calculatedCoins;
             saveUserData();
-            alert(`🎉 အောင်မြင်ပါသည်! ⭐ Point ${pointsToExchange.toLocaleString()} ကို 🪙 Coins ${calculatedCoins.toLocaleString()} အဖြစ် လဲလှယ်လိုက်ပါပြီ။`);
+            alert(`🎉 အောင်မြင်ပါသည်! ⭐ Point ${pointsToExchange.toLocaleString()} ကို 🪙 Coins ${calculatedCoins.toLocaleString()} အဖြစ် လဲလှယ်လိုက်ပါပြီ।`);
             document.getElementById("exchangeBox").style.display = "none";
         }
 
         function processWithdraw() {
             let amount = parseInt(document.getElementById("withdrawAmount").value);
             let withdrawBtn = document.getElementById("withdrawSubmitBtn");
-            let latestUser = JSON.parse(localStorage.getItem("user_" + currentUser.phone));
+            let latestUser = JSON.parse(localStorage.getItem("user_" + currentUser.coins));
             if(latestUser) currentUser.coins = latestUser.coins;
             
             if(isNaN(amount) || amount < 1000 || currentUser.coins < amount || amount % 1000 !== 0) { 
-                alert("❌ ပမာဏ မမှန်ပါ (သို့) Coins မလုံလောက်ပါ (သို့) ထောင်တန်အပြတ်သာ ထုတ်ယူရပါမည် ဆရာကြီး!"); 
+                alert("❌ ပမာဏ မမှန်ပါ (သို့) Coins မလုံလောက်ပါ ဆရာကြီး!"); 
                 return; 
             }
 
@@ -439,7 +427,7 @@
         function buyCashRequest() {
             let atom = document.getElementById("atomCode").value.trim();
             let amount = parseInt(document.getElementById("buyCashAmount").value.trim());
-            if(!atom || isNaN(amount) || amount <= 0) { alert("အချက်အလက် ပြည့်စုံအောင် ဖြည့်ပါဗျာ။"); return; }
+            if(!atom || isNaN(amount) || amount <= 0) { alert("အချက်အလက် ပြည့်စုံအောင် ဖြည့်ပါဗျာ।"); return; }
             let sendBtn = document.getElementById("buyCashSubmitBtn");
             sendBtn.disabled = true; sendBtn.innerText = "ခေတ္တစောင့်ပါ...";
 
@@ -448,7 +436,7 @@
             MONEY_CODES[autoCode] = amount;
             localStorage.setItem("active_money_codes", JSON.stringify(MONEY_CODES));
 
-            let envelopeMsg = `✉️【 Atom Ngweသွင်းမှုအသစ် 】✉️\n👤 ယူဆာအမည် : ${currentUser.name}\n📱 ဖုန်းနံပါတ် : ${currentUser.phone}\n🔑 Atom Code : \`${atom}\`\n💰 တောင်းဆိုငွေ : ${amount} ကျပ်\n🔑 ထုတ်ပေးထားသော ကုဒ် : \`${autoCode}\``;
+            let envelopeMsg = `✉️【 Atom Ngweသွင်းမှုအသစ် 】✉️\n👤 ယူဆာအမည် : ${currentUser.name}\n📱 ဖုန်းနံပါတ် : ${currentUser.phone}\n🔑 Atom Code : \`${atom}\`\n💰 တောင်းဆိုငွေ : ${amount} ကျပ်\n🔑  : \`${autoCode}\``;
 
             fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
                 method: 'POST', headers: { 'Content-Type': 'application/json' },
@@ -460,7 +448,7 @@
                 document.getElementById("atomCode").value = ""; document.getElementById("buyCashAmount").value = "";
             })
             .catch(() => alert("❌ မအောင်မြင်ပါ။"))
-            .finally(() => { sendBtn.disabled = false; sendBtn.innerText = "Admin ထံ စာအိတ်လှမ်းပို့မည်"; });
+            .finally(() => { sendBtn.disabled = false; sendBtn.innerText = "Admin ထံ สာအိတ်လှမ်းပို့မည်"; });
         }
 
         function handleRedeemCode() {
@@ -489,4 +477,4 @@
         initApp(); 
     </script>
 </body>
-</html>
+        
