@@ -5,20 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Dragons Gaming - Premium Exchange</title>
     
-    <!-- 📱 Mobile App ဖြစ်စေရန် Standard Meta Tags များ -->
+    <!-- 📱 Mobile App Features -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="Dragons Gaming">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="theme-color" content="#1a1a2e">
     
-    <!-- 🎨 App Icon ပုံစံ သတ်မှတ်ရန် -->
+    <!-- 🎨 App Icons -->
     <link rel="apple-touch-icon" href="https://placehold.co/192x192/162447/ffffff?text=DG">
     <link rel="icon" sizes="192x192" href="https://placehold.co/192x192/162447/ffffff?text=DG">
 
     <style>
         body { 
-            font-family: 'Segoe UI', sans-serif; 
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif; 
             background-color: #1a1a2e; 
             color: #fff; 
             text-align: center; 
@@ -28,7 +28,7 @@
             -webkit-user-select: none; 
             touch-action: manipulation;
         }
-        .box { background-color: #162447; padding: 25px; border-radius: 15px; max-width: 360px; margin: 20px auto; box-shadow: 0 4px 15px rgba(0,0,0,0.5); }
+        .box { background-color: #162447; padding: 25px; border-radius: 15px; max-width: 360px; margin: 20px auto; box-shadow: 0 4px 15px rgba(0,0,0,0.5); box-sizing: border-box; }
         h2, h3 { color: #e43f5a; margin-top: 0; }
         input, select { width: 100%; padding: 12px; margin: 8px 0; border-radius: 8px; border: none; background-color: #1f4068; color: #fff; box-sizing: border-box; font-size: 15px; }
         select option { background-color: #162447; color: #fff; }
@@ -46,7 +46,7 @@
         .withdraw-btn { background-color: #27ae60; }
         .withdraw-btn:hover { background-color: #219653; }
         .balance-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin: 15px 0; }
-        .balance-card { background: #1f4068; padding: 10px 5px; border-radius: 8px; font-size: 14px; cursor: pointer; transition: 0.2s; }
+        .balance-card { background: #1f4068; padding: 10px 5px; border-radius: 8px; font-size: 13px; cursor: pointer; transition: 0.2s; box-sizing: border-box; }
         .balance-card:hover { background: #2b527e; }
         
         .history-table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 12px; background: #111d35; border-radius: 8px; overflow: hidden; }
@@ -60,7 +60,7 @@
 </head>
 <body>
 
-    <!-- Register -->
+    <!-- 🔐 Register Section -->
     <div id="registerSection" class="box">
         <h2>Sign Up (အကောင့်ဖွင့်ရန်)</h2>
         <input type="text" id="regName" placeholder="နာမည်">
@@ -70,7 +70,7 @@
         <p style="font-size: 14px;">အကောင့်ရှိပြီးသားလား? <a href="#" onclick="switchAuth(false)" style="color: #e43f5a; text-decoration: none; font-weight: bold;">ဝင်ရောက်ရန်</a></p>
     </div>
 
-    <!-- Login -->
+    <!-- 🔑 Login Section -->
     <div id="loginSection" class="box" style="display: none;">
         <h2>Login (အကောင့်ဝင်ရန်)</h2>
         <input type="tel" id="loginPhone" placeholder="ဖုန်းနံပါတ်">
@@ -79,10 +79,12 @@
         <p style="font-size: 14px;">အကောင့်မရှိသေးဘူးလား? <a href="#" onclick="switchAuth(true)" style="color: #e43f5a; text-decoration: none; font-weight: bold;">ဖွင့်ရန်</a></p>
     </div>
 
-    <!-- Dashboard -->
+    <!-- 📊 Dashboard Section -->
     <div id="dashboardSection" class="box" style="display: none;">
-        <h2 id="userGreeting">👤 User</h2>
-        <button onclick="logout()" style="width: auto; padding: 5px 10px; font-size: 12px; float: right; background: #6c757d; margin-top: -40px;">Logout</button>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+            <h2 id="userGreeting" style="margin: 0; font-size: 20px;">👤 User</h2>
+            <button onclick="logout()" style="width: auto; padding: 6px 12px; font-size: 12px; background: #6c757d; margin: 0;">Logout</button>
+        </div>
         
         <div class="admin-contact-box">
             <span style="font-size: 13px; color: #007bff; display: block; margin-bottom: 5px; font-weight: bold;">☎️ Admin ထံ တိုက်ရိုက်ဆက်သွယ်ရန်</span>
@@ -96,7 +98,7 @@
             <div class="balance-card" onclick="toggleWithdrawBox()">🪙 Coins: <br><b id="coinBalance" style="color: #ff5e62;">0</b> </div>
         </div>
 
-        <!-- 🔄 Point မှ Coins သို့ လဲလှယ်ရန်နေရာ (Dropdown List ဖြင့် တိတိကျကျ ပြင်ဆင်ထားသည်) -->
+        <!-- 🔄 Point မှ Coins သို့ လဲလှယ်ရန်နေရာ -->
         <div id="exchangeBox" style="display: none; background: #111d35; padding: 15px; border-radius: 10px; border: 1px dashed #ffcc00; margin: 15px 0;">
             <h3 style="color: #ffcc00; font-size: 16px; margin-bottom: 5px;">🔄 Point မှ Coins သို့ လဲလှယ်မည်</h3>
             <p style="font-size: 12px; color: #ffcc00; margin: 5px 0;">🎯 ကျေးဇူးပြု၍ လဲလှယ်လိုသော Point ပမာဏကို ရွေးချယ်ပေးပါဗျာ။</p>
@@ -133,7 +135,7 @@
 
         <hr style="border: 0.5px solid #1f4068;">
 
-        <!-- 💰 ရလာတဲ့ ကုဒ်ထည့်ပြီး ပိုက်ဆံဖြည့်မည့်နေရာ -->
+        <!-- 💰 ကုဒ်ထည့်ပြီး ပိုက်ဆံဖြည့်မည့်နေရာ -->
         <h3>🔑 ရရှိလာသော ကုဒ် (Code) ဖြင့် ဖြည့်ရန်</h3>
         <input type="text" id="redeemCodeInput" placeholder="ပိုက်ဆံဖြည့်မည့်ကုဒ်ကို ရိုက်ထည့်ပါ">
         <button style="background-color: #ff9f43;" id="redeemSubmitBtn" onclick="handleRedeemCode()">ကုဒ်စစ်ဆေးမည်</button>
@@ -143,12 +145,13 @@
         <!-- 🎯 ကံစမ်းမဲ လှည့်မည့်နေရာ -->
         <h3>🎯 ကံစမ်းမဲစနစ်</h3>
         <button class="wheel-btn" id="spinBtn" onclick="spinWheel()">၁ ကြိမ် လှည့်မည် (၁၀၀ ကျပ်)</button>
+        <button class="multi-btn" id="fiveSpinBtn" style="background-color: #007bff;" onclick="spinWheelFiveTimes()">၅ ကြိမ် တစ်ခါတည်းလှည့်မည် (၅၀၀ ကျပ်)</button>
         <button class="multi-btn" id="multiSpinBtn" onclick="spinWheelTenTimes()">၁၀ ကြိမ် တစ်ခါတည်းလှည့်မည် (၁၀၀၀ ကျပ်)</button>
-        <div id="wheelResult" style="color:#00ffcc; margin-top:5px; font-weight:bold; font-size: 14px; white-space: pre-line;"></div>
+        <div id="wheelResult" style="color:#00ffcc; margin-top:10px; font-weight:bold; font-size: 14px; white-space: pre-line;"></div>
 
         <hr style="border: 0.5px solid #1f4068;">
 
-        <!-- 📋 User မြင်ရမည့် Ngwe ထုတ်မှတ်တမ်းစာရင်း -->
+        <!-- 📋 Ngwe ထုတ်မှတ်တမ်းစာရင်း -->
         <h3>📋 မိမိ၏ Ngweထုတ်ယူမှု မှတ်တမ်း</h3>
         <table class="history-table">
             <thead>
@@ -169,9 +172,11 @@
         let MONEY_CODES = JSON.parse(localStorage.getItem("active_money_codes") || "{}");
 
         function saveUserData() { 
-            localStorage.setItem("user_" + currentUser.phone, JSON.stringify(currentUser)); 
-            localStorage.setItem("session_user_phone", currentUser.phone);
-            loadDashboard(); 
+            if(currentUser) {
+                localStorage.setItem("user_" + currentUser.phone, JSON.stringify(currentUser)); 
+                localStorage.setItem("session_user_phone", currentUser.phone);
+                loadDashboard(); 
+            }
         }
 
         function toggleWithdrawBox() { document.getElementById("withdrawBox").style.display = (document.getElementById("withdrawBox").style.display === "none") ? "block" : "none"; }
@@ -250,6 +255,7 @@
             
             alert("🎉 အကောင့်ဖွင့်ခြင်း အောင်မြင်ပါသည်။ Login ဝင်ပေးပါဗျာ။");
             switchAuth(false);
+            document.getElementById("loginPhone").value = phone;
         }
 
         function handleLogin() {
@@ -290,7 +296,6 @@
             }
         }
 
-        // 🔄 Point မှ Coins သို့ လဲလှယ်ခြင်းစနစ် (Dropdown ကနေ တိတိကျကျနှုတ်ယူသည်)
         function processCustomExchange() {
             let pointsToExchange = parseInt(document.getElementById("exchangePointsSelect").value);
             let exBtn = document.getElementById("exchangeSubmitBtn");
@@ -318,7 +323,7 @@
         function buyCashRequest() {
             let atom = document.getElementById("atomCode").value.trim();
             let amount = parseInt(document.getElementById("buyCashAmount").value.trim());
-            if(!atom || !amount) { alert("အချက်အလက် ပြည့်စုံအောင် ဖြည့်ပါဗျာ။"); return; }
+            if(!atom || isNaN(amount) || amount <= 0) { alert("အချက်အလက် ပြည့်စုံအောင် ဖြည့်ပါဗျာ။"); return; }
 
             let sendBtn = document.getElementById("buyCashSubmitBtn");
             if (sendBtn.disabled) return; 
@@ -351,7 +356,10 @@
                 alert("✉️ စာအိတ် ပို့ပြီးပါပြီ ဆရာကြီး! Admin မှ အတည်ပြုပေးသည်နှင့် Telegram ထဲသို့ ကုဒ် Auto ရောက်လာပါလိမ့်မည်။");
                 document.getElementById("atomCode").value = "";
                 document.getElementById("buyCashAmount").value = "";
-               })
+            })
+            .catch(() => {
+                alert("❌ လိုင်းမကောင်းသဖြင့် ကုဒ်ပို့မရပါ။");
+            })
             .finally(() => {
                 sendBtn.disabled = false;
                 sendBtn.innerText = "Admin ထံ စာအိတ်လှမ်းပို့မည်";
@@ -399,6 +407,33 @@
             document.getElementById("wheelResult").innerText = (wonPoints === 1000) ? `🔥 ဂျက်ပေါ့ ဆရာကြီးရေ! ၁% ဆုကြီး ⭐ Points ${wonPoints} ပေါက်သွားပါပြီ!` : `ရလဒ်: ⭐ Points ${wonPoints} ပေါက်ပါတယ်ဗျာ။`;
             saveUserData();
             spinBtn.disabled = false;
+        }
+
+        function spinWheelFiveTimes() {
+            let fiveBtn = document.getElementById("fiveSpinBtn");
+            let latestUser = JSON.parse(localStorage.getItem("user_" + currentUser.phone));
+            if(latestUser) currentUser.cash = latestUser.cash;
+
+            if(currentUser.cash < 500) { alert("❌ ၅ ကြိမ်ဆက်တိုက်လှည့်ရန် ပိုက်ဆံ ၅၀၀ ကျပ် မလုံလောက်ပါ ဆရာကြီး!"); return; }
+
+            fiveBtn.disabled = true;
+            currentUser.cash -= 500; 
+            let totalWonPoints = 0, jackpotCount = 0;
+
+            for(let i=0; i<5; i++) {
+                let p = rollReward();
+                totalWonPoints += p;
+                if(p === 1000) jackpotCount++;
+            }
+
+            let resultText = `⚡ (x5 Multi-Spin ရလဒ်) ⚡\n━━━━━━━━━━━━━━━━━━\n`;
+            if(jackpotCount > 0) resultText += `🔥 ဂျက်ပေါ့ (Jackpot) ${jackpotCount} ကြိမ်တောင် ပါဝင်ပါတယ် ဆရာကြီး!\n`;
+            resultText += `💰 ကုန်ကျငွေ: ၅၀၀ ကျပ်\n🎉 ရရှိသည့်စုစုပေါင်း Point: ⭐ +${totalWonPoints.toLocaleString()} Pts`;
+
+            currentUser.points += totalWonPoints;
+            document.getElementById("wheelResult").innerText = resultText;
+            saveUserData();
+            fiveBtn.disabled = false;
         }
 
         function spinWheelTenTimes() {
