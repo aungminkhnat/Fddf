@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>2TAMFZWK GAMES APP</title>
     
+    <!-- 📱 ဖုန်း Screen ပေါ်တွင် Icon အမှန်ပေါ်စေရန် အရေးကြီးသော လင့်ခ်များ -->
     <link rel="icon" type="image/png" href="1783267589164.png">
     <link rel="apple-touch-icon" href="1783267589164.png">
     <link rel="manifest" href="manifest.json">
@@ -184,6 +185,7 @@
 </head>
 <body>
 
+    <!-- 🌌 Logo နှင့် Banner ပေါင်းစပ်ထားသော Header နေရာ -->
     <div class="app-header-container">
         <div class="logo-badge-overlay">
             <img src="1783267589164.png" alt="Logo Icon" class="logo-badge-img">
@@ -192,11 +194,13 @@
         <div class="app-title-tag">2TAMFZWK GAMES OFFICIAL</div>
     </div>
 
+    <!-- 📥 Download App Block -->
     <div id="downloadBox" class="box download-app-box">
         <span style="font-weight: bold; font-size: 14px; display: block; margin-bottom: 5px;">📲 App ကို ဖုန်းထဲသို့ ထည့်သွင်းမလား?</span>
         <button onclick="triggerAppInstall()" style="background: linear-gradient(45deg, #00ffcc, #00cc99); color: #111; margin: 5px 0 0 0; padding: 8px; box-shadow: none;">အက်ပ်အဖြစ် ဒေါင်းလုဒ်ဆွဲမည်</button>
     </div>
 
+    <!-- 🔐 Register Section -->
     <div id="registerSection" class="box">
         <h2>Sign Up (အကောင့်ဖွင့်ရန်)</h2>
         <input type="text" id="regName" placeholder="နာမည်">
@@ -206,6 +210,7 @@
         <p style="font-size: 14px;">အကောင့်ရှိပြီးသားလား? <a href="#" onclick="switchAuth(false)" style="color: #00d2ff; text-decoration: none; font-weight: bold;">ဝင်ရောက်ရန်</a></p>
     </div>
 
+    <!-- 🔑 Login Section -->
     <div id="loginSection" class="box" style="display: none;">
         <h2>Login (အကောင့်ဝင်ရန်)</h2>
         <input type="tel" id="loginPhone" placeholder="ဖုန်းနံပါတ်">
@@ -214,6 +219,7 @@
         <p style="font-size: 14px;">အကောင့်မရှိသေးဘူးလား? <a href="#" onclick="switchAuth(true)" style="color: #00d2ff; text-decoration: none; font-weight: bold;">ဖွင့်ရန်</a></p>
     </div>
 
+    <!-- 📊 Dashboard Section -->
     <div id="dashboardSection" class="box" style="display: none;">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
             <h2 id="userGreeting" style="margin: 0; font-size: 18px;">👤 User</h2>
@@ -232,6 +238,7 @@
             <div class="balance-card" onclick="toggleWithdrawBox()">🪙 Coins: <br><b id="coinBalance" style="color: #ff5e62;">0</b> </div>
         </div>
 
+        <!-- 🔄 Point မှ Coins သို့ လဲလှယ်ရန်နေရာ -->
         <div id="exchangeBox" style="display: none; background: #0a0612; padding: 15px; border-radius: 10px; border: 1px dashed #ffcc00; margin: 15px 0;">
             <h3 style="color: #ffcc00; font-size: 16px; margin-bottom: 5px;">🔄 Point မှ Coins သို့ လဲလှယ်မည်</h3>
             <select id="exchangePointsSelect">
@@ -245,6 +252,7 @@
             <button class="exchange-btn" id="exchangeSubmitBtn" onclick="processCustomExchange()">အပိုင်လဲလှယ်မည်</button>
         </div>
 
+        <!-- 📤 Coins ထုတ်ယူရန်နေရာ -->
         <div id="withdrawBox" style="display: none; background: #0a0612; padding: 15px; border-radius: 10px; border: 1px dashed #ff0055; margin: 15px 0;">
             <h3 style="color: #ff0055; font-size: 16px; margin-bottom: 5px;">📤 Coins ထုတ်ယူရန်</h3>
             <input type="number" id="withdrawAmount" placeholder="ထုတ်ယူမည့် Coins ပမာဏ">
@@ -253,6 +261,7 @@
 
         <hr style="border: 0.5px solid #9b59b6;">
         
+        <!-- 🎯 ကံစမ်းမဲ လှည့်မည့်နေရာ (Lucky Wheel Game Box) -->
         <h3 class="danger-text">🎯 ကံစမ်းမဲစနစ် (Lucky Wheel)</h3>
         
         <div id="wheelDisplay" class="wheel-display-zone">
@@ -265,6 +274,7 @@
 
         <hr style="border: 0.5px solid #9b59b6;">
 
+        <!-- 📥 Atom Ngweသွင်းခြင်း -->
         <h3>✉️ ပိုက်ဆံဝယ်ယူရန် (Atom Code ဖြင့်)</h3>
         <input type="text" id="atomCode" placeholder="Atom Code ရိုက်ထည့်ပါ">
         <input type="number" id="buyCashAmount" placeholder="ဝယ်ယူမည့် ပိုက်ဆံပမာဏ">
@@ -272,12 +282,14 @@
 
         <hr style="border: 0.5px solid #9b59b6;">
 
+        <!-- 🔑 ရရှိလာသော ကုဒ်ဖြင့် ဖြည့်ရန် -->
         <h3>🔑 ရရှိလာသော ကုဒ် (Code) ဖြင့် ဖြည့်ရန်</h3>
         <input type="text" id="redeemCodeInput" placeholder="ပိုက်ဆံဖြည့်မည့်ကုဒ်ကို ရိုက်ထည့်ပါ">
         <button style="background: linear-gradient(45deg, #ff9f43, #ff7675);" id="redeemSubmitBtn" onclick="handleRedeemCode()">ကုဒ်စစ်ဆေးမည်</button>
 
         <hr style="border: 0.5px solid #9b59b6;">
 
+        <!-- 📋 မှတ်တမ်းစာရင်း -->
         <h3>📋 မိမိ၏ Ngweထုတ်ယူမှု မှတ်တမ်း</h3>
         <table class="history-table">
             <thead>
@@ -298,6 +310,15 @@
         let MONEY_CODES = JSON.parse(localStorage.getItem("active_money_codes") || "{}");
         let deferredPrompt;
 
+        // 📱 PWA စနစ်အတွက် Service Worker အလိုအလျောက် သွင်းပေးခြင်း
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js')
+                .then(reg => console.log('Service Worker Registered!', reg))
+                .catch(err => console.log('Service Worker Failed!', err));
+            });
+        }
+
         window.addEventListener('beforeinstallprompt', (e) => {
             e.preventDefault(); deferredPrompt = e;
             document.getElementById('downloadBox').style.display = 'block';
@@ -308,7 +329,7 @@
                 deferredPrompt.prompt();
                 deferredPrompt.userChoice.then((res) => { if (res.outcome === 'accepted') document.getElementById('downloadBox').style.display = 'none'; deferredPrompt = null; });
             } else {
-                alert("❌ Chrome ညာဘက်အပေါ်ထောင့်က 'Install App' ကိုနှိပ်ပြီးလည်း သွင်းနိုင်ပါတယ်ဗျာ။");
+                alert("❌ Browser ရဲ့ Option (ညာဘက်အပေါ်ထောင့်အစက်သုံးစက်) ထဲက 'Add to Home Screen' ကိုနှိပ်ပြီး သွင်းပေးပါဗျာ။");
             }
         }
 
@@ -423,8 +444,6 @@
 
         function processCustomExchange() {
             let pointsToExchange = parseInt(document.getElementById("exchangePointsSelect").value);
-            let latestUser = JSON.parse(localStorage.getItem("user_" + currentUser.points));
-            if(latestUser) currentUser.points = latestUser.points;
             if (currentUser.points < pointsToExchange) { alert("❌ Point မလုံလောက်ပါဘူးဗျာ!"); return; }
 
             let calculatedCoins = (pointsToExchange / 7000) * 1000;
@@ -438,8 +457,6 @@
         function processWithdraw() {
             let amount = parseInt(document.getElementById("withdrawAmount").value);
             let withdrawBtn = document.getElementById("withdrawSubmitBtn");
-            let latestUser = JSON.parse(localStorage.getItem("user_" + currentUser.coins));
-            if(latestUser) currentUser.coins = latestUser.coins;
             
             if(isNaN(amount) || amount < 1000 || currentUser.coins < amount || amount % 1000 !== 0) { 
                 alert("❌ ပမာဏ မမှန်ပါ (သို့) Coins မလုံလောက်ပါ ဆရာကြီး!"); 
@@ -492,7 +509,7 @@
                 document.getElementById("atomCode").value = ""; document.getElementById("buyCashAmount").value = "";
             })
             .catch(() => alert("❌ မအောင်မြင်ပါ။"))
-            .finally(() => { sendBtn.disabled = false; sendBtn.innerText = "Admin ထံ สာအိတ်လှမ်းပို့မည်"; });
+            .finally(() => { sendBtn.disabled = false; sendBtn.innerText = "Admin ထံ Сာအိတ်လှမ်းပို့မည်"; });
         }
 
         function handleRedeemCode() {
