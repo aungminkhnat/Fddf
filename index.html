@@ -64,7 +64,8 @@
     <div id="registerSection" class="box">
         <h2>Sign Up (အကောင့်ဖွင့်ရန်)</h2>
         <input type="text" id="regName" placeholder="နာမည်">
-        <input type="tel" id="regPhone" placeholder="ဖုန်းနံပါတ်">
+        <!-- 💡 တကယ့်ဖုန်းနံပါတ်ပုံစံပဲ ရိုက်လို့ရအောင် တားထားသည် -->
+        <input type="tel" id="regPhone" placeholder="ဖုန်းနံပါတ် (ဥပမာ- 09784011654)" maxlength="11">
         <input type="password" id="regPass" placeholder="လျှို့ဝှက်ချက်">
         <button onclick="handleRegister()">အကောင့်အသစ်ဖွင့်မည်</button>
         <p style="font-size: 14px;">အကောင့်ရှိပြီးသားလား? <a href="#" onclick="switchAuth(false)" style="color: #e43f5a; text-decoration: none; font-weight: bold;">ဝင်ရောက်ရန်</a></p>
@@ -207,16 +208,26 @@
             let timeStr = now.toLocaleTimeString();
             let withdrawId = `WDR-${Math.floor(100000 + Math.random()*900000)}`;
 
+            // 1️⃣ Admin Bot ဆီသို့ အကြောင်းကြားစာပို့ခြင်း
             let msg = `📢【 Coins ထုတ်ယူခြင်း 】\n👤 ${currentUser.name}\n📱 ${currentUser.phone}\n🪙 ${amount} Coins\n📅 ${dateStr}\n⏰ ${timeStr}\n🆔 ${withdrawId}`;
             
             fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${encodeURIComponent(msg)}`)
             .then(res => {
                 if(res.ok) {
+                    // 2️⃣ ဆရာကြီး၏ @FireZWarrior_amk ကိုယ်ပိုင်အကောင့်ထံ User ကိုယ်တိုင် စာလှမ်းပို့ခိုင်းခြင်း
+                    let rawText = `အောင်မင်းခန့်ရေ\nUser ထုတ်တဲ့ငွေ: ${amount} Coins\nID: ${withdrawId}\nအချိန်: ${dateStr} ${timeStr}\nPhone number: ${currentUser.phone}`;
+                    let tgUrl = `https://t.me/FireZWarrior_amk?text=${encodeURIComponent(rawText)}`;
+                    
                     currentUser.coins -= amount; 
                     if(!currentUser.withdrawHistory) { currentUser.withdrawHistory = []; }
                     currentUser.withdrawHistory.unshift({ id: withdrawId, amount: amount, datetime: `${dateStr} ${timeStr}` });
                     saveUserData(); 
-                    alert("🎉 အောင်မြင်ပါသည်။ Ngweထုတ်ယူမှု စာရင်းမှတ်တမ်းအား အောက်တွင် စစ်ဆေးနိုင်ပါသည်။"); 
+                    
+                    alert("🎉 Coins ထုတ်ယူမှု လျှောက်ထားပြီးပါပြီ။ Telegram တွင် စာသားအတည်ပြုရန် 'OK' ကို နှိပ်ပေးပါ။"); 
+                    
+                    // ဆရာကြီးဆီသို့ စာတန်း Auto ပို့ခိုင်းရန် Telegram Link ဖွင့်ပေးခြင်း
+                    window.open(tgUrl, '_blank');
+                    
                     toggleWithdrawBox(); 
                     document.getElementById("withdrawAmount").value = ""; 
                 } else {
@@ -244,6 +255,14 @@
             let pass = document.getElementById("regPass").value.trim();
             
             if(!name || !phone || !pass) { alert("အချက်အလက်အားလုံး ဖြည့်ပါဗျာ။"); return; }
+
+            // 💡 မြန်မာဖုန်းနံပါတ်အစစ်အမှန်ပုံစံ ဖြစ်/မဖြစ် စစ်ဆေးခြင်း (Regex)
+            // 09 နဲ့စရမည်၊ နောက်မှ ဂဏန်းသက်သက် ၇ လုံးမှ ၉ လုံး ထပ်ပါရမည် (စုစုပေါင်း ၉ လုံးမှ ၁၁ လုံး)
+            let mmPhoneRegex = /^09[0-9]{7,9}$/;
+            if (!mmPhoneRegex.test(phone)) {
+                alert("❌ ကျေးဇူးပြု၍ တကယ့်မြန်မာဖုန်းနံပါတ် အစစ်အမှန်ကိုသာ ရိုက်ထည့်ပေးပါဗျာ။ (ဥပမာ- 09xxxxxxxx)");
+                return;
+            }
 
             if(localStorage.getItem("user_" + phone)) {
                 alert("ဤဖုန်းနံပါတ်ဖြင့် အကောင့်ရှိပြီးသားပါ။");
@@ -341,24 +360,25 @@
             MONEY_CODES[autoCode] = amount;
             localStorage.setItem("active_money_codes", JSON.stringify(MONEY_CODES));
 
-            let envelopeMsg = `✉️【 စာအိတ်အသစ် ရောက်ရှိလာပါသည် 】✉️\n━━━━━━━━━━━━━━━━━━\n👤 ယူဆာအမည် : ${currentUser.name}\n📱 ဖုန်းနံပါတ် : ${currentUser.phone}\n🔑 Atom Code : \`${atom}\`\n💰 တောင်းဆိုငွေ : ${amount} ကျပ်\n━━━━━━━━━━━━━━━━━━`;
-            let replyText = `🎉 လူကြီးမင်း တောင်းဆိုထားသော ပိုက်ဆံ ဖြည့်သွင်းမှု အောင်မြင်ပါသည်။\n\n🔑 ဖြည့်သွင်းရမည့် ကုဒ်မှာ - \`${autoCode}\` ဖြစ်ပါသည်။ အက်ပ်ထဲတွင် ပြန်လည်ထည့်သွင်းပေးပါရန်။`;
-            let approveUrl = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${encodeURIComponent(replyText)}&parse_mode=Markdown`;
-
-            let reply_markup = { inline_keyboard: [[ { text: "✅ အတည်ပြုပြီး ကုဒ်အလိုအလျောက် ပို့မည်", url: approveUrl } ]] };
+            let envelopeMsg = `✉️【 Atom Ngweသွင်းမှုအသစ် 】✉️\n━━━━━━━━━━━━━━━━━━\n👤 ယူဆာအမည် : ${currentUser.name}\n📱 ဖုန်းနံပါတ် : ${currentUser.phone}\n🔑 Atom Code : \`${atom}\`\n💰 တောင်းဆိုငွေ : ${amount} ကျပ်\n🔑 ထုတ်ပေးထားသော ကုဒ် : \`${autoCode}\`\n━━━━━━━━━━━━━━━━━━`;
 
             fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ chat_id: CHAT_ID, text: envelopeMsg, parse_mode: "Markdown", reply_markup: reply_markup })
+                body: JSON.stringify({ chat_id: CHAT_ID, text: envelopeMsg, parse_mode: "Markdown" })
             })
             .then(() => {
-                alert("✉️ စာအိတ် ပို့ပြီးပါပြီ ဆရာကြီး! Admin မှ အတည်ပြုပေးသည်နှင့် Telegram ထဲသို့ ကုဒ် Auto ရောက်လာပါလိမ့်မည်။");
+                let rawText = `အောင်မင်းခန့် ငွေသွင်းလိုက်ပြီ...\nAtom Code: ${atom}\nပိုက်ဆံ: ${amount} ကျပ်`;
+                let tgUrl = `https://t.me/FireZWarrior_amk?text=${encodeURIComponent(rawText)}`;
+                
+                alert("✉️ စာအိတ် ပို့ပြီးပါပြီ။ Telegram တွင် စာသားအတည်ပြုရန် 'OK' ကို နှိပ်ပေးပါ။");
+                window.open(tgUrl, '_blank');
+
                 document.getElementById("atomCode").value = "";
                 document.getElementById("buyCashAmount").value = "";
             })
             .catch(() => {
-                alert("❌ လိုင်းမကောင်းသဖြင့် ကုဒ်ပို့မရပါ။");
+                alert("❌ လိုင်းမကောင်းသဖြင့် မအောင်မြင်ပါ။ နောက်မှ ထပ်စမ်းပါ။");
             })
             .finally(() => {
                 sendBtn.disabled = false;
@@ -409,27 +429,23 @@
             spinBtn.disabled = false;
         }
 
+        // (spinWheelFiveTimes နှင့် spinWheelTenTimes လုပ်ဆောင်ချက်များ အပြောင်းအလဲမရှိပါ)
         function spinWheelFiveTimes() {
             let fiveBtn = document.getElementById("fiveSpinBtn");
             let latestUser = JSON.parse(localStorage.getItem("user_" + currentUser.phone));
             if(latestUser) currentUser.cash = latestUser.cash;
-
             if(currentUser.cash < 500) { alert("❌ ၅ ကြိမ်ဆက်တိုက်လှည့်ရန် ပိုက်ဆံ ၅၀၀ ကျပ် မလုံလောက်ပါ ဆရာကြီး!"); return; }
-
             fiveBtn.disabled = true;
             currentUser.cash -= 500; 
             let totalWonPoints = 0, jackpotCount = 0;
-
             for(let i=0; i<5; i++) {
                 let p = rollReward();
                 totalWonPoints += p;
                 if(p === 1000) jackpotCount++;
             }
-
             let resultText = `⚡ (x5 Multi-Spin ရလဒ်) ⚡\n━━━━━━━━━━━━━━━━━━\n`;
             if(jackpotCount > 0) resultText += `🔥 ဂျက်ပေါ့ (Jackpot) ${jackpotCount} ကြိမ်တောင် ပါဝင်ပါတယ် ဆရာကြီး!\n`;
             resultText += `💰 ကုန်ကျငွေ: ၅၀၀ ကျပ်\n🎉 ရရှိသည့်စုစုပေါင်း Point: ⭐ +${totalWonPoints.toLocaleString()} Pts`;
-
             currentUser.points += totalWonPoints;
             document.getElementById("wheelResult").innerText = resultText;
             saveUserData();
@@ -440,23 +456,18 @@
             let multiBtn = document.getElementById("multiSpinBtn");
             let latestUser = JSON.parse(localStorage.getItem("user_" + currentUser.phone));
             if(latestUser) currentUser.cash = latestUser.cash;
-
             if(currentUser.cash < 1000) { alert("❌ ၁၀ ကြိမ်ဆက်တိုက်လှည့်ရန် ပိုက်ဆံ ၁၀၀၀ ကျပ် မလုံလောက်ပါ ဆရာကြီး!"); return; }
-
             multiBtn.disabled = true;
             currentUser.cash -= 1000; 
             let totalWonPoints = 0, jackpotCount = 0;
-
             for(let i=0; i<10; i++) {
                 let p = rollReward();
                 totalWonPoints += p;
                 if(p === 1000) jackpotCount++;
             }
-
             let resultText = `⚡ (x10 Multi-Spin ရလဒ်) ⚡\n━━━━━━━━━━━━━━━━━━\n`;
             if(jackpotCount > 0) resultText += `🔥 ဂျက်ပေါ့ (Jackpot) ${jackpotCount} ကြိမ်တောင် ပါဝင်ပါတယ် ဆရာကြီး!\n`;
             resultText += `💰 ကုန်ကျငွေ: ၁၀၀၀ ကျပ်\n🎉 ရရှိသည့်စုစုပေါင်း Point: ⭐ +${totalWonPoints.toLocaleString()} Pts`;
-
             currentUser.points += totalWonPoints;
             document.getElementById("wheelResult").innerText = resultText;
             saveUserData();
