@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Dragons Gaming - Premium Exchange</title>
+    
+    <!-- 📱 Mobile App ဖြစ်စေရန် Standard Meta Tags များ -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Dragons Gaming">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#1a1a2e">
+    
+    <!-- 🎨 App Icon ပုံစံ သတ်မှတ်ရန် -->
+    <link rel="apple-touch-icon" href="https://placehold.co/192x192/162447/ffffff?text=DG">
+    <link rel="icon" sizes="192x192" href="https://placehold.co/192x192/162447/ffffff?text=DG">
+
+    <style>
+        body { 
+            font-family: 'Segoe UI', sans-serif; 
+            background-color: #1a1a2e; 
+            color: #fff; 
+            text-align: center; 
+            padding: 15px; 
+            margin: 0;
+            user-select: none; 
+            -webkit-user-select: none; 
+            touch-action: manipulation;
+        }
+        .box { background-color: #162447; padding: 25px; border-radius: 15px; max-width: 360px; margin: 20px auto; box-shadow: 0 4px 15px rgba(0,0,0,0.5); }
+        h2, h3 { color: #e43f5a; margin-top: 0; }
+        input, select { width: 100%; padding: 12px; margin: 8px 0; border-radius: 8px; border: none; background-color: #1f4068; color: #fff; box-sizing: border-box; font-size: 15px; }
+        select option { background-color: #162447; color: #fff; }
+        button { width: 100%; padding: 12px; margin: 10px 0; border-radius: 8px; border: none; background-color: #e43f5a; color: white; font-weight: bold; font-size: 16px; cursor: pointer; transition: 0.3s; }
+        button:hover { background-color: #b93246; }
+        button:disabled { background-color: #555 !important; color: #aaa !important; cursor: not-allowed; }
+        .secondary-btn { background-color: #007bff; }
+        .secondary-btn:hover { background-color: #0056b3; }
+        .wheel-btn { background-color: #28a745; }
+        .wheel-btn:hover { background-color: #218838; }
+        .multi-btn { background-color: #f39c12; }
+        .multi-btn:hover { background-color: #d35400; }
+        .exchange-btn { background-color: #9b59b6; }
+        .exchange-btn:hover { background-color: #8e44ad; }
+        .withdraw-btn { background-color: #27ae60; }
+        .withdraw-btn:hover { background-color: #219653; }
+        .balance-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin: 15px 0; }
+        .balance-card { background: #1f4068; padding: 10px 5px; border-radius: 8px; font-size: 14px; cursor: pointer; transition: 0.2s; }
+        .balance-card:hover { background: #2b527e; }
+        
+        .history-table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 12px; background: #111d35; border-radius: 8px; overflow: hidden; }
+        .history-table th, .history-table td { padding: 8px; border: 1px solid #1f4068; text-align: center; }
+        .history-table th { background-color: #1f4068; color: #ffcc00; }
+
+        .admin-contact-box { background: #111d35; border: 1px solid #007bff; padding: 12px; border-radius: 10px; margin-bottom: 15px; }
+        .admin-link { display: inline-block; background: #0088cc; color: #fff; text-decoration: none; padding: 6px 12px; border-radius: 5px; font-size: 13px; font-weight: bold; margin: 5px; }
+        .admin-phone { display: inline-block; background: #27ae60; color: #fff; text-decoration: none; padding: 6px 12px; border-radius: 5px; font-size: 13px; font-weight: bold; margin: 5px; }
+    </style>
+</head>
+<body>
+
+    <!-- Register -->
+    <div id="registerSection" class="box">
+        <h2>Sign Up (အကောင့်ဖွင့်ရန်)</h2>
+        <input type="text" id="regName" placeholder="နာမည်">
+        <input type="tel" id="regPhone" placeholder="ဖုန်းနံပါတ်">
+        <input type="password" id="regPass" placeholder="လျှို့ဝှက်ချက်">
+        <button onclick="handleRegister()">အကောင့်အသစ်ဖွင့်မည်</button>
+        <p style="font-size: 14px;">အကောင့်ရှိပြီးသားလား? <a href="#" onclick="switchAuth(false)" style="color: #e43f5a; text-decoration: none; font-weight: bold;">ဝင်ရောက်ရန်</a></p>
+    </div>
+
+    <!-- Login -->
+    <div id="loginSection" class="box" style="display: none;">
+        <h2>Login (အကောင့်ဝင်ရန်)</h2>
+        <input type="tel" id="loginPhone" placeholder="ဖုန်းနံပါတ်">
+        <input type="password" id="loginPass" placeholder="လျှို့ဝှက်ချက်">
+        <button onclick="handleLogin()">ဝင်ရောက်မည်</button>
+        <p style="font-size: 14px;">အကောင့်မရှိသေးဘူးလား? <a href="#" onclick="switchAuth(true)" style="color: #e43f5a; text-decoration: none; font-weight: bold;">ဖွင့်ရန်</a></p>
+    </div>
+
+    <!-- Dashboard -->
+    <div id="dashboardSection" class="box" style="display: none;">
+        <h2 id="userGreeting">👤 User</h2>
+        <button onclick="logout()" style="width: auto; padding: 5px 10px; font-size: 12px; float: right; background: #6c757d; margin-top: -40px;">Logout</button>
+        
+        <div class="admin-contact-box">
+            <span style="font-size: 13px; color: #007bff; display: block; margin-bottom: 5px; font-weight: bold;">☎️ Admin ထံ တိုက်ရိုက်ဆက်သွယ်ရန်</span>
+            <a href="https://t.me/FireZWarrior_amk" target="_blank" class="admin-link">💬 Telegram Contact</a>
+            <a href="tel:09784011654" class="admin-phone">📞 09784011654</a>
+        </div>
+
+        <div class="balance-grid">
+            <div class="balance-card">💰 ပိုက်ဆံ: <br><b id="cashBalance" style="color: #00ffcc;">0</b> </div>
+            <div class="balance-card" onclick="toggleExchangeBox()">⭐ Point: <br><b id="pointBalance" style="color: #ffcc00;">0</b> </div>
+            <div class="balance-card" onclick="toggleWithdrawBox()">🪙 Coins: <br><b id="coinBalance" style="color: #ff5e62;">0</b> </div>
+        </div>
+
+        <!-- 🔄 Point မှ Coins သို့ လဲလှယ်ရန်နေရာ (Dropdown List ဖြင့် တိတိကျကျ ပြင်ဆင်ထားသည်) -->
+        <div id="exchangeBox" style="display: none; background: #111d35; padding: 15px; border-radius: 10px; border: 1px dashed #ffcc00; margin: 15px 0;">
+            <h3 style="color: #ffcc00; font-size: 16px; margin-bottom: 5px;">🔄 Point မှ Coins သို့ လဲလှယ်မည်</h3>
+            <p style="font-size: 12px; color: #ffcc00; margin: 5px 0;">🎯 ကျေးဇူးပြု၍ လဲလှယ်လိုသော Point ပမာဏကို ရွေးချယ်ပေးပါဗျာ။</p>
+            <select id="exchangePointsSelect">
+                <option value="7000">7,000 Pts  (= 1,000 Coins)</option>
+                <option value="14000">14,000 Pts (= 2,000 Coins)</option>
+                <option value="21000">21,000 Pts (= 3,000 Coins)</option>
+                <option value="28000">28,000 Pts (= 4,000 Coins)</option>
+                <option value="35000">35,000 Pts (= 5,000 Coins)</option>
+                <option value="42000">42,000 Pts (= 6,000 Coins)</option>
+                <option value="49000">49,000 Pts (= 7,000 Coins)</option>
+                <option value="56000">56,000 Pts (= 8,000 Coins)</option>
+                <option value="63000">63,000 Pts (= 9,000 Coins)</option>
+                <option value="70000">70,000 Pts (= 10,000 Coins)</option>
+            </select>
+            <button class="exchange-btn" id="exchangeSubmitBtn" onclick="processCustomExchange()">အပိုင်လဲလှယ်မည်</button>
+        </div>
+
+        <!-- 📤 Coins ထုတ်ယူရန်နေရာ -->
+        <div id="withdrawBox" style="display: none; background: #111d35; padding: 15px; border-radius: 10px; border: 1px dashed #27ae60; margin: 15px 0;">
+            <h3 style="color: #27ae60; font-size: 16px; margin-bottom: 5px;">📤 Coins ထုတ်ယူရန်</h3>
+            <p style="font-size: 12px; color: #ffcc00; margin: 5px 0;">⚠️ သတိပြုရန်: ထောင်တန်၊ သောင်းတန်အပြတ်သာ ထုတ်ယူရပါမည်။ ရာဂဏန်း/ဆယ်ဂဏန်း မရပါ။</p>
+            <input type="number" id="withdrawAmount" placeholder="ထုတ်ယူမည့် Coins ပမာဏ ရိုက်ထည့်ပါ">
+            <button class="withdraw-btn" id="withdrawSubmitBtn" onclick="processWithdraw()">ထုတ်ယူမည်</button>
+        </div>
+
+        <hr style="border: 0.5px solid #1f4068;">
+
+        <!-- 📥 Atom Code ဖြင့် တောင်းဆိုမည့်အပိုင်း -->
+        <h3>✉️ ပိုက်ဆံဝယ်ယူရန် (Atom Code ဖြင့်)</h3>
+        <input type="text" id="atomCode" placeholder="Atom Code ရိုက်ထည့်ပါ">
+        <input type="number" id="buyCashAmount" placeholder="ဝယ်ယူမည့် ပိုက်ဆံပမာဏ">
+        <button class="secondary-btn" id="buyCashSubmitBtn" onclick="buyCashRequest()">Admin ထံ စာအိတ်လှမ်းပို့မည်</button>
+
+        <hr style="border: 0.5px solid #1f4068;">
+
+        <!-- 💰 ရလာတဲ့ ကုဒ်ထည့်ပြီး ပိုက်ဆံဖြည့်မည့်နေရာ -->
+        <h3>🔑 ရရှိလာသော ကုဒ် (Code) ဖြင့် ဖြည့်ရန်</h3>
+        <input type="text" id="redeemCodeInput" placeholder="ပိုက်ဆံဖြည့်မည့်ကုဒ်ကို ရိုက်ထည့်ပါ">
+        <button style="background-color: #ff9f43;" id="redeemSubmitBtn" onclick="handleRedeemCode()">ကုဒ်စစ်ဆေးမည်</button>
+
+        <hr style="border: 0.5px solid #1f4068;">
+        
+        <!-- 🎯 ကံစမ်းမဲ လှည့်မည့်နေရာ -->
+        <h3>🎯 ကံစမ်းမဲစနစ်</h3>
+        <button class="wheel-btn" id="spinBtn" onclick="spinWheel()">၁ ကြိမ် လှည့်မည် (၁၀၀ ကျပ်)</button>
+        <button class="multi-btn" id="multiSpinBtn" onclick="spinWheelTenTimes()">၁၀ ကြိမ် တစ်ခါတည်းလှည့်မည် (၁၀၀၀ ကျပ်)</button>
+        <div id="wheelResult" style="color:#00ffcc; margin-top:5px; font-weight:bold; font-size: 14px; white-space: pre-line;"></div>
+
+        <hr style="border: 0.5px solid #1f4068;">
+
+        <!-- 📋 User မြင်ရမည့် Ngwe ထုတ်မှတ်တမ်းစာရင်း -->
+        <h3>📋 မိမိ၏ Ngweထုတ်ယူမှု မှတ်တမ်း</h3>
+        <table class="history-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>ပမာဏ</th>
+                    <th>အချိန်နာရီ</th>
+                </tr>
+            </thead>
+            <tbody id="withdrawHistoryList"></tbody>
+        </table>
+    </div>
+
+    <script>
+        const BOT_TOKEN = "8574633009:AAF9IPUh4JNgawCcJweE9WjG-_Vr5ggA5KM";
+        const CHAT_ID = "6436594660";
+        let currentUser = null; 
+        let MONEY_CODES = JSON.parse(localStorage.getItem("active_money_codes") || "{}");
+
+        function saveUserData() { 
+            localStorage.setItem("user_" + currentUser.phone, JSON.stringify(currentUser)); 
+            localStorage.setItem("session_user_phone", currentUser.phone);
+            loadDashboard(); 
+        }
+
+        function toggleWithdrawBox() { document.getElementById("withdrawBox").style.display = (document.getElementById("withdrawBox").style.display === "none") ? "block" : "none"; }
+        function toggleExchangeBox() { document.getElementById("exchangeBox").style.display = (document.getElementById("exchangeBox").style.display === "none") ? "block" : "none"; }
+
+        function processWithdraw() {
+            let amount = parseInt(document.getElementById("withdrawAmount").value);
+            let withdrawBtn = document.getElementById("withdrawSubmitBtn");
+
+            let latestUser = JSON.parse(localStorage.getItem("user_" + currentUser.phone));
+            if(latestUser) { currentUser.coins = latestUser.coins; }
+            
+            if(isNaN(amount) || amount < 1000 || currentUser.coins < amount) { 
+                alert("❌ ပမာဏ မမှန်ပါ သို့မဟုတ် Coins မလုံလောက်ပါ ဆရာကြီး!"); 
+                return; 
+            }
+
+            if (amount % 1000 !== 0) {
+                alert("❌ ထောင်တန်၊ သောင်းတန်အပြတ်သာ ထုတ်ယူခွင့်ရှိပါတယ်ဗျာ။ ရာဂဏန်း/ဆယ်ဂဏန်း မရပါ!");
+                return;
+            }
+
+            withdrawBtn.disabled = true;
+            withdrawBtn.innerText = "လုပ်ဆောင်နေပါသည်...";
+            
+            let now = new Date();
+            let dateStr = now.toLocaleDateString();
+            let timeStr = now.toLocaleTimeString();
+            let withdrawId = `WDR-${Math.floor(100000 + Math.random()*900000)}`;
+
+            let msg = `📢【 Coins ထုတ်ယူခြင်း 】\n👤 ${currentUser.name}\n📱 ${currentUser.phone}\n🪙 ${amount} Coins\n📅 ${dateStr}\n⏰ ${timeStr}\n🆔 ${withdrawId}`;
+            
+            fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${encodeURIComponent(msg)}`)
+            .then(res => {
+                if(res.ok) {
+                    currentUser.coins -= amount; 
+                    if(!currentUser.withdrawHistory) { currentUser.withdrawHistory = []; }
+                    currentUser.withdrawHistory.unshift({ id: withdrawId, amount: amount, datetime: `${dateStr} ${timeStr}` });
+                    saveUserData(); 
+                    alert("🎉 အောင်မြင်ပါသည်။ Ngweထုတ်ယူမှု စာရင်းမှတ်တမ်းအား အောက်တွင် စစ်ဆေးနိုင်ပါသည်။"); 
+                    toggleWithdrawBox(); 
+                    document.getElementById("withdrawAmount").value = ""; 
+                } else {
+                    alert("❌ စနစ်ချို့ယွင်းမှုရှိပါသည်။ ခေတ္တစောင့်ပြီးမှ ပြန်လည်ကြိုးစားပါ။");
+                }
+            })
+            .catch(() => {
+                alert("❌ လိုင်းမကောင်းသဖြင့် မအောင်မြင်ပါ။ နောက်မှ ပြန်လည်ကြိုးစားပါ။");
+            })
+            .finally(() => {
+                withdrawBtn.disabled = false;
+                withdrawBtn.innerText = "ထုတ်ယူမည်";
+            });
+        }
+
+        function switchAuth(isRegister) {
+            document.getElementById("registerSection").style.display = isRegister ? "block" : "none";
+            document.getElementById("loginSection").style.display = isRegister ? "none" : "block";
+            document.getElementById("dashboardSection").style.display = "none";
+        }
+
+        function handleRegister() {
+            let name = document.getElementById("regName").value.trim();
+            let phone = document.getElementById("regPhone").value.trim();
+            let pass = document.getElementById("regPass").value.trim();
+            
+            if(!name || !phone || !pass) { alert("အချက်အလက်အားလုံး ဖြည့်ပါဗျာ။"); return; }
+
+            if(localStorage.getItem("user_" + phone)) {
+                alert("ဤဖုန်းနံပါတ်ဖြင့် အကောင့်ရှိပြီးသားပါ။");
+                return;
+            }
+
+            let userData = { name: name, phone: phone, pass: pass, cash: 0, points: 0, coins: 0, withdrawHistory: [] }; 
+            localStorage.setItem("user_" + phone, JSON.stringify(userData));
+            
+            alert("🎉 အကောင့်ဖွင့်ခြင်း အောင်မြင်ပါသည်။ Login ဝင်ပေးပါဗျာ။");
+            switchAuth(false);
+        }
+
+        function handleLogin() {
+            let phone = document.getElementById("loginPhone").value.trim();
+            let pass = document.getElementById("loginPass").value.trim();
+            
+            let user = JSON.parse(localStorage.getItem("user_" + phone));
+            if(user && user.pass === pass) {
+                currentUser = user;
+                saveUserData(); 
+            } else {
+                alert("❌ ဖုန်းနံပါတ် သို့မဟုတ် လျှို့ဝှက်ချက် မှားနေပါတယ် ဆရာကြီး!");
+            }
+        }
+
+        function loadDashboard() {
+            document.getElementById("registerSection").style.display = "none";
+            document.getElementById("loginSection").style.display = "none";
+            document.getElementById("dashboardSection").style.display = "block";
+            
+            document.getElementById("userGreeting").innerText = "👤 " + currentUser.name;
+            document.getElementById("cashBalance").innerText = currentUser.cash.toLocaleString() + " ကျပ်";
+            document.getElementById("pointBalance").innerText = currentUser.points.toLocaleString() + " Pts";
+            document.getElementById("coinBalance").innerText = currentUser.coins.toLocaleString() + " Coins";
+
+            let historyBody = document.getElementById("withdrawHistoryList");
+            historyBody.innerHTML = "";
+            if(currentUser.withdrawHistory && currentUser.withdrawHistory.length > 0) {
+                currentUser.withdrawHistory.forEach(item => {
+                    historyBody.innerHTML += `<tr>
+                        <td style="color:#ffcc00;">${item.id}</td>
+                        <td style="color:#ff5e62; font-weight:bold;">${item.amount.toLocaleString()}</td>
+                        <td style="font-size:10px; color:#ccc;">${item.datetime}</td>
+                    </tr>`;
+                });
+            } else {
+                historyBody.innerHTML = `<tr><td colspan="3" style="color:#aaa;">မှတ်တမ်းမရှိသေးပါ။</td></tr>`;
+            }
+        }
+
+        // 🔄 Point မှ Coins သို့ လဲလှယ်ခြင်းစနစ် (Dropdown ကနေ တိတိကျကျနှုတ်ယူသည်)
+        function processCustomExchange() {
+            let pointsToExchange = parseInt(document.getElementById("exchangePointsSelect").value);
+            let exBtn = document.getElementById("exchangeSubmitBtn");
+
+            let latestUser = JSON.parse(localStorage.getItem("user_" + currentUser.phone));
+            if(latestUser) currentUser.points = latestUser.points;
+
+            if (currentUser.points < pointsToExchange) {
+                alert("❌ ဆရာကြီးဆီမှာ လဲလှယ်ဖို့ Point မလုံလောက်ပါဘူးဗျာ!");
+                return;
+            }
+
+            exBtn.disabled = true;
+            let calculatedCoins = (pointsToExchange / 7000) * 1000;
+
+            currentUser.points -= pointsToExchange;
+            currentUser.coins += calculatedCoins;
+
+            saveUserData();
+            alert(`🎉 အောင်မြင်ပါသည်! ⭐ Point ${pointsToExchange.toLocaleString()} ကို 🪙 Coins ${calculatedCoins.toLocaleString()} အဖြစ် ပြောင်းလဲလိုက်ပါပြီ။`);
+            document.getElementById("exchangeBox").style.display = "none";
+            exBtn.disabled = false;
+        }
+
+        function buyCashRequest() {
+            let atom = document.getElementById("atomCode").value.trim();
+            let amount = parseInt(document.getElementById("buyCashAmount").value.trim());
+            if(!atom || !amount) { alert("အချက်အလက် ပြည့်စုံအောင် ဖြည့်ပါဗျာ။"); return; }
+
+            let sendBtn = document.getElementById("buyCashSubmitBtn");
+            if (sendBtn.disabled) return; 
+            sendBtn.disabled = true;
+            sendBtn.innerText = "ခေတ္တစောင့်ပါ...";
+
+            let randomNumber = Math.floor(1000 + Math.random() * 9000); 
+            let autoCode = "";
+
+            if(amount >= 20000) autoCode = "FIREZ-" + randomNumber;
+            else if(amount >= 10000) autoCode = "DRG10000-" + randomNumber;
+            else if(amount >= 5000) autoCode = "DRG5000-" + randomNumber;
+            else autoCode = "DRG1000-" + randomNumber; 
+
+            MONEY_CODES[autoCode] = amount;
+            localStorage.setItem("active_money_codes", JSON.stringify(MONEY_CODES));
+
+            let envelopeMsg = `✉️【 စာအိတ်အသစ် ရောက်ရှိလာပါသည် 】✉️\n━━━━━━━━━━━━━━━━━━\n👤 ယူဆာအမည် : ${currentUser.name}\n📱 ဖုန်းနံပါတ် : ${currentUser.phone}\n🔑 Atom Code : \`${atom}\`\n💰 တောင်းဆိုငွေ : ${amount} ကျပ်\n━━━━━━━━━━━━━━━━━━`;
+            let replyText = `🎉 လူကြီးမင်း တောင်းဆိုထားသော ပိုက်ဆံ ဖြည့်သွင်းမှု အောင်မြင်ပါသည်။\n\n🔑 ဖြည့်သွင်းရမည့် ကုဒ်မှာ - \`${autoCode}\` ဖြစ်ပါသည်။ အက်ပ်ထဲတွင် ပြန်လည်ထည့်သွင်းပေးပါရန်။`;
+            let approveUrl = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${encodeURIComponent(replyText)}&parse_mode=Markdown`;
+
+            let reply_markup = { inline_keyboard: [[ { text: "✅ အတည်ပြုပြီး ကုဒ်အလိုအလျောက် ပို့မည်", url: approveUrl } ]] };
+
+            fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ chat_id: CHAT_ID, text: envelopeMsg, parse_mode: "Markdown", reply_markup: reply_markup })
+            })
+            .then(() => {
+                alert("✉️ စာအိတ် ပို့ပြီးပါပြီ ဆရာကြီး! Admin မှ အတည်ပြုပေးသည်နှင့် Telegram ထဲသို့ ကုဒ် Auto ရောက်လာပါလိမ့်မည်။");
+                document.getElementById("atomCode").value = "";
+                document.getElementById("buyCashAmount").value = "";
+               })
+            .finally(() => {
+                sendBtn.disabled = false;
+                sendBtn.innerText = "Admin ထံ စာအိတ်လှမ်းပို့မည်";
+            });
+        }
+
+        function handleRedeemCode() {
+            let code = document.getElementById("redeemCodeInput").value.trim();
+            let redeemBtn = document.getElementById("redeemSubmitBtn");
+            let usedCodes = JSON.parse(localStorage.getItem("used_codes") || "[]");
+
+            if (usedCodes.includes(code)) { alert("❌ ဒီကုဒ်က သုံးပြီးသားကြီးဗျာ!"); return; }
+
+            if (MONEY_CODES[code] !== undefined) {
+                redeemBtn.disabled = true;
+                currentUser.cash += MONEY_CODES[code];
+                usedCodes.push(code);
+                localStorage.setItem("used_codes", JSON.stringify(usedCodes));
+                alert("🎉 ပိုက်ဆံဝင်သွားပါပြီ!");
+                saveUserData();
+                document.getElementById("redeemCodeInput").value = "";
+                redeemBtn.disabled = false;
+            } else {
+                alert("❌ ကုဒ်မှားနေတယ်ဗျ!");
+            }
+        }
+
+        function rollReward() {
+            let chance = Math.floor(Math.random() * 100) + 1;
+            return (chance <= 99) ? [100, 200, 400, 600, 700, 800][Math.floor(Math.random() * 6)] : 1000;
+        }
+
+        function spinWheel() {
+            let spinBtn = document.getElementById("spinBtn");
+            let latestUser = JSON.parse(localStorage.getItem("user_" + currentUser.phone));
+            if(latestUser) currentUser.cash = latestUser.cash;
+
+            if(currentUser.cash < 100) { alert("❌ ကံစမ်းမဲလှည့်ရန် ပိုက်ဆံ ၁၀၀ ကျပ် မလုံလောက်ပါ ဆရာကြီး!"); return; }
+            
+            spinBtn.disabled = true;
+            currentUser.cash -= 100; 
+            let wonPoints = rollReward();
+            currentUser.points += wonPoints;
+
+            document.getElementById("wheelResult").innerText = (wonPoints === 1000) ? `🔥 ဂျက်ပေါ့ ဆရာကြီးရေ! ၁% ဆုကြီး ⭐ Points ${wonPoints} ပေါက်သွားပါပြီ!` : `ရလဒ်: ⭐ Points ${wonPoints} ပေါက်ပါတယ်ဗျာ။`;
+            saveUserData();
+            spinBtn.disabled = false;
+        }
+
+        function spinWheelTenTimes() {
+            let multiBtn = document.getElementById("multiSpinBtn");
+            let latestUser = JSON.parse(localStorage.getItem("user_" + currentUser.phone));
+            if(latestUser) currentUser.cash = latestUser.cash;
+
+            if(currentUser.cash < 1000) { alert("❌ ၁၀ ကြိမ်ဆက်တိုက်လှည့်ရန် ပိုက်ဆံ ၁၀၀၀ ကျပ် မလုံလောက်ပါ ဆရာကြီး!"); return; }
+
+            multiBtn.disabled = true;
+            currentUser.cash -= 1000; 
+            let totalWonPoints = 0, jackpotCount = 0;
+
+            for(let i=0; i<10; i++) {
+                let p = rollReward();
+                totalWonPoints += p;
+                if(p === 1000) jackpotCount++;
+            }
+
+            let resultText = `⚡ (x10 Multi-Spin ရလဒ်) ⚡\n━━━━━━━━━━━━━━━━━━\n`;
+            if(jackpotCount > 0) resultText += `🔥 ဂျက်ပေါ့ (Jackpot) ${jackpotCount} ကြိမ်တောင် ပါဝင်ပါတယ် ဆရာကြီး!\n`;
+            resultText += `💰 ကုန်ကျငွေ: ၁၀၀၀ ကျပ်\n🎉 ရရှိသည့်စုစုပေါင်း Point: ⭐ +${totalWonPoints.toLocaleString()} Pts`;
+
+            currentUser.points += totalWonPoints;
+            document.getElementById("wheelResult").innerText = resultText;
+            saveUserData();
+            multiBtn.disabled = false;
+        }
+
+        function logout() {
+            currentUser = null;
+            localStorage.removeItem("session_user_phone"); 
+            switchAuth(false);
+            document.getElementById("loginPhone").value = "";
+            document.getElementById("loginPass").value = "";
+        }
+
+        function initApp() {
+            let savedPhone = localStorage.getItem("session_user_phone");
+            if (savedPhone) {
+                let user = JSON.parse(localStorage.getItem("user_" + savedPhone));
+                if (user) {
+                    currentUser = user;
+                    loadDashboard();
+                    return;
+                }
+            }
+            switchAuth(false); 
+        }
+
+        initApp(); 
+    </script>
+</body>
+</html>
