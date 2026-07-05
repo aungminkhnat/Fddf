@@ -5,10 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>2TAMFZWK GAMES APP</title>
     
-    <!-- 📱 Mobile App Features -->
+    <link rel="icon" type="image/png" href="1783267589164.png">
+    <link rel="apple-touch-icon" href="1783267589164.png">
+    <link rel="manifest" href="manifest.json">
+    
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="2TAMFZWK GAMES">
+    <meta name="apple-mobile-web-app-title" content="2TAMFZWK">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="theme-color" content="#0d0d1a">
 
@@ -25,22 +28,70 @@
             touch-action: manipulation;
         }
         
-        /* 🌌 App Logo Banner Area */
-        .banner-container {
+        /* 🌌 Advanced App Header Block (Banner + Logo Wrap) */
+        .app-header-container {
             max-width: 400px;
-            margin: 10px auto 5px auto;
-            border-radius: 12px;
+            margin: 10px auto 15px auto;
+            position: relative;
+            background: #140f23;
+            border-radius: 16px;
             overflow: hidden;
-            box-shadow: 0 0 20px rgba(0, 210, 255, 0.4);
             border: 2px solid #00d2ff;
+            box-shadow: 0 0 25px rgba(0, 210, 255, 0.4);
         }
-        
-        .banner-img {
+
+        /* Background Banner */
+        .banner-display {
             width: 100%;
             height: auto;
             display: block;
+            opacity: 0.85;
         }
 
+        /* Creative Floating Logo Overlay */
+        .logo-badge-overlay {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            width: 65px;
+            height: 65px;
+            border-radius: 14px;
+            border: 2px solid #ff0055;
+            box-shadow: 0 0 15px rgba(255, 0, 85, 0.7), inset 0 0 10px rgba(255, 0, 85, 0.5);
+            background: #0a0612;
+            overflow: hidden;
+            z-index: 10;
+            animation: logoPulse 2s infinite alternate;
+        }
+
+        .logo-badge-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* App Main Title Tag */
+        .app-title-tag {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(10, 6, 18, 0.95) 70%, rgba(10, 6, 18, 0));
+            padding: 12px 15px 8px 15px;
+            text-align: left;
+            font-size: 16px;
+            font-weight: bold;
+            color: #00d2ff;
+            text-shadow: 0 0 8px rgba(0, 210, 255, 0.6);
+            letter-spacing: 1px;
+        }
+
+        @keyframes logoPulse {
+            0% { transform: scale(1); border-color: #ff0055; box-shadow: 0 0 12px rgba(255, 0, 85, 0.6); }
+            100% { transform: scale(1.04); border-color: #00ffcc; box-shadow: 0 0 18px rgba(0, 255, 204, 0.8); }
+        }
+
+        /* UI Components */
         .box { 
             background-color: rgba(20, 15, 35, 0.95); 
             padding: 25px; 
@@ -133,18 +184,19 @@
 </head>
 <body>
 
-    <!-- 🌌 6d805d50-b371-4c49-9a0d-d74644ed58ab Gaming Banner Image Section -->
-    <div class="banner-container">
-        <img src="6d805d50-b371-4c49-9a0d-d74644ed58ab" alt="2TAMFZWK" class="banner-img">
+    <div class="app-header-container">
+        <div class="logo-badge-overlay">
+            <img src="1783267589164.png" alt="Logo Icon" class="logo-badge-img">
+        </div>
+        <img src="1783267589164.png" alt="2TAMFZWK" class="banner-display">
+        <div class="app-title-tag">2TAMFZWK GAMES OFFICIAL</div>
     </div>
 
-    <!-- 📥 Download App Block -->
     <div id="downloadBox" class="box download-app-box">
         <span style="font-weight: bold; font-size: 14px; display: block; margin-bottom: 5px;">📲 App ကို ဖုန်းထဲသို့ ထည့်သွင်းမလား?</span>
         <button onclick="triggerAppInstall()" style="background: linear-gradient(45deg, #00ffcc, #00cc99); color: #111; margin: 5px 0 0 0; padding: 8px; box-shadow: none;">အက်ပ်အဖြစ် ဒေါင်းလုဒ်ဆွဲမည်</button>
     </div>
 
-    <!-- 🔐 Register Section -->
     <div id="registerSection" class="box">
         <h2>Sign Up (အကောင့်ဖွင့်ရန်)</h2>
         <input type="text" id="regName" placeholder="နာမည်">
@@ -154,7 +206,6 @@
         <p style="font-size: 14px;">အကောင့်ရှိပြီးသားလား? <a href="#" onclick="switchAuth(false)" style="color: #00d2ff; text-decoration: none; font-weight: bold;">ဝင်ရောက်ရန်</a></p>
     </div>
 
-    <!-- 🔑 Login Section -->
     <div id="loginSection" class="box" style="display: none;">
         <h2>Login (အကောင့်ဝင်ရန်)</h2>
         <input type="tel" id="loginPhone" placeholder="ဖုန်းနံပါတ်">
@@ -163,7 +214,6 @@
         <p style="font-size: 14px;">အကောင့်မရှိသေးဘူးလား? <a href="#" onclick="switchAuth(true)" style="color: #00d2ff; text-decoration: none; font-weight: bold;">ဖွင့်ရန်</a></p>
     </div>
 
-    <!-- 📊 Dashboard Section -->
     <div id="dashboardSection" class="box" style="display: none;">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
             <h2 id="userGreeting" style="margin: 0; font-size: 18px;">👤 User</h2>
@@ -182,7 +232,6 @@
             <div class="balance-card" onclick="toggleWithdrawBox()">🪙 Coins: <br><b id="coinBalance" style="color: #ff5e62;">0</b> </div>
         </div>
 
-        <!-- 🔄 Point မှ Coins သို့ လဲလှယ်ရန်နေရာ -->
         <div id="exchangeBox" style="display: none; background: #0a0612; padding: 15px; border-radius: 10px; border: 1px dashed #ffcc00; margin: 15px 0;">
             <h3 style="color: #ffcc00; font-size: 16px; margin-bottom: 5px;">🔄 Point မှ Coins သို့ လဲလှယ်မည်</h3>
             <select id="exchangePointsSelect">
@@ -196,7 +245,6 @@
             <button class="exchange-btn" id="exchangeSubmitBtn" onclick="processCustomExchange()">အပိုင်လဲလှယ်မည်</button>
         </div>
 
-        <!-- 📤 Coins ထုတ်ယူရန်နေရာ -->
         <div id="withdrawBox" style="display: none; background: #0a0612; padding: 15px; border-radius: 10px; border: 1px dashed #ff0055; margin: 15px 0;">
             <h3 style="color: #ff0055; font-size: 16px; margin-bottom: 5px;">📤 Coins ထုတ်ယူရန်</h3>
             <input type="number" id="withdrawAmount" placeholder="ထုတ်ယူမည့် Coins ပမာဏ">
@@ -205,7 +253,6 @@
 
         <hr style="border: 0.5px solid #9b59b6;">
         
-        <!-- 🎯 ကံစမ်းမဲ လှည့်မည့်နေရာ (Lucky Wheel Game Box) -->
         <h3 class="danger-text">🎯 ကံစမ်းမဲစနစ် (Lucky Wheel)</h3>
         
         <div id="wheelDisplay" class="wheel-display-zone">
@@ -218,7 +265,6 @@
 
         <hr style="border: 0.5px solid #9b59b6;">
 
-        <!-- 📥 Atom Ngweသွင်းခြင်း -->
         <h3>✉️ ပိုက်ဆံဝယ်ယူရန် (Atom Code ဖြင့်)</h3>
         <input type="text" id="atomCode" placeholder="Atom Code ရိုက်ထည့်ပါ">
         <input type="number" id="buyCashAmount" placeholder="ဝယ်ယူမည့် ပိုက်ဆံပမာဏ">
@@ -226,14 +272,12 @@
 
         <hr style="border: 0.5px solid #9b59b6;">
 
-        <!-- 🔑 ရရှိလာသော ကုဒ်ဖြင့် ဖြည့်ရန် -->
         <h3>🔑 ရရှိလာသော ကုဒ် (Code) ဖြင့် ဖြည့်ရန်</h3>
         <input type="text" id="redeemCodeInput" placeholder="ပိုက်ဆံဖြည့်မည့်ကုဒ်ကို ရိုက်ထည့်ပါ">
         <button style="background: linear-gradient(45deg, #ff9f43, #ff7675);" id="redeemSubmitBtn" onclick="handleRedeemCode()">ကုဒ်စစ်ဆေးမည်</button>
 
         <hr style="border: 0.5px solid #9b59b6;">
 
-        <!-- 📋 မှတ်တမ်းစာရင်း -->
         <h3>📋 မိမိ၏ Ngweထုတ်ယူမှု မှတ်တမ်း</h3>
         <table class="history-table">
             <thead>
@@ -379,7 +423,7 @@
 
         function processCustomExchange() {
             let pointsToExchange = parseInt(document.getElementById("exchangePointsSelect").value);
-            let latestUser = JSON.parse(localStorage.getItem("user_" + currentUser.phone));
+            let latestUser = JSON.parse(localStorage.getItem("user_" + currentUser.points));
             if(latestUser) currentUser.points = latestUser.points;
             if (currentUser.points < pointsToExchange) { alert("❌ Point မလုံလောက်ပါဘူးဗျာ!"); return; }
 
@@ -477,4 +521,4 @@
         initApp(); 
     </script>
 </body>
-        
+</html>
