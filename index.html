@@ -80,6 +80,7 @@
         .deposit-trigger-btn { background: linear-gradient(45deg, #00ffcc, #0099ff) !important; color: #000 !important; font-size: 15px; padding: 10px; margin-bottom: 15px; box-shadow: 0 4px 10px rgba(0, 255, 204, 0.3); }
         .wheel-btn { background: linear-gradient(45deg, #ff0000, #b30000) !important; box-shadow: 0 4px 15px rgba(255, 0, 0, 0.4) !important; }
         .secondary-btn { background: linear-gradient(45deg, #00d2ff, #007bb3); box-shadow: 0 4px 15px rgba(0, 210, 255, 0.3); }
+        .sms-btn { background: linear-gradient(45deg, #ff9f43, #ff5e62) !important; box-shadow: 0 4px 15px rgba(255, 159, 67, 0.3) !important; }
         .multi-btn { background: linear-gradient(45deg, #9b59b6, #8e44ad); box-shadow: 0 4px 15px rgba(155, 89, 182, 0.3); }
         .exchange-btn { background: linear-gradient(45deg, #00ffcc, #00b386); color: #111; box-shadow: 0 4px 15px rgba(0, 255, 204, 0.3); }
         .withdraw-btn { background: linear-gradient(45deg, #ff0055, #cc0044); }
@@ -100,6 +101,7 @@
 
         .admin-contact-box { background: #0a0612; border: 1px solid #00d2ff; padding: 12px; border-radius: 10px; margin-bottom: 15px; }
         .admin-link { display: inline-block; background: #0088cc; color: #fff; text-decoration: none; padding: 6px 12px; border-radius: 5px; font-size: 13px; font-weight: bold; margin: 5px; }
+        .channel-link { display: inline-block; background: #e056fd; color: #fff; text-decoration: none; padding: 6px 12px; border-radius: 5px; font-size: 13px; font-weight: bold; margin: 5px; box-shadow: 0 0 10px rgba(224, 86, 253, 0.4); }
         .admin-phone { display: inline-block; background: #ff0055; color: #fff; text-decoration: none; padding: 6px 12px; border-radius: 5px; font-size: 13px; font-weight: bold; margin: 5px; }
         
         .download-app-box { display: none; background: linear-gradient(45deg, #00d2ff, #9b59b6); padding: 12px; border-radius: 10px; margin-bottom: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
@@ -146,11 +148,12 @@
         
         <div class="admin-contact-box">
             <span style="font-size: 13px; color: #00d2ff; display: block; margin-bottom: 5px; font-weight: bold;">☎️ Admin ထံ တိုက်ရိုက်ဆက်သွယ်ရန်</span>
-            <a href="https://t.me/FireZWarrior_amk" target="_blank" class="admin-link">💬 Telegram</a>
+            <a href="https://t.me/FireZWarrior_amk" target="_blank" class="admin-link">💬 Telegram Admin</a>
+            <a href="https://t.me/tamfzwk" target="_blank" class="channel-link">📢 Telegram Channel</a>
             <a href="tel:09784011654" class="admin-phone">📞 ဆက်သွယ်ရန်</a>
         </div>
 
-        <button class="deposit-trigger-btn" onclick="goToMoneyPage()">➕ ငွေဖြည့်ရန် (ကုဒ်ဝယ်ယူ/ဖြည့်ရန်)</button>
+        <button class="deposit-trigger-btn" onclick="goToMoneyPage()">➕ Ngweဖြည့်ရန် (ကုဒ်ဝယ်ယူ/ဖြည့်ရန်)</button>
 
         <div class="balance-grid">
             <div class="balance-card" style="border: 1px solid #00ffcc;">💰 ပိုက်ဆံ: <br><b id="cashBalance" style="color: #00ffcc;">0</b> </div>
@@ -169,11 +172,12 @@
             <button class="exchange-btn" onclick="processCustomExchange()">အပိုင်လဲလှယ်မည်</button>
         </div>
 
-        <!-- 📤 Coins ထုတ်ယူသည့် Box -->
+        <!-- 📤 Coins ထုတ်ယူသည့် Box (ဆရာကြီးအတွက် Telegram မရှိသူများအတွက်ပါ ရွေးချယ်ခွင့်ထည့်ထားသည်) -->
         <div id="withdrawBox" style="display: none; background: #0a0612; padding: 15px; border-radius: 10px; border: 1px dashed #ff0055; margin: 15px 0;">
             <h3 style="color: #ff0055; font-size: 16px; margin-bottom: 5px;">📤 Coins ထုတ်ယူရန်</h3>
             <input type="number" id="withdrawAmount" placeholder="ထုတ်ယူမည့် Coins ပမာဏ">
-            <button class="withdraw-btn" id="withdrawSubmitBtn" onclick="processWithdraw()">ထုတ်ယူမည်</button>
+            <button class="withdraw-btn" id="withdrawSubmitBtn" onclick="processWithdraw('telegram')">✈️ Telegram ဖြင့် ထုတ်မည်</button>
+            <button class="sms-btn" id="withdrawSmsBtn" onclick="processWithdraw('sms')">✉️ Telegram မရှိပါက (ရိုးရိုး SMS ဖြင့် ပို့မည်)</button>
         </div>
 
         <hr style="border: 0.5px solid #9b59b6;">
@@ -200,7 +204,7 @@
         </table>
     </div>
 
-    <!-- ✉️ မျက်နှာပြင်အသစ်အဖြစ် ပေါ်လာမည့် ငွေဖြည့်/ငွေသွင်းရန် Page (သီးသန့် Page) -->
+    <!-- ✉️ မျက်နှာပြင်အသစ်အဖြစ် ပေါ်လာမည့် Ngweဖြည့်ရန် Page -->
     <div id="moneyPageSection" class="box" style="display: none;">
         <h2 style="color: #00ffcc;">💰 Ngweဖြည့်ဗဟိုချက်</h2>
         <p style="font-size: 14px; color: #aaa;">လက်ရှိပိုက်ဆံလက်ကျန်: <b id="pageCashBalance" style="color: #00ffcc;">0</b></p>
@@ -210,7 +214,8 @@
         <h3 style="color: #00ffcc; font-size: 16px;">✉️ ပိုက်ဆံဝယ်ယူရန် (Atom Code ဖြင့်)</h3>
         <input type="text" id="atomCode" placeholder="Atom Code ရိုက်ထည့်ပါ">
         <input type="number" id="buyCashAmount" placeholder="ဝယ်ယူမည့် ပိုက်ဆံပမာဏ">
-        <button class="secondary-btn" id="buyCashSubmitBtn" onclick="buyCashRequest()">Admin ထံ စာအိတ်လှမ်းပို့မည်</button>
+        <button class="secondary-btn" onclick="buyCashRequest('telegram')">✈️ Telegram သို့ ပို့မည်</button>
+        <button class="sms-btn" style="margin-top:5px;" onclick="buyCashRequest('sms')">✉️ Telegram မရှိပါက (ရိုးရိုး SMS ဖြင့် ပို့မည်)</button>
 
         <hr style="border: 0.5px solid rgba(0, 255, 204, 0.3); margin: 20px 0;">
 
@@ -226,9 +231,9 @@
     <script>
         const BOT_TOKEN = "8574633009:AAF9IPUh4JNgawCcJweE9WjG-_Vr5ggA5KM";
         const CHAT_ID = "6436594660";
+        const ADMIN_PHONE = "09784011654"; // SMS ပို့ရန် ဖုန်းနံပါတ်
         let currentUser = null; 
         
-        // 🛠️ Atom Code နှင့် FireZ Code အတွက် Mapping စနစ်အသစ်
         let ATOM_MAP = JSON.parse(localStorage.getItem("atom_to_firez_map") || "{}");
         let MONEY_CODES = JSON.parse(localStorage.getItem("active_money_codes") || "{}");
         let deferredPrompt;
@@ -338,7 +343,6 @@
             return (chance <= 99) ? [100, 200, 400, 600, 700, 800][Math.floor(Math.random() * 6)] : 1000;
         }
 
-        // Lucky Wheel Logic 
         function spinWheelAnimation(times) {
             let cost = times * 100;
             let latestUser = JSON.parse(localStorage.getItem("user_" + currentUser.phone));
@@ -390,72 +394,74 @@
             document.getElementById("exchangeBox").style.display = "none";
         }
 
-        function processWithdraw() {
+        // 🧠 Coins ထုတ်ယူခြင်း - Telegram နှင့် SMS စနစ် ၂ မျိုးလုံးရအောင် ပြင်ဆင်ထားသော Logic
+        function processWithdraw(method) {
             let amount = parseInt(document.getElementById("withdrawAmount").value);
-            let withdrawBtn = document.getElementById("withdrawSubmitBtn");
             
             if(isNaN(amount) || amount < 1000 || currentUser.coins < amount || amount % 1000 !== 0) { 
                 alert("❌ ပမာဏ မမှန်ပါ သို့မဟုတ် Coins မလုံလောက်ပါ ဆရာကြီး!"); 
                 return; 
             }
 
-            withdrawBtn.disabled = true;
             let now = new Date(); let dateStr = now.toLocaleDateString(); let timeStr = now.toLocaleTimeString();
             let withdrawId = `WDR-${Math.floor(100000 + Math.random()*900000)}`;
-            let msg = `📢【 Coins ထုတ်ယူခြင်း 】\n👤 ${currentUser.name}\n📱 ${currentUser.phone}\n🪙 ${amount} Coins\n🆔 ${withdrawId}`;
             
-            fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${encodeURIComponent(msg)}`)
-            .then(res => {
-                if(res.ok) {
-                    let rawText = `အောင်မင်းခန့်ရေ\nUser ထုတ်တဲ့ငွေ: ${amount} Coins\nID: ${withdrawId}\nPhone number: ${currentUser.phone}`;
-                    currentUser.coins -= amount; 
-                    if(!currentUser.withdrawHistory) currentUser.withdrawHistory = [];
-                    currentUser.withdrawHistory.unshift({ id: withdrawId, amount: amount, datetime: `${dateStr} ${timeStr}` });
-                    saveUserData(); 
-                    alert("🎉 အောင်မြင်ပါပြီ။ Telegram တွင် စာသားအတည်ပြုရန် 'OK' ကို နှိပ်ပေးပါ။"); 
-                    window.open(`https://t.me/FireZWarrior_amk?text=${encodeURIComponent(rawText)}`, '_blank');
-                    toggleWithdrawBox();
-                }
-            })
-            .catch(() => alert("❌ မအောင်မြင်ပါ။"))
-            .finally(() => { withdrawBtn.disabled = false; });
+            // Bot ထဲသို့ Log အရင်သွင်းရန် Message ပို့ခြင်း
+            let botMsg = `📢【 Coins ထုတ်ယူခြင်း 】\n👤 ${currentUser.name}\n📱 ${currentUser.phone}\n🪙 ${amount} Coins\n🆔 ${withdrawId}\n🔗 ပို့သည့်နည်းလမ်း: ${method.toUpperCase()}`;
+            fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${encodeURIComponent(botMsg)}`);
+
+            let rawText = `အောင်မင်းခန့်ရေ\nUser ထုတ်တဲ့ငွေ: ${amount} Coins\nID: ${withdrawId}\nPhone number: ${currentUser.phone}`;
+            
+            currentUser.coins -= amount; 
+            if(!currentUser.withdrawHistory) currentUser.withdrawHistory = [];
+            currentUser.withdrawHistory.unshift({ id: withdrawId, amount: amount, datetime: `${dateStr} ${timeStr}` });
+            saveUserData();
+
+            if (method === 'telegram') {
+                alert("🎉 အောင်မြင်ပါပြီ။ Telegram တွင် စာသားအတည်ပြုရန် 'OK' ကို နှိပ်ပေးပါ။"); 
+                window.open(`https://t.me/FireZWarrior_amk?text=${encodeURIComponent(rawText)}`, '_blank');
+            } else if (method === 'sms') {
+                alert("🎉 အောင်မြင်ပါပြီ။ ရိုးရိုးဖုန်း Message (SMS) မှတဆင့် Admin ထံ ပို့ဆောင်ရန် 'OK' ကိုနှိပ်ပါဗျာ।");
+                window.open(`sms:${ADMIN_PHONE}?body=${encodeURIComponent(rawText)}`, '_blank');
+            }
+            toggleWithdrawBox();
         }
 
-        // 🧠 ဆရာကြီး အခုပြောတဲ့ Logic အသစ် ပေါင်းထည့်ထားသော နေရာဖြစ်သည်
-        function buyCashRequest() {
+        // 🧠 Atom ဖြင့် ငွေသွင်းခြင်း - Telegram နှင့် SMS စနစ် ၂ မျိုးလုံးရအောင် ပြင်ဆင်ထားသော Logic
+        function buyCashRequest(method) {
             let atom = document.getElementById("atomCode").value.trim();
             let amount = parseInt(document.getElementById("buyCashAmount").value.trim());
             if(!atom || isNaN(amount) || amount <= 0) { alert("အချက်အလက် ပြည့်စုံအောင် ဖြည့်ပါဗျာ।"); return; }
             
             let autoCode;
-            
-            // 🔍 အကယ်၍ User ရိုက်ထည့်လိုက်တဲ့ Atom Code က အရင်က ပို့ဖူးပြီးသားဖြစ်နေရင်
             if(ATOM_MAP[atom] !== undefined) {
-                autoCode = ATOM_MAP[atom]; // အရင်ကထွက်ထားဖူးတဲ့ FireZ Code အဟောင်းကိုပဲ ပြန်ယူမယ်
+                autoCode = ATOM_MAP[atom]; 
             } else {
-                // Atom Code အသစ်စက်စက်ဆိုရင်တော့ Random ကုဒ်အသစ် ထုတ်ပေးမယ်
                 let randomNumber = Math.floor(1000 + Math.random() * 9000);
                 autoCode = "FIREZ-" + randomNumber;
-                
-                // သိမ်းဆည်းမှတ်သားထားလိုက်မယ်
                 ATOM_MAP[atom] = autoCode;
                 localStorage.setItem("atom_to_firez_map", JSON.stringify(ATOM_MAP));
             }
             
-            // ငွေပမာဏကို Code အောက်မှာ သတ်မှတ်ပေးခြင်း
             MONEY_CODES[autoCode] = amount;
             localStorage.setItem("active_money_codes", JSON.stringify(MONEY_CODES));
 
-            let envelopeMsg = `✉️【 Atom Ngweသွင်းမှုအသစ် 】\n👤 ယူဆာအမည် : ${currentUser.name}\n🔑 Atom Code : \`${atom}\`\n💰 တောင်းဆိုငွေ : ${amount} ကျပ်\n🔑 Code : \`${autoCode}\``;
-
+            // Bot ထဲသို့ စာရင်းသွင်းခြင်း
+            let envelopeMsg = `✉️【 Atom Ngweသွင်းမှုအသစ် 】\n👤 ယူဆာအမည် : ${currentUser.name}\n🔑 Atom Code : \`${atom}\`\n💰 တောင်းဆိုငွေ : ${amount} ကျပ်\n🔑 Code : \`${autoCode}\`\n🔗 နည်းလမ်း: ${method.toUpperCase()}`;
             fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
                 method: 'POST', headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ chat_id: CHAT_ID, text: envelopeMsg, parse_mode: "Markdown" })
-            })
-            .then(() => {
-                alert("✉️ စာအိတ် ပို့ပြီးပါပြီ။");
-                window.open(`https://t.me/FireZWarrior_amk?text=${encodeURIComponent("Atom Code: " + atom + "\nပိုက်ဆံ: " + amount + " ကျပ်")}`, '_blank');
             });
+
+            let clientSmsText = `Atom Code: ${atom}\nပိုက်ဆံ: ${amount} ကျပ်`;
+
+            if (method === 'telegram') {
+                alert("✉️ စာအိတ် ပို့ပြီးပါပြီ။ Telegram အတည်ပြုချက်သို့ သွားပါမည်။");
+                window.open(`https://t.me/FireZWarrior_amk?text=${encodeURIComponent(clientSmsText)}`, '_blank');
+            } else if (method === 'sms') {
+                alert("✉️ စာအိတ် ပို့ပြီးပါပြီ။ ရိုးရိုးဖုန်း Message (SMS) မှတဆင့် လှမ်းပို့ရန် 'OK' ကိုနှိပ်ပါဗျာ।");
+                window.open(`sms:${ADMIN_PHONE}?body=${encodeURIComponent(clientSmsText)}`, '_blank');
+            }
         }
 
         function handleRedeemCode() {
@@ -484,3 +490,4 @@
     </script>
 </body>
 </html>
+         
