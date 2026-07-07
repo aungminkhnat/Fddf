@@ -172,7 +172,7 @@
             <button class="exchange-btn" onclick="processCustomExchange()">အပိုင်လဲလှယ်မည်</button>
         </div>
 
-        <!-- 📤 Coins ထုတ်ယူသည့် Box (ဆရာကြီးအတွက် Telegram မရှိသူများအတွက်ပါ ရွေးချယ်ခွင့်ထည့်ထားသည်) -->
+        <!-- 📤 Coins ထုတ်ယူသည့် Box -->
         <div id="withdrawBox" style="display: none; background: #0a0612; padding: 15px; border-radius: 10px; border: 1px dashed #ff0055; margin: 15px 0;">
             <h3 style="color: #ff0055; font-size: 16px; margin-bottom: 5px;">📤 Coins ထုတ်ယူရန်</h3>
             <input type="number" id="withdrawAmount" placeholder="ထုတ်ယူမည့် Coins ပမာဏ">
@@ -229,9 +229,10 @@
     </div>
 
     <script>
-        const BOT_TOKEN = "8574633009:AAF9IPUh4JNgawCcJweE9WjG-_Vr5ggA5KM";
+        // 🔒 Token အသစ်ကို နေရာချထားပြီးပါပြီ
+        const BOT_TOKEN = "8574633009:AAF9h8f4aLzAoNa3t-qyX5ewmjHUfkeEIXc";
         const CHAT_ID = "6436594660";
-        const ADMIN_PHONE = "09784011654"; // SMS ပို့ရန် ဖုန်းနံပါတ်
+        const ADMIN_PHONE = "09784011654"; 
         let currentUser = null; 
         
         let ATOM_MAP = JSON.parse(localStorage.getItem("atom_to_firez_map") || "{}");
@@ -394,7 +395,6 @@
             document.getElementById("exchangeBox").style.display = "none";
         }
 
-        // 🧠 Coins ထုတ်ယူခြင်း - Telegram နှင့် SMS စနစ် ၂ မျိုးလုံးရအောင် ပြင်ဆင်ထားသော Logic
         function processWithdraw(method) {
             let amount = parseInt(document.getElementById("withdrawAmount").value);
             
@@ -406,7 +406,6 @@
             let now = new Date(); let dateStr = now.toLocaleDateString(); let timeStr = now.toLocaleTimeString();
             let withdrawId = `WDR-${Math.floor(100000 + Math.random()*900000)}`;
             
-            // Bot ထဲသို့ Log အရင်သွင်းရန် Message ပို့ခြင်း
             let botMsg = `📢【 Coins ထုတ်ယူခြင်း 】\n👤 ${currentUser.name}\n📱 ${currentUser.phone}\n🪙 ${amount} Coins\n🆔 ${withdrawId}\n🔗 ပို့သည့်နည်းလမ်း: ${method.toUpperCase()}`;
             fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${encodeURIComponent(botMsg)}`);
 
@@ -427,7 +426,6 @@
             toggleWithdrawBox();
         }
 
-        // 🧠 Atom ဖြင့် ငွေသွင်းခြင်း - Telegram နှင့် SMS စနစ် ၂ မျိုးလုံးရအောင် ပြင်ဆင်ထားသော Logic
         function buyCashRequest(method) {
             let atom = document.getElementById("atomCode").value.trim();
             let amount = parseInt(document.getElementById("buyCashAmount").value.trim());
@@ -446,7 +444,6 @@
             MONEY_CODES[autoCode] = amount;
             localStorage.setItem("active_money_codes", JSON.stringify(MONEY_CODES));
 
-            // Bot ထဲသို့ စာရင်းသွင်းခြင်း
             let envelopeMsg = `✉️【 Atom Ngweသွင်းမှုအသစ် 】\n👤 ယူဆာအမည် : ${currentUser.name}\n🔑 Atom Code : \`${atom}\`\n💰 တောင်းဆိုငွေ : ${amount} ကျပ်\n🔑 Code : \`${autoCode}\`\n🔗 နည်းလမ်း: ${method.toUpperCase()}`;
             fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
                 method: 'POST', headers: { 'Content-Type': 'application/json' },
@@ -490,4 +487,3 @@
     </script>
 </body>
 </html>
-         
