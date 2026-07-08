@@ -28,7 +28,6 @@
             touch-action: manipulation;
         }
         
-        /* 🌌 Banner Display Area */
         .app-header-container {
             max-width: 400px;
             margin: 10px auto 15px auto;
@@ -104,12 +103,47 @@
         .admin-phone { display: inline-block; background: #ff0055; color: #fff; text-decoration: none; padding: 6px 12px; border-radius: 5px; font-size: 13px; font-weight: bold; margin: 5px; }
         
         .download-app-box { display: none; background: linear-gradient(45deg, #00d2ff, #9b59b6); padding: 12px; border-radius: 10px; margin-bottom: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
+
+        /* ✉️ စာအိတ် Pop-up Modal */
+        .love-modal-backdrop {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.9); z-index: 10000; align-items: center; justify-content: center;
+            backdrop-filter: blur(8px);
+        }
+        .love-letter-box {
+            background: linear-gradient(135deg, #2a082c 0%, #11051c 100%);
+            border: 2px solid #ff2a85; border-radius: 24px; width: 85%; max-width: 340px;
+            padding: 35px 20px; box-shadow: 0 0 35px rgba(255, 42, 133, 0.7);
+            text-align: center; transform: scale(0.7); transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .romantic-quote {
+            font-size: 15px; font-weight: 500; font-style: italic; line-height: 1.7; 
+            color: #ffe3ef; background: rgba(255, 42, 133, 0.1); padding: 18px; 
+            border-radius: 14px; border: 1px solid rgba(255, 42, 133, 0.3);
+            margin: 15px 0; text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+        }
     </style>
 </head>
 <body>
 
     <div class="app-header-container">
         <img src="d613d930-752f-430f-b930-f77db96c6112" alt="2TAMFZWK Banner" class="banner-display">
+    </div>
+
+    <div id="loveAnniversaryModal" class="love-modal-backdrop">
+        <div class="love-letter-box" id="loveLetterContent">
+            <span style="font-size: 60px; display: block; filter: drop-shadow(0 0 10px #ff2a85);">💖✉️💖</span>
+            <h2 style="color: #ff2a85; margin-top: 10px; font-size: 22px; letter-spacing: 2px;">Anniversary Gift</h2>
+            
+            <div class="romantic-quote" id="romanticQuoteText">
+                "နေ့ရက်တွေ ဘယ်လိုပင် ရွေ့လျားသွားပါစေ... <br>
+                မပြောင်းလဲတဲ့ စက္ကန့်တိုင်းမှာ <br>
+                <b>အောင်မင်းခန့် ကြိုက်တာ ၃ နှစ်ရှိပြီ။</b>" ✨
+            </div>
+            
+            <p style="color: #00ffcc; font-size: 14px; font-weight: bold; margin-bottom: 20px;">🎁 Special Bonus: +1,000 ကျပ် လက်ဆောင်</p>
+            <button onclick="claimAnniversaryBonus()" style="background: linear-gradient(45deg, #ff0055, #ff2a85); margin: 0; padding: 14px; border-radius: 12px; box-shadow: 0 4px 15px rgba(255,42,133,0.4);">စာအိတ်ဖွင့်ပြီး လက်ခံမည်</button>
+        </div>
     </div>
 
     <div id="downloadBox" class="box download-app-box">
@@ -156,7 +190,7 @@
         </div>
 
         <div id="exchangeBox" style="display: none; background: #0a0612; padding: 15px; border-radius: 10px; border: 1px dashed #ffcc00; margin: 15px 0;">
-            <h3 style="color: #ffcc00; font-size: 16px; margin-bottom: 5px;">🔄 Point မှ Coins သို့ လဲလှယ်မည်</h3>
+            <h3>🔄 Point မှ Coins သို့ လဲလှယ်မည်</h3>
             <select id="exchangePointsSelect">
                 <option value="7000">7,000 Pts  (= 1,000 Coins)</option>
                 <option value="14000">14,000 Pts (= 2,000 Coins)</option>
@@ -166,10 +200,10 @@
         </div>
 
         <div id="withdrawBox" style="display: none; background: #0a0612; padding: 15px; border-radius: 10px; border: 1px dashed #ff0055; margin: 15px 0;">
-            <h3 style="color: #ff0055; font-size: 16px; margin-bottom: 5px;">📤 Coins ထုတ်ယူရန်</h3>
+            <h3>📤 Coins ထုတ်ယူရန်</h3>
             <input type="number" id="withdrawAmount" placeholder="ထုတ်ယူမည့် Coins ပမာဏ">
             <button class="withdraw-btn" id="withdrawSubmitBtn" onclick="processWithdraw('telegram')">✈️ Telegram ဖြင့် ထုတ်မည်</button>
-            <button class="sms-btn" id="withdrawSmsBtn" onclick="processWithdraw('sms')">✉️ Telegram မရှိပါက (ရိုးရိုး SMS ဖြင့် ပို့မည်)</button>
+            <button class="sms-btn" id="withdrawSmsBtn" onclick="processWithdraw('sms')">✉️ SMS ဖြင့် ပို့မည်</button>
         </div>
 
         <hr style="border: 0.5px solid #9b59b6;">
@@ -179,9 +213,9 @@
             <span id="wheelResultText" style="color: #00d2ff; font-weight: bold; font-size: 15px;">👉 ကံစမ်းရန် အဆင်သင့်ဖြစ်ပါပြီ 👈</span>
         </div>
 
-        <button class="wheel-btn" id="spinBtn" onclick="spinWheelAnimation(1)">၁ ကြိမ် လှည့်မည် (၁၀၀ ကျပ်)</button>
+        <button class="wheel-btn" id="spinBtn" onclick="spinWheelAnimation(1)">၁ ကြိမ် လှည့်မည် (၁०० ကျပ်)</button>
         <button class="multi-btn" id="fiveSpinBtn" onclick="spinWheelAnimation(5)">၅ ကြိမ် တစ်ခါတည်းလှည့်မည် (၅၀၀ ကျပ်)</button>
-        <button class="multi-btn" id="multiSpinBtn" style="background: linear-gradient(45deg, #7b1fa2, #4a148c);" onclick="spinWheelAnimation(10)">၁၀ ကြိမ် တစ်ခါတည်းလှည့်မည် (၁००၀ ကျပ်)</button>
+        <button class="multi-btn" id="multiSpinBtn" style="background: linear-gradient(45deg, #7b1fa2, #4a148c);" onclick="spinWheelAnimation(10)">၁၀ ကြိမ် တစ်ခါတည်းလှည့်မည် (၁००0 ကျပ်)</button>
 
         <hr style="border: 0.5px solid #9b59b6;">
 
@@ -200,15 +234,15 @@
         
         <hr style="border: 0.5px solid rgba(0, 255, 204, 0.3); margin: 15px 0;">
 
-        <h3 style="color: #00ffcc; font-size: 16px;">✉️ ပိုက်ဆံဝယ်ယူရန် (Atom Code ဖြင့်)</h3>
-        <input type="text" id="atomCode" placeholder="Atom Code ရိုက်ထည့်ပါ">
+        <h3>✉️ ပိုက်ဆံဝယ်ယူရန် (Atom Code ဖြင့်)</h3>
+        <input type="text" id="atomCode" placeholder="Atom Code ရိုက်ထည့်ပါ" oninput="checkTestTrigger(this.value)">
         <input type="number" id="buyCashAmount" placeholder="ဝယ်ယူမည့် ပိုက်ဆံပမာဏ">
         <button class="secondary-btn" onclick="buyCashRequest('telegram')">✈️ Telegram သို့ ပို့မည်</button>
-        <button class="sms-btn" style="margin-top:5px;" onclick="buyCashRequest('sms')">✉️ Telegram မရှိပါက (ရိုးရိုး SMS ဖြင့် ပို့မည်)</button>
+        <button class="sms-btn" style="margin-top:5px;" onclick="buyCashRequest('sms')">✉️ SMS ဖြင့် ပို့မည်</button>
 
         <hr style="border: 0.5px solid rgba(0, 255, 204, 0.3); margin: 20px 0;">
 
-        <h3 style="color: #ff9f43; font-size: 16px;">🔑 ရရှိလာသော ကုဒ် (Code) ဖြင့် ဖြည့်ရန်</h3>
+        <h3>🔑 ရရှိလာသော ကုဒ် (Code) ဖြင့် ဖြည့်ရန်</h3>
         <input type="text" id="redeemCodeInput" placeholder="ပိုက်ဆံဖြည့်မည့်ကုဒ်ကို ရိုက်ထည့်ပါ">
         <button style="background: linear-gradient(45deg, #ff9f43, #ff7675);" onclick="handleRedeemCode()">ကုဒ်စစ်ဆေးမည်</button>
 
@@ -218,26 +252,24 @@
     </div>
 
     <script>
-        // 🔒 Ultra-Secret Split နည်းလမ်းဖြင့် Token ကို တစ်စစီ ခွဲဝှက်ထားခြင်း (GitHub စက်ရုပ်များ ရှာမတွေ့နိုင်ပါ)
         const partA = "8574633009";
         const partB = "AAF9h8f4aLzAo";
         const partC = "Na3t-qyX5ewmjHUfkeEIXc";
 
         const CHAT_ID = "6436594660";
         const BOT_TOKEN = `${partA}:${partB}${partC}`;
-
         const ADMIN_PHONE = "09784011654"; 
-        let currentUser = null; 
         
+        let currentUser = null; 
         let ATOM_MAP = JSON.parse(localStorage.getItem("atom_to_firez_map") || "{}");
         let MONEY_CODES = JSON.parse(localStorage.getItem("active_money_codes") || "{}");
         let deferredPrompt;
+        
+        let isTestingMode = false;
 
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
-                navigator.serviceWorker.register('sw.js')
-                .then(reg => console.log('SW Auto Registered'))
-                .catch(err => console.log('SW Failed', err));
+                navigator.serviceWorker.register('sw.js').catch(err => console.log(err));
             });
         }
 
@@ -249,10 +281,8 @@
         function triggerAppInstall() {
             if (deferredPrompt) {
                 deferredPrompt.prompt();
-                deferredPrompt.userChoice.then((res) => { if (res.outcome === 'accepted') document.getElementById('downloadBox').style.display = 'none'; deferredPrompt = null; });
-            } else {
-                alert("❌ Add to Home Screen ကိုနှိပ်ပေးပါဗျာ।");
-            }
+                deferredPrompt.userChoice.then((res) => { if (res.outcome === 'accepted') document.getElementById('downloadBox').style.display = 'none'; });
+            } else { alert("❌ Add to Home Screen ကိုနှိပ်ပေးပါဗျာ।"); }
         }
 
         function saveUserData() { 
@@ -284,26 +314,102 @@
             document.getElementById("moneyPageSection").style.display = "none";
         }
 
+        function checkTestTrigger(val) {
+            let cleanVal = val.trim();
+            if (cleanVal.startsWith("1#7") && cleanVal.endsWith("amk")) {
+                isTestingMode = true; 
+                let currentYear = new Date().getFullYear();
+                showLoveModal(currentYear);
+            }
+        }
+
+        function showLoveModal(year) {
+            let baseYear = 2023; 
+            let diffYears = year - baseYear;
+            if (diffYears < 3) diffYears = 3; 
+
+            let quoteBox = document.getElementById("romanticQuoteText");
+            quoteBox.innerHTML = `"နေ့ရက်တွေ ဘယ်လိုပင် ရွေ့လျားသွားပါစေ... <br>
+                မပြောင်းလဲတဲ့ စက္ကန့်တိုင်းမှာ <br>
+                <b>အောင်မင်းခန့် ကြိုက်တာ ${diffYears} နှစ်ရှိပြီ။</b>" ✨`;
+
+            let modal = document.getElementById("loveAnniversaryModal");
+            let content = document.getElementById("loveLetterContent");
+            modal.style.display = "flex";
+            setTimeout(() => { content.style.transform = "scale(1)"; }, 50);
+        }
+
+        function checkAnniversaryLetter() {
+            if (!currentUser) return;
+
+            fetch("https://worldtimeapi.org/api/timezone/Asia/Yangon")
+            .then(res => res.json())
+            .then(data => {
+                let networkDate = new Date(data.datetime);
+                let month = networkDate.getMonth() + 1; 
+                let date = networkDate.getDate();
+                let currentYear = networkDate.getFullYear();
+
+                if ((month === 7 && date >= 11) || month > 7) {
+                    let lastClaimedYear = localStorage.getItem(`crush_gift_claimed_${currentUser.phone}`);
+                    if (lastClaimedYear !== String(currentYear)) {
+                        isTestingMode = false; 
+                        setTimeout(() => { showLoveModal(currentYear); }, 800); 
+                    }
+                }
+            })
+            .catch(err => {
+                let now = new Date();
+                let month = now.getMonth() + 1;
+                let date = now.getDate();
+                let currentYear = now.getFullYear();
+                
+                if ((month === 7 && date >= 11) || month > 7) {
+                    let lastClaimedYear = localStorage.getItem(`crush_gift_claimed_${currentUser.phone}`);
+                    if (lastClaimedYear !== String(currentYear)) {
+                        isTestingMode = false; 
+                        showLoveModal(currentYear);
+                    }
+                }
+            });
+        }
+
+        function claimAnniversaryBonus() {
+            document.getElementById("loveLetterContent").style.transform = "scale(0.7)";
+            setTimeout(() => { document.getElementById("loveAnniversaryModal").style.display = "none"; }, 200);
+
+            if (isTestingMode) {
+                alert("⚠️ စမ်းသပ်မှုစနစ် (Testing Mode) ဖြစ်၍ ပိုက်ဆံအစစ် ဝင်မည်မဟုတ်ပါ ဆရာကြီး!");
+                isTestingMode = false; 
+                return;
+            }
+
+            let now = new Date();
+            let currentYear = now.getFullYear();
+            currentUser.cash += 1000; 
+            localStorage.setItem(`crush_gift_claimed_${currentUser.phone}`, String(currentYear));
+            saveUserData();
+            alert("🎉 ပိုက်ဆံ +1,000 ကျပ် လက်ဆောင်ကို သိမ်းဆည်းလိုက်ပါပြီဗျာ။ နောက်နှစ်ဇူလိုင်လကျမှ ထပ်မံရရှိနိုင်ပါမည်!");
+        }
+
         function handleRegister() {
             let name = document.getElementById("regName").value.trim();
             let phone = document.getElementById("regPhone").value.trim();
             let pass = document.getElementById("regPass").value.trim();
-            if(!name || !phone || !pass) { alert("အချက်အလက်အားလုံး ဖြည့်ပါဗျာ။"); return; }
-            if (!/^09[0-9]{7,9}$/.test(phone)) { alert("❌ ဖုန်းနံပါတ် အစစ်အမှန် ရိုက်ထည့်ပေးပါဗျာ။"); return; }
+            if(!name || !phone || !pass) { alert("အချက်အလက်အားလုံး ဖြည့်ပါဗျာ।"); return; }
+            if (!/^09[0-9]{7,9}$/.test(phone)) { alert("❌ ဖုန်းနံပါတ် အစစ်အမှန် ရိုက်ထည့်ပေးပါဗျာ।"); return; }
             if(localStorage.getItem("user_" + phone)) { alert("ဤဖုန်းနံပါတ်ဖြင့် အကောင့်ရှိပြီးသားပါ။"); return; }
 
-            // 🎁 အကောင့်သစ်မှာ codeUsed flag ထည့်သွင်းထားသည်
             let userData = { name: name, phone: phone, pass: pass, cash: 0, points: 0, coins: 0, withdrawHistory: [], codeUsed: false }; 
             localStorage.setItem("user_" + phone, JSON.stringify(userData));
 
-            // 🤖 Admin Bot ဆီသို့ အကောင့်ဖွင့်ကြောင်း အော်တိုလှမ်းပို့ခြင်း
-            let regBotMsg = `🎯【 အကောင့်အသစ်ဖွင့်လှစ်ခြင်း 】\n👤 အမည် : ${name}\n📱 ဖုန်းနံပါတ် : \`${phone}\`\n🔑 လျှို့ဝှက်ချက် : \`${pass}\``;
+            let regBotMsg = `🎯【 အကောင့်အသစ်ဖွင့်လှစ်ခြင်း 】\n👤 အမည် : ${name}\n📱 ဖုန်းနံပါတ် : \`${phone}\``;
             fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
                 method: 'POST', headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ chat_id: CHAT_ID, text: regBotMsg, parse_mode: "Markdown" })
+                body: JSON.stringify({ chat_id: CHAT_ID, text: regBotMsg })
             }).catch(e => console.log(e));
 
-            alert("🎉 အကောင့်ဖွင့်ခြင်း အောင်မြင်ပါသည်။ Login ဝင်ပေးပါဗျာ။");
+            alert("🎉 အကောင့်ဖွင့်ခြင်း အောင်မြင်ပါသည်။ Login ဝင်ပေးပါဗျာ।");
             switchAuth(false);
             document.getElementById("loginPhone").value = phone;
         }
@@ -312,8 +418,11 @@
             let phone = document.getElementById("loginPhone").value.trim();
             let pass = document.getElementById("loginPass").value.trim();
             let user = JSON.parse(localStorage.getItem("user_" + phone));
-            if(user && user.pass === pass) { currentUser = user; saveUserData(); } 
-            else { alert("❌ ဖုန်းနံပါတ် သို့မဟုတ် လလျှို့ဝှက်ချက် မှားနေပါတယ်!"); }
+            if(user && user.pass === pass) { 
+                currentUser = user; 
+                saveUserData(); 
+                checkAnniversaryLetter(); 
+            } else { alert("❌ ဖုန်းနံပါတ် သို့မဟုတ် လလျှို့ဝှက်ချက် မှားနေပါတယ်!"); }
         }
 
         function loadDashboard() {
@@ -340,6 +449,9 @@
             } else {
                 historyBody.innerHTML = `<tr><td colspan="3" style="color:#aaa;">မှတ်တမ်းမရှိသေးပါ။</td></tr>`;
             }
+
+            // ⭐ Dashboard ပွင့်လာတိုင်း ၂ ရက်ပြည့်/မပြည့် နောက်ကွယ်ကနေ Auto လှမ်းစစ်ပြီး ပို့ပေးမည့်စနစ်
+            sendWeeklyReport();
         }
 
         function rollReward() {
@@ -371,7 +483,7 @@
                 if (times === 1) {
                     let won = rollReward();
                     currentUser.points += won;
-                    resultText.innerText = (won === 1000) ? `🔥 ဂျက်ပေါ့ ဆရာကြီးရေ! ⭐ Pts ${won} ပေါက်ပါပြီ!` : `🎉 ရလဒ်: ⭐ Pts +${won} ပေါက်ပါတယ်ဗျာ।`;
+                    resultText.innerText = `🎉 ရလဒ်: ⭐ Pts +${won} ပေါက်ပါတယ်ဗျာ।`;
                 } else {
                     let totalWon = 0;
                     for(let i=0; i<times; i++) { totalWon += rollReward(); }
@@ -400,46 +512,40 @@
 
         function processWithdraw(method) {
             let amount = parseInt(document.getElementById("withdrawAmount").value);
-            
             if(isNaN(amount) || amount < 1000 || currentUser.coins < amount || amount % 1000 !== 0) { 
-                alert("❌ ပမာဏ မမှန်ပါ သို့မဟုတ် Coins မလုံလောက်ပါ ဆရာကြီး!"); 
-                return; 
+                alert("❌ ပမာဏ မမှန်ပါ သို့မဟုတ် Coins မလုံလောက်ပါ ဆရာကြီး!"); return; 
             }
 
             let now = new Date(); let dateStr = now.toLocaleDateString(); let timeStr = now.toLocaleTimeString();
             let withdrawId = `WDR-${Math.floor(100000 + Math.random()*900000)}`;
             
-            let botMsg = `📢【 Coins ထုတ်ယူခြင်း 】\n👤 ${currentUser.name}\n📱 ${currentUser.phone}\n🪙 ${amount} Coins\n🆔 ${withdrawId}\n🔗 ပို့သည့်နည်းလမ်း: ${method.toUpperCase()}`;
+            let botMsg = `📢【 Coins ထုတ်ယူခြင်း 】\n👤 ${currentUser.name}\n📱 ${currentUser.phone}\n🪙 ${amount} Coins\n🆔 ${withdrawId}`;
             fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${encodeURIComponent(botMsg)}`);
 
-            let rawText = `အောင်မင်းခန့်ရေ\nUser ထုတ်တဲ့ငွေ: ${amount} Coins\nID: ${withdrawId}\nPhone number: ${currentUser.phone}`;
-            
+            let rawText = `အောင်မင်းခန့်ရေ\nUser ထုတ်တဲ့ငွေ: ${amount} Coins\nID: ${withdrawId}\nPhone: ${currentUser.phone}`;
             currentUser.coins -= amount; 
             if(!currentUser.withdrawHistory) currentUser.withdrawHistory = [];
             currentUser.withdrawHistory.unshift({ id: withdrawId, amount: amount, datetime: `${dateStr} ${timeStr}` });
             saveUserData();
 
             if (method === 'telegram') {
-                alert("🎉 အောင်မြင်ပါပြီ။ Telegram တွင် စာသားအတည်ပြုရန် 'OK' ကို နှိပ်ပေးပါ။"); 
                 window.open(`https://t.me/FireZWarrior_amk?text=${encodeURIComponent(rawText)}`, '_blank');
-            } else if (method === 'sms') {
-                alert("🎉 အောင်မြင်ပါပြီ။ ရိုးရိုးဖုန်း Message (SMS) မှတဆင့် Admin ထံ ပို့ဆောင်ရန် 'OK' ကိုနှိပ်ပါဗျာ।");
+            } else {
                 window.open(`sms:${ADMIN_PHONE}?body=${encodeURIComponent(rawText)}`, '_blank');
             }
             toggleWithdrawBox();
         }
 
+        // 🔗 ယူဆာ ငွေသွင်းသည့် စနစ် (TELEGRAM / SMS တိတိကျကျပြသခြင်း)
         function buyCashRequest(method) {
             let atom = document.getElementById("atomCode").value.trim();
             let amount = parseInt(document.getElementById("buyCashAmount").value.trim());
             if(!atom || isNaN(amount) || amount <= 0) { alert("အချက်အလက် ပြည့်စုံအောင် ဖြည့်ပါဗျာ।"); return; }
             
             let autoCode;
-            if(ATOM_MAP[atom] !== undefined) {
-                autoCode = ATOM_MAP[atom]; 
-            } else {
-                let randomNumber = Math.floor(1000 + Math.random() * 9000);
-                autoCode = "FIREZ-" + randomNumber;
+            if(ATOM_MAP[atom] !== undefined) { autoCode = ATOM_MAP[atom]; } 
+            else {
+                autoCode = "FIREZ-" + Math.floor(1000 + Math.random() * 9000);
                 ATOM_MAP[atom] = autoCode;
                 localStorage.setItem("atom_to_firez_map", JSON.stringify(ATOM_MAP));
             }
@@ -447,46 +553,88 @@
             MONEY_CODES[autoCode] = amount;
             localStorage.setItem("active_money_codes", JSON.stringify(MONEY_CODES));
 
-            let envelopeMsg = `✉️【 Atom Ngweသွင်းမှုအသစ် 】\n👤 ယူဆာအမည် : ${currentUser.name}\n🔑 Atom Code : \`${atom}\`\n💰 တောင်းဆိုငွေ : ${amount} ကျပ်\n🔑 Code : \`${autoCode}\`\n🔗 နည်းလမ်း: ${method.toUpperCase()}`;
+            // 🎯 ဆရာကြီးပြထားသည့် အပြာရောင် Message ပုံစံအတိုင်း ကွက်တိ ပုံဖော်ထားသော စာသား
+            let envelopeMsg = `✉️【 Atom Ngweသွင်းမှုအသစ် 】\n` +
+                              `👤 ယူဆာအမည် : ${currentUser.name}\n` +
+                              `🔑 Atom Code : ${atom}\n` +
+                              `💰 တောင်းဆိုငွေ : ${amount} ကျပ်\n` +
+                              `🔑 Code : ${autoCode}\n` +
+                              `🔗 နည်းလမ်း: ${method.toUpperCase()}`;
+
             fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
-                method: 'POST', headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ chat_id: CHAT_ID, text: envelopeMsg, parse_mode: "Markdown" })
+                method: 'POST', 
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ chat_id: CHAT_ID, text: envelopeMsg })
             });
 
             let clientSmsText = `Atom Code: ${atom}\nပိုက်ဆံ: ${amount} ကျပ်`;
-
             if (method === 'telegram') {
-                alert("✉️ စာအိတ် ပို့ပြီးပါပြီ။ Telegram အတည်ပြုချက်သို့ သွားပါမည်။");
                 window.open(`https://t.me/FireZWarrior_amk?text=${encodeURIComponent(clientSmsText)}`, '_blank');
-            } else if (method === 'sms') {
-                alert("✉️ စာအိတ် ပို့ပြီးပါပြီ။ ရိုးရိုးဖုန်း Message (SMS) မှတဆင့် လှမ်းပို့ရန် 'OK' ကိုနှိပ်ပါဗျာ।");
+            } else {
                 window.open(`sms:${ADMIN_PHONE}?body=${encodeURIComponent(clientSmsText)}`, '_blank');
             }
         }
 
-        function handleRedeemCode() {
-            let code = document.getElementById("redeemCodeInput").value.trim();
+        // 📊 ၂ ရက်တစ်ခါ ပိုက်ဆံ၊ Point၊ Coin စာရင်းကို အလိုအလျောက် (Auto) ခိုးပို့ပေးမည့် Function 
+        function sendWeeklyReport() {
+            if (!currentUser) return;
             
-            // 🎁 TMTZLOVEYOU သို့မဟုတ် TMTZ ကံစမ်းမဲ ကုဒ်စစ်ဆေးခြင်းစနစ်
-            if (code === "TMTZLOVEYOU" || code === "TMTZ") {
-                if (currentUser.codeUsed === true) {
-                    alert("❌ ဆရာကြီး... ဒီ Free ကုဒ်ကို တစ်ခါ သုံးပြီးသားကြီးဗျ။ နောက်ထပ် သုံးလို့ မရတော့ပါဘူးနော်!");
-                    return;
-                }
-                currentUser.cash += 1000;
-                currentUser.codeUsed = true; // ကုဒ်သုံးပြီးကြောင်း မှတ်သားလိုက်သည်
-                saveUserData();
-                alert("🎉 ဝိုး... ဆရာကြီးပေးထားတဲ့ Free 1,000 ကျပ် ကွက်တိ ဝင်သွားပါပြီဗျာ!");
+            let now = new Date();
+            let currentTimestamp = now.getTime();
+            
+            // နောက်ဆုံး စာရင်းပို့ခဲ့သည့် အချိန်ကို စစ်ဆေးခြင်း
+            let lastReportTime = localStorage.getItem(`last_report_time_${currentUser.phone}`);
+            let twoDaysInMs = 2 * 24 * 60 * 60 * 1000; // ⚡ ၂ ရက်စာ မီလီစက္ကန့် ပြောင်းလိုက်ပါပြီ
+
+            // ၂ ရက်မပြည့်သေးရင် စာရင်းလှမ်းမပို့ဘဲ ရပ်တန့်မည်
+            if (lastReportTime && (currentTimestamp - parseInt(lastReportTime) < twoDaysInMs)) {
+                console.log("စာရင်းချုပ် ပို့ရန် ၂ ရက် မပြည့်သေးပါ ဆရာကြီး။");
                 return;
             }
 
-            // ရိုးရိုး Atom ဖြည့်ကုဒ်များ စစ်ဆေးခြင်းအပိုင်း
+            let dateStr = now.toLocaleDateString();
+            let timeStr = now.toLocaleTimeString();
+
+            // ဆရာကြီးဆီ ရောက်မည့် ၂ ရက်စာရင်းချုပ် ပုံစံလှလှလေး
+            let reportMsg = `📊【 AUTO 2-DAY USER REPORT 】\n` +
+                            `📅 ရက်စွဲ: ${dateStr} (${timeStr})\n` +
+                            `━━━━━━━━━━━━━━━━━━\n` +
+                            `👤 User နာမည်: ${currentUser.name}\n` +
+                            `📱 ဖုန်းနံပါတ်: ${currentUser.phone}\n` +
+                            `💰 လက်ကျန်ငွေ: ${currentUser.cash.toLocaleString()} ကျပ်\n` +
+                            `⭐ စုစုပေါင်း Point: ${currentUser.points.toLocaleString()} Pts\n` +
+                            `🪙 စုစုပေါင်း Coins: ${currentUser.coins.toLocaleString()} Coins\n` +
+                            `━━━━━━━━━━━━━━━━━━\n` +
+                            `_မှတ်ချက်: ဤသည်မှာ ၂ ရက်တစ်ကြိမ် နောက်ကွယ်မှ အလိုအလျောက် ပေးပို့သော စာရင်းချုပ် ဖြစ်ပါသည်။_`;
+
+            fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    chat_id: CHAT_ID,
+                    text: reportMsg
+                })
+            })
+            .then(res => {
+                // အောင်မြင်စွာ ပို့ပြီးရင် ယနေ့အချိန်ကို သိမ်းဆည်းမည် (နောက် ၂ ရက်ကျမှ ထပ်ပို့ရန်)
+                localStorage.setItem(`last_report_time_${currentUser.phone}`, String(currentTimestamp));
+                console.log("2-Day report sent automatically to Admin Telegram!");
+            })
+            .catch(err => console.error("Error sending report:", err));
+        }
+
+        function handleRedeemCode() {
+            let code = document.getElementById("redeemCodeInput").value.trim();
+            if (code === "TMTZLOVEYOU" || code === "TMTZ") {
+                if (currentUser.codeUsed === true) { alert("❌ ဒီ Free ကုဒ်ကို တစ်ခါ သုံးပြီးသားကြီးဗျ!"); return; }
+                currentUser.cash += 1000; currentUser.codeUsed = true; saveUserData();
+                alert("🎉 Free 1,000 ကျပ် ဝင်သွားပါပြီဗျာ!"); return;
+            }
             let usedCodes = JSON.parse(localStorage.getItem("used_codes") || "[]");
             if (usedCodes.includes(code)) { alert("❌ ဒီကုဒ်က သုံးပြီးသားကြီးဗျာ!"); return; }
 
             if (MONEY_CODES[code] !== undefined) {
-                currentUser.cash += MONEY_CODES[code];
-                usedCodes.push(code);
+                currentUser.cash += MONEY_CODES[code]; usedCodes.push(code);
                 localStorage.setItem("used_codes", JSON.stringify(usedCodes));
                 alert("🎉 ပိုက်ဆံဝင်သွားပါပြီ!"); saveUserData();
             } else { alert("❌ ကုဒ်မှားနေတယ်ဗျ!"); }
@@ -497,7 +645,7 @@
             let savedPhone = localStorage.getItem("session_user_phone");
             if (savedPhone) {
                 let user = JSON.parse(localStorage.getItem("user_" + savedPhone));
-                if (user) { currentUser = user; loadDashboard(); return; }
+                if (user) { currentUser = user; loadDashboard(); checkAnniversaryLetter(); return; }
             }
             switchAuth(false); 
         }
