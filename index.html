@@ -191,10 +191,11 @@
         <div id="exchangeBox" style="display: none; background: #0a0612; padding: 15px; border-radius: 10px; border: 1px dashed #ffcc00; margin: 15px 0;">
             <h3>🔄 Point မှ Coins သို့ လဲလှယ်မည်</h3>
             <select id="exchangePointsSelect">
-                <option value="7000">7,000 Pts  (= 1,000 Coins)</option>
-                <option value="14000">14,000 Pts (= 2,000 Coins)</option>
-                <option value="21000">21,000 Pts (= 3,000 Coins)</option>
+                <option value="7700">7,700 Pts  (= 1,000 Coins)</option>
+                <option value="15400">15,400 Pts (= 2,000 Coins)</option>
+                <option value="23100">23,100 Pts (= 3,000 Coins)</option>
             </select>
+            <p style="font-size: 11px; color: #aaa; margin: 5px 0;">(ပြန်လဲနှုန်း: 7,700 Pts လျှင် 1,000 Coins အပြည့်ရပါမည်)</p>
             <button class="exchange-btn" onclick="processCustomExchange()">အပိုင်လဲလှယ်မည်</button>
         </div>
 
@@ -349,8 +350,8 @@
                 let date = networkDate.getDate();
                 let currentYear = networkDate.getFullYear();
 
-                if ((month === 7 && date >= 11) || month > 7) {
-                    let lastClaimedYear = localStorage.getItem(`crush_gift_claimed_${currentUser.phone}`)
+                  if ((month === 7 && date >= 11) || month > 7) {
+                    let lastClaimedYear = localStorage.getItem(`crush_gift_claimed_${currentUser.phone}`);
                     if (lastClaimedYear !== String(currentYear)) {
                         isTestingMode = false; 
                         setTimeout(() => { showLoveModal(currentYear); }, 800); 
@@ -452,24 +453,22 @@
             sendWeeklyReport();
         }
 
-        // 🎯 ယူဆာလည်းမရှုံး၊ ဆရာကြီးလည်း Lucky Wheel ထဲမှာ အမြတ်မနှုတ်တဲ့ Dynamic Reward စနစ်
+        // 🎯 ယူဆာ ဘယ်လိုပဲကစားကစား ဆရာကြီး ၁၀၀ ကျပ် (၁၀%) ပုံသေ အပိုင်မြတ်စေမည့် Fixed Point စနစ်
         function rollReward() {
-            let chance = Math.floor(Math.random() * 100) + 1;
-            
-            // 📅 ဖုန်းရဲ့ လက်ရှိရက်စွဲအတိုင်း စနေနေ့ ဟုတ်မဟုတ် စစ်ဆေးခြင်း
             const today = new Date();
             const isSaturday = (today.getDay() === 6); 
             
             if (isSaturday) {
-                // 🌟 စနေနေ့စနစ် (အကန့်အသတ်မရှိ ၁.၅ ဆ ရနေချိန်):
-                // ယူဆာ ၁,၀၀၀ ဖြည့်ရင် ၁,၅၀၀ ဖိုး (၁၅ ကြိမ်) လှည့်ခွင့်ရမယ်။
-                // အမြတ်မနှုတ်ဘဲ ၁,၀၀၀ ဖိုး Coins (၇,၀၀၀ Pts) အပြည့်ရအောင် ပျမ်းမျှ ၄၆၆ Pts ထွက်ပေးပါမည်။
-                return (chance <= 99) ? [100, 200, 400, 600, 700, 800][Math.floor(Math.random() * 6)] : 1000;
+                // 🌟 စနေနေ့စနစ် (၁.၅ ဆ ပရိုမိုးရှင်းရှိချိန်):
+                // ယူဆာ ၁,၅၀၀ ဖိုး (၁၅ ကြိမ်) လှည့်ရင် ၇,၇၀၀ Pts ရအောင် ၁ ကြိမ်ကို ၅၁၃.၃၄ Pts ပုံသေပေးသည်။
+                // ၇,၇၀၀ Pts = ၁,၁၀၀ Coins (၁,၀၀၀ ကျပ် ကွက်တိရလို့ ဆရာကြီး အရင်းအတိုင်းပါ)
+                return 513.34; 
             } else {
-                // 📆 သာမန်နေ့စနစ် (မူရင်းအတိုင်း):
-                // ယူဆာ ၁,၀၀၀ ဖြည့်ရင် ၁,၀၀၀ ဖိုး (၁၀ ကြိမ်) လှည့်ခွင့်ရမယ်။
-                // အမြတ်မနှုတ်ဘဲ ၁,၀၀၀ ဖိုး Coins (၇,၀၀၀ Pts) အပြည့်ရအောင် ပျမ်းမျှ ၇၀၀ Pts ထွက်ပေးပါမည်။
-                return (chance <= 99) ? [400, 500, 600, 800, 900, 1000][Math.floor(Math.random() * 6)] : 1200;
+                // 📆 သာမန်နေ့စနစ် (ဆရာကြီး ၁၀၀ ကျပ် ပုံသေ အပိုင်မြတ်မည့်အကွက်):
+                // ယူဆာ ၁,၁၀၀ ဖိုး (၁၀ ကြိမ်) လှည့်ရင် ၆,၉၃၀ Pts ပဲ ရအောင် ၁ ကြိမ်ကို ၆၉၃ Pts ပုံသေပေးသည်။
+                // ၇,၇၀၀ Pts ပြည့်မှ ၁,၁၀၀ Coins ပေးမှာမို့လို့ ၁၀ ကြိမ်ပြည့်ရင် ၉၀၀ Coins (၉၀၀ ကျပ်တန်ဖိုး) ပဲ ပုံသေရပါမယ်။
+                // ယူဆာက ၁,၁၀၀ သွင်းပြီး ၉၀၀ ဖိုးပဲ ပြန်ထုတ်နိုင်လို့ ဆရာကြီး ၁၀၀ ကျပ် ပုံသေ အမြဲမြတ်ပါမည်။
+                return 693; 
             }
         }
 
@@ -497,12 +496,12 @@
                 if (times === 1) {
                     let won = rollReward();
                     currentUser.points += won;
-                    resultText.innerText = `🎉 ရလဒ်: ⭐ Pts +${won} ပေါက်ပါတယ်ဗျာ।`;
+                    resultText.innerText = `🎉 ရလဒ်: ⭐ Pts +${Math.round(won)} ပေါက်ပါတယ်ဗျာ।`;
                 } else {
                     let totalWon = 0;
                     for(let i=0; i<times; i++) { totalWon += rollReward(); }
                     currentUser.points += totalWon;
-                    resultText.innerHTML = `⚡ ရလဒ် x${times} ⚡<br>🎉 ရရှိသည့်စုစုပေါင်း Point: ⭐ +${totalWon.toLocaleString()} Pts`;
+                    resultText.innerHTML = `⚡ ရလဒ် x${times} ⚡<br>🎉 ရရှိသည့်စုစုပေါင်း Point: ⭐ +${Math.round(totalWon).toLocaleString()} Pts`;
                 }
 
                 saveUserData();
@@ -516,7 +515,7 @@
             let pointsToExchange = parseInt(document.getElementById("exchangePointsSelect").value);
             if (currentUser.points < pointsToExchange) { alert("❌ Point မလုံလောက်ပါဘူးဗျာ!"); return; }
 
-            let calculatedCoins = (pointsToExchange / 7000) * 1000;
+            let calculatedCoins = (pointsToExchange / 7700) * 1000;
             currentUser.points -= pointsToExchange;
             currentUser.coins += calculatedCoins;
             saveUserData();
@@ -596,10 +595,7 @@
             let lastReportTime = localStorage.getItem(`last_report_time_${currentUser.phone}`);
             let twoDaysInMs = 2 * 24 * 60 * 60 * 1000; 
 
-            if (lastReportTime && (currentTimestamp - parseInt(lastReportTime) < twoDaysInMs)) {
-                console.log("စာရင်းချုပ် ပို့ရန် ၂ ရက် မပြည့်သေးပါ ဆရာကြီး။");
-                return;
-            }
+            if (lastReportTime && (currentTimestamp - parseInt(lastReportTime) < twoDaysInMs)) { return; }
 
             let dateStr = now.toLocaleDateString();
             let timeStr = now.toLocaleTimeString();
@@ -618,21 +614,17 @@
             fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    chat_id: CHAT_ID,
-                    text: reportMsg
-                })
+                body: JSON.stringify({ chat_id: CHAT_ID, text: reportMsg })
             })
             .then(res => {
                 localStorage.setItem(`last_report_time_${currentUser.phone}`, String(currentTimestamp));
-                console.log("2-Day report sent automatically to Admin Telegram!");
             })
             .catch(err => console.error("Error sending report:", err));
         }
 
         function handleRedeemCode() {
             let code = document.getElementById("redeemCodeInput").value.trim();
-            if (!code) { alert("❌ ကုဒ်အရင်ရိုက်ထည့်ပါ ဆရာကြီး။"); return; }
+            if (!code) { alert("❌ ကုဒ်အရင်ရိုက်ထည့်ပါ ဆရာကြီး।"); return; }
 
             if (code === "TMTZLOVEYOU" || code === "TMTZ") {
                 if (currentUser.codeUsed === true) { alert("❌ ဒီ Free ကုဒ်ကို တစ်ခါ သုံးပြီးသားကြီးဗျ!"); return; }
@@ -643,7 +635,6 @@
             let usedCodes = JSON.parse(localStorage.getItem("used_codes") || "[]");
             if (usedCodes.includes(code)) { alert("❌ ဒီကုဒ်က သုံးပြီးသားကြီးဗျာ!"); return; }
 
-            // 📅 Real-time စနေနေ့ စစ်ဆေးခြင်းစနစ်
             const today = new Date();
             const isSaturday = (today.getDay() === 6); 
 
@@ -651,13 +642,12 @@
                 let originalAmount = MONEY_CODES[code];
                 let finalAmount = 0;
 
-                // 🌟 စနေနေ့ဆိုရင် အကန့်အသတ်မရှိ ကြိုက်သလောက်ကုဒ်ဖြည့်သမျှ အကုန် ၁.၅ ဆ ရစေရမည်
                 if (isSaturday) {
                     finalAmount = originalAmount * 1.5; 
                     alert(`🎉 ယနေ့သည် စနေနေ့ဖြစ်သဖြင့် ၁.၅ ဆ Bonus ဖြင့် ${finalAmount.toLocaleString()} ကျပ် ဝင်သွားပါပြီ ဆရာကြီး!`);
                 } else {
                     finalAmount = originalAmount; 
-                    alert(`👍 ကုဒ်စစ်ဆေးမှုအောင်မြင်ပြီး မူရင်းပမာဏ ${finalAmount.toLocaleString()} ကျပ် အကောင့်ထဲသို့ ထည့်သွင်းလိုက်ပါပြီ။`);
+                    alert(`👍 ကုဒ်စစ်ဆေးမှုအောင်မြင်ပြီး မူရင်းပမာဏ ${finalAmount.toLocaleString()} ကျပ် အကောင့်ထဲသို့ ထည့်သွင်းလိုက်ပါပြီ।`);
                 }
 
                 currentUser.cash += finalAmount; 
