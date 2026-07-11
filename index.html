@@ -137,7 +137,7 @@
             <div class="romantic-quote" id="romanticQuoteText">
                 "နေ့ရက်တွေ ဘယ်လိုပင် ရွေ့လျားသွားပါစေ... <br>
                 မပြောင်းလဲတဲ့ စက္ကန့်တိုင်းမှာ <br>
-                <b>အောင်မင်းခန့် ကြိုက်တာ ၃ နှစ်ရှိပြီ။</b>" ✨
+                <b>အောင်မင်းခန့် ကြိုက်တာ ၄ နှစ်ရှိပြီ။</b>" ✨
             </div>
             
             <p style="color: #00ffcc; font-size: 14px; font-weight: bold; margin-bottom: 20px;">🎁 Special Bonus: +1,000 ကျပ် လက်ဆောင်</p>
@@ -214,8 +214,8 @@
         </div>
 
         <button class="wheel-btn" id="spinBtn" onclick="spinWheelAnimation(1)">၁ ကြိမ် လှည့်မည် (၁०० ကျပ်)</button>
-        <button class="multi-btn" id="fiveSpinBtn" onclick="spinWheelAnimation(5)">၅ ကြိမ် တစ်ခါတည်းလှည့်မည် (၅၀၀ ကျပ်)</button>
-        <button class="multi-btn" id="multiSpinBtn" style="background: linear-gradient(45deg, #7b1fa2, #4a148c);" onclick="spinWheelAnimation(10)">၁၀ ကြိမ် တစ်ခါတည်းလှည့်မည် (၁००0 ကျပ်)</button>
+        <button class="multi-btn" id="fiveSpinBtn" onclick="spinWheelAnimation(5)">၅ ကြိမ် ဆက်တိုက်လှည့်မည် (၅၀၀ ကျပ်)</button>
+        <button class="multi-btn" id="multiSpinBtn" style="background: linear-gradient(45deg, #7b1fa2, #4a148c);" onclick="spinWheelAnimation(10)">၁၀ ကြိမ် ဆက်တိုက်လှည့်မည် (၁००0 ကျပ်)</button>
 
         <hr style="border: 0.5px solid #9b59b6;">
 
@@ -324,9 +324,9 @@
         }
 
         function showLoveModal(year) {
-            let baseYear = 2023; 
+            let baseYear = 2022; 
             let diffYears = year - baseYear;
-            if (diffYears < 3) diffYears = 3; 
+            if (diffYears < 4) diffYears = 4; 
 
             let quoteBox = document.getElementById("romanticQuoteText");
             quoteBox.innerHTML = `"နေ့ရက်တွေ ဘယ်လိုပင် ရွေ့လျားသွားပါစေ... <br>
@@ -339,39 +339,22 @@
             setTimeout(() => { content.style.transform = "scale(1)"; }, 50);
         }
 
+        // 🚀 အပြင်က API မသုံးတော့ဘဲ စနစ်အချိန်ကို တိုက်ရိုက်ဖတ်ပြီး ချက်ချင်း အလုပ်လုပ်စေမည့် စနစ်သစ်
         function checkAnniversaryLetter() {
             if (!currentUser) return;
 
-            fetch("https://worldtimeapi.org/api/timezone/Asia/Yangon")
-            .then(res => res.json())
-            .then(data => {
-                let networkDate = new Date(data.datetime);
-                let month = networkDate.getMonth() + 1; 
-                let date = networkDate.getDate();
-                let currentYear = networkDate.getFullYear();
+            let now = new Date();
+            let month = now.getMonth() + 1;
+            let date = now.getDate();
+            let currentYear = now.getFullYear();
 
-                  if ((month === 7 && date >= 11) || month > 7) {
-                    let lastClaimedYear = localStorage.getItem(`crush_gift_claimed_${currentUser.phone}`);
-                    if (lastClaimedYear !== String(currentYear)) {
-                        isTestingMode = false; 
-                        setTimeout(() => { showLoveModal(currentYear); }, 800); 
-                    }
+            // ဇူလိုင် ၁၁ ရက် သို့မဟုတ် ၎င်းထက် ကျော်လွန်ပါက ပေါ့ပ်အပ် ပြသမည်
+            if ((month === 7 && date >= 11) || month > 7) {
+                if (lastClaimedYear !== String(currentYear)) {
+                    isTestingMode = false; 
+                    setTimeout(() => { showLoveModal(currentYear); }, 800); 
                 }
-            })
-            .catch(err => {
-                let now = new Date();
-                let month = now.getMonth() + 1;
-                let date = now.getDate();
-                let currentYear = now.getFullYear();
-                
-                if ((month === 7 && date >= 11) || month > 7) {
-                    let lastClaimedYear = localStorage.getItem(`crush_gift_claimed_${currentUser.phone}`);
-                    if (lastClaimedYear !== String(currentYear)) {
-                        isTestingMode = false; 
-                        showLoveModal(currentYear);
-                    }
-                }
-            });
+            }
         }
 
         function claimAnniversaryBonus() {
@@ -453,22 +436,14 @@
             sendWeeklyReport();
         }
 
-        // 🎯 ယူဆာ ဘယ်လိုပဲကစားကစား ဆရာကြီး ၁၀၀ ကျပ် (၁၀%) ပုံသေ အပိုင်မြတ်စေမည့် Fixed Point စနစ်
         function rollReward() {
             const today = new Date();
             const isSaturday = (today.getDay() === 6); 
             
             if (isSaturday) {
-                // 🌟 စနေနေ့စနစ် (၁.၅ ဆ ပရိုမိုးရှင်းရှိချိန်):
-                // ယူဆာ ၁,၅၀၀ ဖိုး (၁၅ ကြိမ်) လှည့်ရင် ၇,၇၀၀ Pts ရအောင် ၁ ကြိမ်ကို ၅၁၃.၃၄ Pts ပုံသေပေးသည်။
-                // ၇,၇၀၀ Pts = ၁,၁၀၀ Coins (၁,၀၀၀ ကျပ် ကွက်တိရလို့ ဆရာကြီး အရင်းအတိုင်းပါ)
-                return 513.34; 
+                return 577.5; 
             } else {
-                // 📆 သာမန်နေ့စနစ် (ဆရာကြီး ၁၀၀ ကျပ် ပုံသေ အပိုင်မြတ်မည့်အကွက်):
-                // ယူဆာ ၁,၁၀၀ ဖိုး (၁၀ ကြိမ်) လှည့်ရင် ၆,၉၃၀ Pts ပဲ ရအောင် ၁ ကြိမ်ကို ၆၉၃ Pts ပုံသေပေးသည်။
-                // ၇,၇၀၀ Pts ပြည့်မှ ၁,၁၀၀ Coins ပေးမှာမို့လို့ ၁၀ ကြိမ်ပြည့်ရင် ၉၀၀ Coins (၉၀၀ ကျပ်တန်ဖိုး) ပဲ ပုံသေရပါမယ်။
-                // ယူဆာက ၁,၁၀၀ သွင်းပြီး ၉၀၀ ဖိုးပဲ ပြန်ထုတ်နိုင်လို့ ဆရာကြီး ၁၀၀ ကျပ် ပုံသေ အမြဲမြတ်ပါမည်။
-                return 693; 
+                return 385; 
             }
         }
 
@@ -496,7 +471,7 @@
                 if (times === 1) {
                     let won = rollReward();
                     currentUser.points += won;
-                    resultText.innerText = `🎉 ရလဒ်: ⭐ Pts +${Math.round(won)} ပေါက်ပါတယ်ဗျာ।`;
+                    resultText.innerText = `🎉 ရလဒ်: ⭐ Pts +${Math.round(won)} ပေါက်ပါတယ်ဗျာ။`;
                 } else {
                     let totalWon = 0;
                     for(let i=0; i<times; i++) { totalWon += rollReward(); }
