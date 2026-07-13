@@ -58,7 +58,7 @@
         }
         
         h2, h3 { color: #00d2ff; margin-top: 0; text-transform: uppercase; letter-spacing: 1px; }
-        .danger-text { color: #ff3333 !important; font-weight: bold; text-shadow: 0 0 5px rgba(255, 51, 51, 0.3); }
+        .danger-text { color: #ff9f43 !important; font-weight: bold; }
 
         input, select { 
             width: 100%; padding: 12px; margin: 8px 0; border-radius: 8px; 
@@ -76,26 +76,50 @@
         button:disabled { background: #444 !important; color: #888 !important; cursor: not-allowed; box-shadow: none !important; transform: none !important; }
         
         .deposit-trigger-btn { background: linear-gradient(45deg, #00ffcc, #0099ff) !important; color: #000 !important; font-size: 15px; padding: 10px; margin-bottom: 15px; box-shadow: 0 4px 10px rgba(0, 255, 204, 0.3); }
-        .wheel-btn { background: linear-gradient(45deg, #ff0000, #b30000) !important; box-shadow: 0 4px 15px rgba(255, 0, 0, 0.4) !important; }
-        .secondary-btn { background: linear-gradient(45deg, #00d2ff, #007bb3); box-shadow: 0 4px 15px rgba(0, 210, 255, 0.3); }
+        .wheel-btn { background: linear-gradient(45deg, #ff0000, #b30000) !important; box-shadow: 0 4px 15px rgba(255, 0, 0, 0.4) !important; font-weight: normal; font-size: 14px; padding: 11px; margin: 5px 0; }
         .sms-btn { background: linear-gradient(45deg, #ff9f43, #ff5e62) !important; box-shadow: 0 4px 15px rgba(255, 159, 67, 0.3) !important; }
-        .multi-btn { background: linear-gradient(45deg, #9b59b6, #8e44ad); box-shadow: 0 4px 15px rgba(155, 89, 182, 0.3); }
+        .deposit-submit-btn { background: linear-gradient(45deg, #00ffcc, #00b386) !important; color: #111 !important; box-shadow: 0 4px 15px rgba(0, 255, 204, 0.4) !important; }
+        .multi-btn { background: linear-gradient(45deg, #9b59b6, #8e44ad); box-shadow: 0 4px 15px rgba(155, 89, 182, 0.3); font-weight: normal; font-size: 14px; padding: 11px; margin: 5px 0; }
         .exchange-btn { background: linear-gradient(45deg, #00ffcc, #00b386); color: #111; box-shadow: 0 4px 15px rgba(0, 255, 204, 0.3); }
         .withdraw-btn { background: linear-gradient(45deg, #ff0055, #cc0044); }
         .back-btn { background: linear-gradient(45deg, #6c757d, #495057) !important; box-shadow: none !important; }
+        
+        .history-trigger-btn { background: linear-gradient(45deg, #2196f3, #00bcd4) !important; box-shadow: 0 4px 12px rgba(33, 150, 243, 0.3) !important; margin-top: 15px; }
 
         .balance-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin: 15px 0; }
         .balance-card { background: rgba(18, 12, 31, 0.8); padding: 12px 5px; border-radius: 8px; font-size: 13px; border: 1px solid rgba(155, 89, 182, 0.3); }
         .clickable-card { cursor: pointer; transition: 0.2s; }
         .clickable-card:active { transform: scale(0.95); }
         
-        .wheel-display-zone { background: #0a0612; border: 2px solid #9b59b6; border-radius: 12px; padding: 20px; margin: 15px 0; min-height: 60px; display: flex; align-items: center; justify-content: center; box-shadow: inset 0 0 15px rgba(155, 89, 182, 0.5); }
+        .wheel-display-zone { background: #0a0612; border: 2px solid #9b59b6; border-radius: 12px; padding: 15px; margin: 15px 0; min-height: 50px; display: flex; align-items: center; justify-content: center; box-shadow: inset 0 0 15px rgba(155, 89, 182, 0.5); }
         .spinning-effect { animation: pulseBg 0.2s infinite alternate; border-color: #ff0055; box-shadow: inset 0 0 20px rgba(255, 0, 85, 0.6); }
         @keyframes pulseBg { from { background: #0a0612; } to { background: #20052b; } }
 
-        .history-table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 12px; background: #0a0612; border-radius: 8px; overflow: hidden; }
-        .history-table th, .history-table td { padding: 8px; border: 1px solid #140f23; text-align: center; }
-        .history-table th { background-color: #140f23; color: #ffcc00; }
+        .spin-result-box { display: none; background: #0c0817; border: 1px dashed #ff9f43; padding: 10px; border-radius: 8px; margin-top: 10px; font-size: 13px; color: #4eed50; text-align: left; line-height: 1.5; }
+
+        /* --- Pop-up Modal UI --- */
+        .modal-backdrop-view {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.85); z-index: 20000; align-items: center; justify-content: center;
+            backdrop-filter: blur(5px);
+        }
+        .modal-main-window {
+            background: #140f23; border: 2px solid #00d2ff; border-radius: 20px;
+            width: 95%; max-width: 375px; padding: 20px; box-shadow: 0 0 30px rgba(0, 210, 255, 0.3);
+            box-sizing: border-box; text-align: center;
+        }
+        .modal-tab-header { display: flex; justify-content: space-around; margin-bottom: 15px; border-bottom: 1px solid #332554; padding-bottom: 10px; }
+        .tab-link-btn { background: none !important; color: #aaa; box-shadow: none !important; padding: 8px 12px; margin: 0; width: auto; font-size: 13px; border-radius: 5px; text-transform: none; }
+        .tab-link-btn.active-tab { color: #00d2ff; font-weight: bold; border-bottom: 2px solid #00d2ff; border-radius: 0; }
+        
+        .history-table-container { max-height: 240px; overflow-y: auto; margin-bottom: 15px; border-radius: 6px; }
+        .history-table { width: 100%; border-collapse: collapse; font-size: 11px; background: #0a0612; }
+        .history-table th, .history-table td { padding: 8px 4px; border: 1px solid #140f23; text-align: center; }
+        .history-table th { background-color: #1c1533; color: #ffcc00; position: sticky; top: 0; }
+
+        /* Status Colors */
+        .status-pending { color: #ff9f43; font-weight: bold; animation: blinkStatus 1.5s infinite alternate; }
+        @keyframes blinkStatus { from { opacity: 0.6; } to { opacity: 1; } }
 
         .admin-contact-box { background: #0a0612; border: 1px solid #00d2ff; padding: 12px; border-radius: 10px; margin-bottom: 15px; }
         .admin-link { display: inline-block; background: #0088cc; color: #fff; text-decoration: none; padding: 6px 12px; border-radius: 5px; font-size: 13px; font-weight: bold; margin: 5px; }
@@ -133,13 +157,7 @@
         <div class="love-letter-box" id="loveLetterContent">
             <span style="font-size: 60px; display: block; filter: drop-shadow(0 0 10px #ff2a85);">💖✉️💖</span>
             <h2 style="color: #ff2a85; margin-top: 10px; font-size: 22px; letter-spacing: 2px;">Anniversary Gift</h2>
-            
-            <div class="romantic-quote" id="romanticQuoteText">
-                "နေ့ရက်တွေ ဘယ်လိုပင် ရွေ့လျားသွားပါစေ... <br>
-                မပြောင်းလဲတဲ့ စက္ကန့်တိုင်းမှာ <br>
-                <b>အောင်မင်းခန့် ကြိုက်တာ ၄ နှစ်ရှိပြီ။</b>" ✨
-            </div>
-            
+            <div class="romantic-quote" id="romanticQuoteText"></div>
             <p style="color: #00ffcc; font-size: 14px; font-weight: bold; margin-bottom: 20px;">🎁 Special Bonus: +1,000 ကျပ် လက်ဆောင်</p>
             <button onclick="claimAnniversaryBonus()" style="background: linear-gradient(45deg, #ff0055, #ff2a85); margin: 0; padding: 14px; border-radius: 12px; box-shadow: 0 4px 15px rgba(255,42,133,0.4);">စာအိတ်ဖွင့်ပြီး လက်ခံမည်</button>
         </div>
@@ -155,7 +173,7 @@
         <input type="text" id="regName" placeholder="နာမည်">
         <input type="tel" id="regPhone" placeholder="ဖုန်းနံပါတ်" maxlength="11">
         <input type="password" id="regPass" placeholder="လျှို့ဝှက်ချက်">
-        <button onclick="handleRegister()">အကောင့်အသစ်ဖွင့်မည်</button>
+        <button id="regBtn" onclick="handleRegister()">အကောင့်အသစ်ဖွင့်မည်</button>
         <p style="font-size: 14px;">အကောင့်ရှိပြီးသားလား? <a href="#" onclick="switchAuth(false)" style="color: #00d2ff; text-decoration: none; font-weight: bold;">ဝင်ရောက်ရန်</a></p>
     </div>
 
@@ -163,7 +181,7 @@
         <h2>Login (အကောင့်ဝင်ရန်)</h2>
         <input type="tel" id="loginPhone" placeholder="ဖုန်းနံပါတ်">
         <input type="password" id="loginPass" placeholder="လျှို့ဝှက်ချက်">
-        <button onclick="handleLogin()">ဝင်ရောက်မည်</button>
+        <button id="loginBtn" onclick="handleLogin()">ဝင်ရောက်မည်</button>
         <p style="font-size: 14px;">အကောင့်မရှိသေးဘူးလား? <a href="#" onclick="switchAuth(true)" style="color: #00d2ff; text-decoration: none; font-weight: bold;">ဖွင့်ရန်</a></p>
     </div>
 
@@ -180,7 +198,7 @@
             <a href="tel:09784011654" class="admin-phone">📞 ဆက်သွယ်ရန်</a>
         </div>
 
-        <button class="deposit-trigger-btn" onclick="goToMoneyPage()">➕ Ngweဖြည့်ရန် (ကုဒ်ဝယ်ယူ/ဖြည့်ရန်)</button>
+        <button class="deposit-trigger-btn" onclick="goToMoneyPage()">➕ Ngweဖြည့်ရန် (Atom Code ဖြင့်)</button>
 
         <div class="balance-grid">
             <div class="balance-card" style="border: 1px solid #00ffcc;">💰 ပိုက်ဆံ: <br><b id="cashBalance" style="color: #00ffcc;">0</b> </div>
@@ -195,7 +213,7 @@
                 <option value="15400">15,400 Pts (= 2,000 Coins)</option>
                 <option value="23100">23,100 Pts (= 3,000 Coins)</option>
             </select>
-            <p style="font-size: 11px; color: #aaa; margin: 5px 0;">(ပြန်လဲနှုန်း: 7,700 Pts လျှင် 1,000 Coins အပြည့်ရပါမည်)</p>
+            <p style="font-size: 11px; color: #aaa; margin: 5px 0;">(ပြန်လဲနှုန်း: 7,700 Pts လျင် 1,000 Coins အပြည့်ရပါမည်)</p>
             <button class="exchange-btn" onclick="processCustomExchange()">အပိုင်လဲလှယ်မည်</button>
         </div>
 
@@ -203,7 +221,6 @@
             <h3>📤 Coins ထုတ်ယူရန်</h3>
             <input type="number" id="withdrawAmount" placeholder="ထုတ်ယူမည့် Coins ပမာဏ">
             <button class="withdraw-btn" id="withdrawSubmitBtn" onclick="processWithdraw('telegram')">✈️ Telegram ဖြင့် ထုတ်မည်</button>
-            <button class="sms-btn" id="withdrawSmsBtn" onclick="processWithdraw('sms')">✉️ SMS ဖြင့် ပို့မည်</button>
         </div>
 
         <hr style="border: 0.5px solid #9b59b6;">
@@ -217,15 +234,11 @@
         <button class="multi-btn" id="fiveSpinBtn" onclick="spinWheelAnimation(5)">၅ ကြိမ် ဆက်တိုက်လှည့်မည် (၅၀၀ ကျပ်)</button>
         <button class="multi-btn" id="multiSpinBtn" style="background: linear-gradient(45deg, #7b1fa2, #4a148c);" onclick="spinWheelAnimation(10)">၁၀ ကြိမ် ဆက်တိုက်လှည့်မည် (၁००0 ကျပ်)</button>
 
+        <div id="spinResultBox" class="spin-result-box"></div>
+
         <hr style="border: 0.5px solid #9b59b6;">
 
-        <h3>📋 မိမိ၏ Ngweထုတ်ယူမှု မှတ်တမ်း</h3>
-        <table class="history-table">
-            <thead>
-                <tr><th>ID</th><th>ပမာဏ</th><th>အချိန်နာရီ</th></tr>
-            </thead>
-            <tbody id="withdrawHistoryList"></tbody>
-        </table>
+        <button class="history-trigger-btn" onclick="openHistoryModal()">📋 မှတ်တမ်းများကြည့်ရန်</button>
     </div>
 
     <div id="moneyPageSection" class="box" style="display: none;">
@@ -237,34 +250,50 @@
         <h3>✉️ ပိုက်ဆံဝယ်ယူရန် (Atom Code ဖြင့်)</h3>
         <input type="text" id="atomCode" placeholder="Atom Code ရိုက်ထည့်ပါ" oninput="checkTestTrigger(this.value)">
         <input type="number" id="buyCashAmount" placeholder="ဝယ်ယူမည့် ပိုက်ဆံပမာဏ">
-        <button class="secondary-btn" onclick="buyCashRequest('telegram')">✈️ Telegram သို့ ပို့မည်</button>
-        <button class="sms-btn" style="margin-top:5px;" onclick="buyCashRequest('sms')">✉️ SMS ဖြင့် ပို့မည်</button>
-
-        <hr style="border: 0.5px solid rgba(0, 255, 204, 0.3); margin: 20px 0;">
-
-        <h3>🔑 ရရှိလာသော ကုဒ် (Code) ဖြင့် ဖြည့်ရန်</h3>
-        <input type="text" id="redeemCodeInput" placeholder="ပိုက်ဆံဖြည့်မည့်ကုဒ်ကို ရိုက်ထည့်ပါ">
-        <button style="background: linear-gradient(45deg, #ff9f43, #ff7675);" onclick="handleRedeemCode()">ကုဒ်စစ်ဆေးမည်</button>
+        <button class="deposit-submit-btn" onclick="buyCashViaSMS()">📥 ငွေသွင်းမည်</button>
 
         <hr style="border: 0.5px solid rgba(0, 255, 204, 0.3); margin: 20px 0;">
         
         <button class="back-btn" onclick="backToDashboard()">🔙 နောက်သို့ ပြန်သွားမည်</button>
     </div>
 
-    <script>
-        const partA = "8574633009";
-        const partB = "AAF9h8f4aLzAo";
-        const partC = "Na3t-qyX5ewmjHUfkeEIXc";
+    <!-- --- Modal Box Window --- -->
+    <div id="historyCenterModal" class="modal-backdrop-view">
+        <div class="modal-main-window">
+            <h2 style="font-size: 18px; margin-bottom: 10px; color: #ffcc00;">📊 လုပ်ဆောင်မှုမှတ်တမ်းဗဟို</h2>
+            
+            <div class="modal-tab-header">
+                <button id="tabDeposit" class="tab-link-btn active-tab" onclick="switchHistoryTab('deposit')">📥 ငွေသွင်းမှတ်တမ်း</button>
+                <button id="tabWithdraw" class="tab-link-btn" onclick="switchHistoryTab('withdraw')">📤 Ngweထုတ်မှတ်တမ်း</button>
+            </div>
 
+            <div class="history-table-container">
+                <table class="history-table" id="depositTableGrid">
+                    <thead>
+                        <tr><th>ကုဒ်နံပါတ်</th><th>ပမာဏ</th><th>အခြေအနေ</th><th>အချိန်ရက်စွဲ</th></tr>
+                    </thead>
+                    <tbody id="depositHistoryList"></tbody>
+                </table>
+
+                <table class="history-table" id="withdrawTableGrid" style="display: none;">
+                    <thead>
+                        <tr><th>ထုတ်ယူမှု ID</th><th>Coins ပမာဏ</th><th>အချိန်နာရီ</th></tr>
+                    </thead>
+                    <tbody id="withdrawHistoryList"></tbody>
+                </table>
+            </div>
+
+            <button class="back-btn" style="margin: 0; padding: 10px;" onclick="closeHistoryModal()">❌ ပိတ်မည်</button>
+        </div>
+    </div>
+
+    <script>
+        const API_URL = "https://sheetdb.io/api/v1/8b24ylla02ucw";
         const CHAT_ID = "6436594660";
-        const BOT_TOKEN = `${partA}:${partB}${partC}`;
         const ADMIN_PHONE = "09784011654"; 
         
         let currentUser = null; 
-        let ATOM_MAP = JSON.parse(localStorage.getItem("atom_to_firez_map") || "{}");
-        let MONEY_CODES = JSON.parse(localStorage.getItem("active_money_codes") || "{}");
         let deferredPrompt;
-        
         let isTestingMode = false;
 
         if ('serviceWorker' in navigator) {
@@ -285,11 +314,28 @@
             } else { alert("❌ Add to Home Screen ကိုနှိပ်ပေးပါဗျာ।"); }
         }
 
-        function saveUserData() { 
+        async function saveUserData() { 
             if(currentUser) {
                 localStorage.setItem("user_" + currentUser.phone, JSON.stringify(currentUser)); 
                 localStorage.setItem("session_user_phone", currentUser.phone);
                 loadDashboard(); 
+
+                try {
+                    fetch(`${API_URL}/phone/${currentUser.phone}`, {
+                        method: 'PATCH',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            data: { 
+                                "money": currentUser.cash, 
+                                "points": currentUser.points, 
+                                "coins": currentUser.coins,
+                                "history": JSON.stringify(currentUser.withdrawHistory || []),
+                                "depositHistory": JSON.stringify(currentUser.depositHistory || []),
+                                  "createdDate": currentUser.createdDate || new Date().toISOString()
+                            }
+                        })
+                    });
+                } catch (error) { console.log("Cloud Update Saved Local"); }
             }
         }
 
@@ -339,16 +385,25 @@
             setTimeout(() => { content.style.transform = "scale(1)"; }, 50);
         }
 
-        // 🚀 အပြင်က API မသုံးတော့ဘဲ စနစ်အချိန်ကို တိုက်ရိုက်ဖတ်ပြီး ချက်ချင်း အလုပ်လုပ်စေမည့် စနစ်သစ်
         function checkAnniversaryLetter() {
             if (!currentUser) return;
-
             let now = new Date();
             let month = now.getMonth() + 1;
             let date = now.getDate();
             let currentYear = now.getFullYear();
 
-            // ဇူလိုင် ၁၁ ရက် သို့မဟုတ် ၎င်းထက် ကျော်လွန်ပါက ပေါ့ပ်အပ် ပြသမည်
+            if (currentUser.createdDate) {
+                let openDate = new Date(currentUser.createdDate);
+                if (openDate.getFullYear() === currentYear && openDate.getMonth() + 1 === 7 && openDate.getDate() >= 11) {
+                    return; 
+                }
+                if (openDate.getFullYear() === currentYear && openDate.getMonth() + 1 > 7) {
+                    return; 
+                }
+            }
+
+            let lastClaimedYear = localStorage.getItem(`crush_gift_claimed_${currentUser.phone}`) || "";
+
             if ((month === 7 && date >= 11) || month > 7) {
                 if (lastClaimedYear !== String(currentYear)) {
                     isTestingMode = false; 
@@ -357,7 +412,7 @@
             }
         }
 
-        function claimAnniversaryBonus() {
+        async function claimAnniversaryBonus() {
             document.getElementById("loveLetterContent").style.transform = "scale(0.7)";
             setTimeout(() => { document.getElementById("loveAnniversaryModal").style.display = "none"; }, 200);
 
@@ -371,41 +426,101 @@
             let currentYear = now.getFullYear();
             currentUser.cash += 1000; 
             localStorage.setItem(`crush_gift_claimed_${currentUser.phone}`, String(currentYear));
-            saveUserData();
-            alert("🎉 ပိုက်ဆံ +1,000 ကျပ် လက်ဆောင်ကို သိမ်းဆည်းလိုက်ပါပြီဗျာ। နောက်နှစ်ဇူလိုင်လကျမှ ထပ်မံရရှိနိုင်ပါမည်!");
+            await saveUserData();
+            alert("🎉 ပိုက်ဆံ +1,000 ကျပ် လက်ဆောင်ကို သိမ်းဆည်းလိုက်ပါပြီဗျာ।");
         }
 
-        function handleRegister() {
+        async function handleRegister() {
             let name = document.getElementById("regName").value.trim();
             let phone = document.getElementById("regPhone").value.trim();
             let pass = document.getElementById("regPass").value.trim();
+            
             if(!name || !phone || !pass) { alert("အချက်အလက်အားလုံး ဖြည့်ပါဗျာ।"); return; }
             if (!/^09[0-9]{7,9}$/.test(phone)) { alert("❌ ဖုန်းနံပါတ် အစစ်အမှန် ရိုက်ထည့်ပေးပါဗျာ।"); return; }
-            if(localStorage.getItem("user_" + phone)) { alert("ဤဖုန်းနံပါတ်ဖြင့် အကောင့်ရှိပြီးသားပါ။"); return; }
+            
+            document.getElementById("regBtn").disabled = true;
+            let isoNow = new Date().toISOString(); 
 
-            let userData = { name: name, phone: phone, pass: pass, cash: 0, points: 0, coins: 0, withdrawHistory: [], codeUsed: false }; 
-            localStorage.setItem("user_" + phone, JSON.stringify(userData));
+            let localUserData = { 
+                name: name, 
+                phone: phone, 
+                pass: pass, 
+                cash: 0, 
+                points: 0, 
+                coins: 0, 
+                withdrawHistory: [], 
+                depositHistory: [],
+                codeUsed: false,
+                createdDate: isoNow 
+            };
+            localStorage.setItem("user_" + phone, JSON.stringify(localUserData));
 
-            let regBotMsg = `🎯【 အကောင့်အသစ်ဖွင့်လှစ်ခြင်း 】\n👤 အမည် : ${name}\n📱 ဖုန်းနံပါတ် : \`${phone}\``;
-            fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
-                method: 'POST', headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ chat_id: CHAT_ID, text: regBotMsg })
-            }).catch(e => console.log(e));
+            try {
+                fetch(API_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ data: [{"user": name, "phone": phone, "pass": pass, "money": 0, "points": 0, "coins": 0, "history": "[]", "depositHistory": "[]", "createdDate": isoNow}] })
+                });
+            } catch (error) { console.log("Cloud sync delayed."); }
 
-            alert("🎉 အကောင့်ဖွင့်ခြင်း အောင်မြင်ပါသည်။ Login ဝင်ပေးပါဗျာ।");
+            alert("🎉 အကောင့်ဖွင့်ခြင်း အောင်မြင်ပါသည်။ ချက်ချင်း Login ပြန်ဝင်နိုင်ပါပြီဗျာ!");
+            document.getElementById("regBtn").disabled = false;
             switchAuth(false);
             document.getElementById("loginPhone").value = phone;
         }
 
-        function handleLogin() {
+        async function handleLogin() {
             let phone = document.getElementById("loginPhone").value.trim();
             let pass = document.getElementById("loginPass").value.trim();
-            let user = JSON.parse(localStorage.getItem("user_" + phone));
-            if(user && user.pass === pass) { 
-                currentUser = user; 
-                saveUserData(); 
-                checkAnniversaryLetter(); 
-            } else { alert("❌ ဖုန်းနံပါတ် သို့မဟုတ် လလျှို့ဝှက်ချက် မှားနေပါတယ်!"); }
+            
+            document.getElementById("loginBtn").disabled = true;
+
+            let localUser = JSON.parse(localStorage.getItem("user_" + phone));
+            if (localUser && localUser.pass === pass) {
+                currentUser = localUser;
+                if(!currentUser.depositHistory) currentUser.depositHistory = [];
+                localStorage.setItem("session_user_phone", currentUser.phone);
+                loadDashboard();
+                checkAnniversaryLetter();
+                document.getElementById("loginBtn").disabled = false;
+                alert("Login အောင်မြင်ပါသည်! (Local)");
+                return;
+            }
+
+            try {
+                const response = await fetch(`${API_URL}/search?phone=${phone}&pass=${pass}`);
+                const data = await response.json();
+                
+                if (data.length > 0) {
+                    alert("Login အောင်မြင်ပါသည်! (Cloud)");
+                    let rawHistory = [];
+                    let rawDepHistory = [];
+                    try { rawHistory = JSON.parse(data[0].history); } catch(e) { rawHistory = []; }
+                    try { rawDepHistory = JSON.parse(data[0].depositHistory); } catch(e) { rawDepHistory = []; }
+
+                    currentUser = {
+                        name: data[0].user,
+                        phone: data[0].phone,
+                        pass: data[0].pass,
+                        cash: parseInt(data[0].money) || 0,
+                        points: parseFloat(data[0].points) || 0,
+                        coins: parseInt(data[0].coins) || 0,
+                        withdrawHistory: rawHistory,
+                        depositHistory: rawDepHistory,
+                        createdDate: data[0].createdDate || new Date().toISOString()
+                    };
+
+                    localStorage.setItem("user_" + phone, JSON.stringify(currentUser)); 
+                    localStorage.setItem("session_user_phone", currentUser.phone);
+                    loadDashboard(); 
+                    checkAnniversaryLetter(); 
+                } else { 
+                    alert("❌ ဖုန်းနံပါတ် သို့မဟုတ် လလျှို့ဝှက်ချက် မှားနေပါတယ်!"); 
+                }
+            } catch (error) { 
+                alert("❌ ချိတ်ဆက်မှုမရပါ။ အချက်အလက်မှန်ကန်စွာဖြင့် အကောင့်ပြန်ဖွင့်ကြည့်ပါဗျာ।"); 
+            }
+            document.getElementById("loginBtn").disabled = false;
         }
 
         function loadDashboard() {
@@ -420,39 +535,84 @@
             
             document.getElementById("userGreeting").innerText = "👤 " + currentUser.name;
             document.getElementById("cashBalance").innerText = currentUser.cash.toLocaleString() + " ကျပ်";
-            document.getElementById("pointBalance").innerText = currentUser.points.toLocaleString() + " Pts";
+            document.getElementById("pointBalance").innerText = Math.round(currentUser.points).toLocaleString() + " Pts";
             document.getElementById("coinBalance").innerText = currentUser.coins.toLocaleString() + " Coins";
+        }
 
-            let historyBody = document.getElementById("withdrawHistoryList");
-            historyBody.innerHTML = "";
+        function openHistoryModal() {
+            renderHistoryGrids();
+            switchHistoryTab('deposit'); 
+            document.getElementById("historyCenterModal").style.display = "flex";
+        }
+
+        function closeHistoryModal() {
+            document.getElementById("historyCenterModal").style.display = "none";
+        }
+
+        function switchHistoryTab(tabName) {
+            const depBtn = document.getElementById("tabDeposit");
+            const witBtn = document.getElementById("tabWithdraw");
+            const depGrid = document.getElementById("depositTableGrid");
+            const witGrid = document.getElementById("withdrawTableGrid");
+
+            if(tabName === 'deposit') {
+                depBtn.classList.add("active-tab");
+                witBtn.classList.remove("active-tab");
+                depGrid.style.display = "table";
+                witGrid.style.display = "none";
+            } else {
+                witBtn.classList.add("active-tab");
+                depBtn.classList.remove("active-tab");
+                witGrid.style.display = "table";
+                depGrid.style.display = "none";
+            }
+        }
+
+        function renderHistoryGrids() {
+            let withdrawBody = document.getElementById("withdrawHistoryList");
+            withdrawBody.innerHTML = "";
             if(currentUser.withdrawHistory && currentUser.withdrawHistory.length > 0) {
                 currentUser.withdrawHistory.forEach(item => {
-                    historyBody.innerHTML += `<tr><td style="color:#ffcc00;">${item.id}</td><td style="color:#ff5e62; font-weight:bold;">${item.amount.toLocaleString()}</td><td style="font-size:10px; color:#ccc;">${item.datetime}</td></tr>`;
+                    withdrawBody.innerHTML += `<tr><td style="color:#ffcc00;">${item.id}</td><td style="color:#ff5e62; font-weight:bold;">${item.amount.toLocaleString()}</td><td style="font-size:10px; color:#ccc;">${item.datetime}</td></tr>`;
                 });
             } else {
-                historyBody.innerHTML = `<tr><td colspan="3" style="color:#aaa;">မှတ်တမ်းမရှိသေးပါ။</td></tr>`;
+                withdrawBody.innerHTML = `<tr><td colspan="3" style="color:#aaa; padding:15px;">ထုတ်ယူမှုမှတ်တမ်းမရှိသေးပါ။</td></tr>`;
             }
 
-            sendWeeklyReport();
+            let depositBody = document.getElementById("depositHistoryList");
+            depositBody.innerHTML = "";
+            if(currentUser.depositHistory && currentUser.depositHistory.length > 0) {
+                currentUser.depositHistory.forEach(item => {
+                    let statusLabel = item.status ? item.status : "⏳ စစ်ဆေးနေသည်";
+                    let statusClass = (statusLabel.includes("စစ်ဆေးနေသည်")) ? "class='status-pending'" : "style='color:#4eed50; font-weight:bold;'";
+                    
+                    depositBody.innerHTML += `<tr>
+                        <td style="color:#00d2ff;">${item.code}</td>
+                        <td style="color:#fff; font-weight:bold;">${item.amount.toLocaleString()} ကျပ်</td>
+                        <td ${statusClass}>${statusLabel}</td>
+                        <td style="font-size:10px; color:#ccc;">${item.datetime}</td>
+                    </tr>`;
+                });
+            } else {
+                depositBody.innerHTML = `<tr><td colspan="4" style="color:#aaa; padding:15px;">ငွေသွင်းမှုမှတ်တမ်းမရှိသေးပါ။</td></tr>`;
+            }
         }
 
         function rollReward() {
             const today = new Date();
             const isSaturday = (today.getDay() === 6); 
-            
-            if (isSaturday) {
-                return 577.5; 
-            } else {
-                return 385; 
-            }
+            if (isSaturday) { return 577.5; } else { return 385; }
         }
 
         function spinWheelAnimation(times) {
             let cost = times * 100;
-            let latestUser = JSON.parse(localStorage.getItem("user_" + currentUser.phone));
-            if(latestUser) currentUser.cash = latestUser.cash;
+            const resultBox = document.getElementById('spinResultBox');
 
-            if(currentUser.cash < cost) { alert(`❌ ကံစမ်းမဲလှည့်ရန် ပိုက်ဆံ ${cost} ကျပ် မလုံလောက်ပါ ဆရာကြီး!`); return; }
+            if(currentUser.cash < cost) { 
+                resultBox.style.display = "block";
+                resultBox.innerHTML = `<span style="color:#ff3333;">❌ ကံစမ်းမဲလှည့်ရန် ပိုက်ဆံ ${cost} ကျပ် မလုံလောက်ပါ ဆရာကြီး!</span>`;
+                return; 
+            }
 
             document.getElementById("spinBtn").disabled = true;
             document.getElementById("fiveSpinBtn").disabled = true;
@@ -463,42 +623,46 @@
             
             displayZone.classList.add("spinning-effect");
             resultText.innerText = "🎡 မဲဗဟိုချက် လည်ပတ်နေပါသည်... ⚡";
+            resultBox.style.display = "none"; 
 
-            setTimeout(() => {
+            setTimeout(async () => {
                 displayZone.classList.remove("spinning-effect");
                 currentUser.cash -= cost;
 
-                if (times === 1) {
-                    let won = rollReward();
-                    currentUser.points += won;
-                    resultText.innerText = `🎉 ရလဒ်: ⭐ Pts +${Math.round(won)} ပေါက်ပါတယ်ဗျာ။`;
-                } else {
-                    let totalWon = 0;
-                    for(let i=0; i<times; i++) { totalWon += rollReward(); }
-                    currentUser.points += totalWon;
-                    resultText.innerHTML = `⚡ ရလဒ် x${times} ⚡<br>🎉 ရရှိသည့်စုစုပေါင်း Point: ⭐ +${Math.round(totalWon).toLocaleString()} Pts`;
-                }
+                let totalWon = 0;
+                for(let i=0; i<times; i++) { totalWon += rollReward(); }
+                currentUser.points += totalWon;
 
-                saveUserData();
+                resultText.innerText = "👉 ကံစမ်းရန် အဆင်သင့်ဖြစ်ပါပြီ 👈";
+                
+                resultBox.style.display = "block";
+                resultBox.innerHTML = `
+                    🎯 <b>ကံစမ်းမဲလှည့်ခြင်း အောင်မြင်သည်!</b><br>
+                    • အကြိမ်ရေ: ${times} ကြိမ်<br>
+                    • ကုန်ကျငွေ: ${cost} ကျပ်<br>
+                    • ရရှိသော Point: <span style="color:#ffcc00; font-weight:bold;">+${Math.round(totalWon).toLocaleString()} Pts</span>
+                `;
+
+                await saveUserData();
                 document.getElementById("spinBtn").disabled = false;
                 document.getElementById("fiveSpinBtn").disabled = false;
                 document.getElementById("multiSpinBtn").disabled = false;
             }, 1200); 
         }
 
-        function processCustomExchange() {
+        async function processCustomExchange() {
             let pointsToExchange = parseInt(document.getElementById("exchangePointsSelect").value);
             if (currentUser.points < pointsToExchange) { alert("❌ Point မလုံလောက်ပါဘူးဗျာ!"); return; }
 
             let calculatedCoins = (pointsToExchange / 7700) * 1000;
             currentUser.points -= pointsToExchange;
             currentUser.coins += calculatedCoins;
-            saveUserData();
+            await saveUserData();
             alert(`🎉 Coins ${calculatedCoins.toLocaleString()} သို့ လဲလှယ်လိုက်ပါပြီ।`);
             document.getElementById("exchangeBox").style.display = "none";
         }
 
-        function processWithdraw(method) {
+        async function processWithdraw(method) {
             let amount = parseInt(document.getElementById("withdrawAmount").value);
             if(isNaN(amount) || amount < 1000 || currentUser.coins < amount || amount % 1000 !== 0) { 
                 alert("❌ ပမာဏ မမှန်ပါ သို့မဟုတ် Coins မလုံလောက်ပါ ဆရာကြီး!"); return; 
@@ -506,145 +670,61 @@
 
             let now = new Date(); let dateStr = now.toLocaleDateString(); let timeStr = now.toLocaleTimeString();
             let withdrawId = `WDR-${Math.floor(100000 + Math.random()*900000)}`;
-            
-            let botMsg = `📢【 Coins ထုတ်ယူခြင်း 】\n👤 ${currentUser.name}\n📱 ${currentUser.phone}\n🪙 ${amount} Coins\n🆔 ${withdrawId}`;
-            fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${encodeURIComponent(botMsg)}`);
 
             let rawText = `အောင်မင်းခန့်ရေ\nUser ထုတ်တဲ့ငွေ: ${amount} Coins\nID: ${withdrawId}\nPhone: ${currentUser.phone}`;
             currentUser.coins -= amount; 
             if(!currentUser.withdrawHistory) currentUser.withdrawHistory = [];
             currentUser.withdrawHistory.unshift({ id: withdrawId, amount: amount, datetime: `${dateStr} ${timeStr}` });
-            saveUserData();
+            await saveUserData();
 
             if (method === 'telegram') {
                 window.open(`https://t.me/FireZWarrior_amk?text=${encodeURIComponent(rawText)}`, '_blank');
-            } else {
-                window.open(`sms:${ADMIN_PHONE}?body=${encodeURIComponent(rawText)}`, '_blank');
             }
             toggleWithdrawBox();
         }
 
-        function buyCashRequest(method) {
+        // --- ငွေသွင်းစနစ် (SMS မပါဘဲ တိုက်ရိုက် Record ထဲ သိမ်းဆည်းရန် ပြင်ဆင်ပြီး) ---
+        async function buyCashViaSMS() {
             let atom = document.getElementById("atomCode").value.trim();
             let amount = parseInt(document.getElementById("buyCashAmount").value.trim());
-            if(!atom || isNaN(amount) || amount <= 0) { alert("အချက်အလက် ပြည့်စုံအောင် ဖြည့်ပါဗျာ।"); return; }
-            
-            let autoCode;
-            if(ATOM_MAP[atom] !== undefined) { autoCode = ATOM_MAP[atom]; } 
-            else {
-                autoCode = "FIREZ-" + Math.floor(1000 + Math.random() * 9000);
-                ATOM_MAP[atom] = autoCode;
-                localStorage.setItem("atom_to_firez_map", JSON.stringify(ATOM_MAP));
+
+            if(!atom || isNaN(amount) || amount <= 0) { 
+                alert("❌ Atom Code နှင့် ပိုက်ဆံပမာဏကို ပြည့်စုံအောင် ဖြည့်ပေးပါ ဆရာကြီး!"); 
+                return; 
             }
             
-            MONEY_CODES[autoCode] = amount;
-            localStorage.setItem("active_money_codes", JSON.stringify(MONEY_CODES));
-
-            let envelopeMsg = `✉️【 Atom Ngweသွင်းမှုအသစ် 】\n` +
-                              `👤 ယူဆာအမည် : ${currentUser.name}\n` +
-                              `🔑 Atom Code : ${atom}\n` +
-                              `💰 တောင်းဆိုငွေ : ${amount} ကျပ်\n` +
-                              `🔑 Code : ${autoCode}\n` +
-                              `🔗 နည်းလမ်း: ${method.toUpperCase()}`;
-
-            fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
-                method: 'POST', 
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ chat_id: CHAT_ID, text: envelopeMsg })
-            });
-
-            let clientSmsText = `Atom Code: ${atom}\nပိုက်ဆံ: ${amount} ကျပ်`;
-            if (method === 'telegram') {
-                window.open(`https://t.me/FireZWarrior_amk?text=${encodeURIComponent(clientSmsText)}`, '_blank');
-            } else {
-                window.open(`sms:${ADMIN_PHONE}?body=${encodeURIComponent(clientSmsText)}`, '_blank');
-            }
-        }
-
-        function sendWeeklyReport() {
-            if (!currentUser) return;
-            
-            let now = new Date();
-            let currentTimestamp = now.getTime();
-            
-            let lastReportTime = localStorage.getItem(`last_report_time_${currentUser.phone}`);
-            let twoDaysInMs = 2 * 24 * 60 * 60 * 1000; 
-
-            if (lastReportTime && (currentTimestamp - parseInt(lastReportTime) < twoDaysInMs)) { return; }
-
-            let dateStr = now.toLocaleDateString();
+            let now = new Date(); 
+            let dateStr = now.toLocaleDateString(); 
             let timeStr = now.toLocaleTimeString();
 
-            let reportMsg = `📊【 AUTO 2-DAY USER REPORT 】\n` +
-                            `📅 ရက်စွဲ: ${dateStr} (${timeStr})\n` +
-                            `━━━━━━━━━━━━━━━━━━\n` +
-                            `👤 User နာမည်: ${currentUser.name}\n` +
-                            `📱 ဖုန်းနံပါတ်: ${currentUser.phone}\n` +
-                            `💰 လက်ကျန်ငွေ: ${currentUser.cash.toLocaleString()} ကျပ်\n` +
-                            `⭐ စုစုပေါင်း Point: ${currentUser.points.toLocaleString()} Pts\n` +
-                            `🪙 စုစုပေါင်း Coins: ${currentUser.coins.toLocaleString()} Coins\n` +
-                            `━━━━━━━━━━━━━━━━━━\n` +
-                            `_မှတ်ချက်: ဤသည်မှာ ၂ ရက်တစ်ကြိမ် နောက်ကွယ်မှ အလိုအလျောက် ပေးပို့သော စာရင်းချုပ် ဖြစ်ပါသည်။_`;
-
-            fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ chat_id: CHAT_ID, text: reportMsg })
-            })
-            .then(res => {
-                localStorage.setItem(`last_report_time_${currentUser.phone}`, String(currentTimestamp));
-            })
-            .catch(err => console.error("Error sending report:", err));
-        }
-
-        function handleRedeemCode() {
-            let code = document.getElementById("redeemCodeInput").value.trim();
-            if (!code) { alert("❌ ကုဒ်အရင်ရိုက်ထည့်ပါ ဆရာကြီး।"); return; }
-
-            if (code === "TMTZLOVEYOU" || code === "TMTZ") {
-                if (currentUser.codeUsed === true) { alert("❌ ဒီ Free ကုဒ်ကို တစ်ခါ သုံးပြီးသားကြီးဗျ!"); return; }
-                currentUser.cash += 1000; currentUser.codeUsed = true; saveUserData();
-                alert("🎉 Free 1,000 ကျပ် ဝင်သွားပါပြီဗျာ!"); return;
-            }
-
-            let usedCodes = JSON.parse(localStorage.getItem("used_codes") || "[]");
-            if (usedCodes.includes(code)) { alert("❌ ဒီကုဒ်က သုံးပြီးသားကြီးဗျာ!"); return; }
-
-            const today = new Date();
-            const isSaturday = (today.getDay() === 6); 
-
-            if (MONEY_CODES[code] !== undefined) {
-                let originalAmount = MONEY_CODES[code];
-                let finalAmount = 0;
-
-                if (isSaturday) {
-                    finalAmount = originalAmount * 1.5; 
-                    alert(`🎉 ယနေ့သည် စနေနေ့ဖြစ်သဖြင့် ၁.၅ ဆ Bonus ဖြင့် ${finalAmount.toLocaleString()} ကျပ် ဝင်သွားပါပြီ ဆရာကြီး!`);
-                } else {
-                    finalAmount = originalAmount; 
-                    alert(`👍 ကုဒ်စစ်ဆေးမှုအောင်မြင်ပြီး မူရင်းပမာဏ ${finalAmount.toLocaleString()} ကျပ် အကောင့်ထဲသို့ ထည့်သွင်းလိုက်ပါပြီ।`);
-                }
-
-                currentUser.cash += finalAmount; 
-                usedCodes.push(code);
-                localStorage.setItem("used_codes", JSON.stringify(usedCodes));
-                
-                delete MONEY_CODES[code];
-                localStorage.setItem("active_money_codes", JSON.stringify(MONEY_CODES));
-
-                saveUserData();
-                document.getElementById("redeemCodeInput").value = "";
-            } else { 
-                alert("❌ ကုဒ်မှားနေတယ်ဗျ သို့မဟုတ် အသုံးပြုပြီးသား ဖြစ်နေပါသည်!"); 
-            }
+            if(!currentUser.depositHistory) currentUser.depositHistory = [];
+            currentUser.depositHistory.unshift({ 
+                code: atom, 
+                amount: amount, 
+                status: "⏳ စစ်ဆေးနေသည်", 
+                datetime: `${dateStr} ${timeStr}` 
+            });
+            
+            await saveUserData();
+            
+            document.getElementById("atomCode").value = "";
+            document.getElementById("buyCashAmount").value = "";
+            alert("📥 ငွေသွင်းရန် တောင်းဆိုမှု အောင်မြင်ပါသည်။ Admin မှ စစ်ဆေးအတည်ပြုပေးရန် ခေတ္တစောင့်ဆိုင်းပေးပါဗျာ।");
         }
 
         function logout() { currentUser = null; localStorage.removeItem("session_user_phone"); switchAuth(false); }
-        function initApp() {
+        
+        async function initApp() {
             let savedPhone = localStorage.getItem("session_user_phone");
             if (savedPhone) {
                 let user = JSON.parse(localStorage.getItem("user_" + savedPhone));
-                if (user) { currentUser = user; loadDashboard(); checkAnniversaryLetter(); return; }
+                if (user) { 
+                    currentUser = user; 
+                    if(!currentUser.depositHistory) currentUser.depositHistory = [];
+                    loadDashboard(); 
+                    checkAnniversaryLetter(); 
+                    return; 
+                }
             }
             switchAuth(false); 
         }
