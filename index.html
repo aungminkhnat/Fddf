@@ -1,734 +1,458 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="my">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>2TAMFZWK GAMES</title>
-    
-    <link rel="manifest" href="manifest.json">
-    <link rel="icon" type="image/png" href="1783267589164.png">
-    <link rel="apple-touch-icon" href="1783267589164.png">
-    
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <meta name="apple-mobile-web-app-title" content="2TAMFZWK GAMES">
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="theme-color" content="#0d0d1a">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FireZWarrior Game Dashboard</title>
     <style>
-        body { 
-            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif; 
-            background: radial-gradient(circle, #120c1f 0%, #0a0612 100%);
-            color: #fff; 
-            text-align: center; 
-            padding: 15px; 
-            margin: 0;
-            user-select: none; 
-            -webkit-user-select: none; 
-            touch-action: manipulation;
+        :root {
+            --primary: #6366f1;
+            --primary-hover: #4f46e5;
+            --bg: #0f172a;
+            --card-bg: #1e293b;
+            --text: #f8fafc;
+            --text-muted: #94a3b8;
+            --success: #10b981; 
+            --warning: #f59e0b;
+            --info: #06b6d4;
+            --withdraw-btn: #a855f7; 
+            --history-btn: #e2e8f0; 
+            --red: #ef4444;
         }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: sans-serif; }
+        body { background-color: var(--bg); color: var(--text); display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 20px; }
+        .container { width: 100%; max-width: 450px; background: var(--card-bg); padding: 30px; border-radius: 16px; box-shadow: 0 10px 25px rgba(0,0,0,0.3); }
+        h2, h3, h4 { margin-bottom: 20px; text-align: center; font-weight: 600; }
+        .tabs { display: flex; margin-bottom: 20px; background: #0f172a; padding: 4px; border-radius: 8px; }
+        .tab-btn { flex: 1; padding: 10px; background: transparent; border: none; color: var(--text-muted); cursor: pointer; font-weight: 600; border-radius: 6px; }
+        .tab-btn.active { background: var(--primary); color: white; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 6px; color: var(--text-muted); font-size: 14px; }
+        input, select { width: 100%; padding: 12px; background: #0f172a; border: 1px solid #334155; border-radius: 8px; color: white; font-size: 16px; outline: none; }
+        input:focus { border-color: var(--primary); }
+        button.main-btn { width: 100%; padding: 12px; background: var(--primary); border: none; border-radius: 8px; color: white; font-size: 16px; font-weight: 600; cursor: pointer; margin-top: 10px; }
+        .hidden { display: none !important; }
+        .user-info { text-align: center; margin-bottom: 20px; }
+        .user-info h3 { color: var(--primary); }
+        .stats-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 25px; }
+        .stat-card { background: #0f172a; padding: 12px 5px; border-radius: 12px; text-align: center; border: 1px solid #334155; }
+        .stat-card.money .value { color: var(--success); }
+        .stat-card.point .value { color: var(--warning); }
+        .stat-card.coin .value { color: var(--info); }
+        .stat-card .label { font-size: 11px; color: var(--text-muted); margin-bottom: 5px; }
+        .stat-card .value { font-size: 18px; font-weight: bold; }
+        .action-group { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 15px; }
         
-        .app-header-container {
-            max-width: 400px;
-            margin: 10px auto 15px auto;
-            position: relative;
-            background: #140f23;
-            border-radius: 16px;
-            overflow: hidden;
-            border: 2px solid #00d2ff;
-            box-shadow: 0 0 25px rgba(0, 210, 255, 0.4);
-        }
+        .exchange-btn { padding: 12px 5px; background: transparent; border: 1px solid var(--warning); color: var(--warning); border-radius: 8px; font-size: 13px; font-weight: bold; cursor: pointer; }
+        .withdraw-toggle-btn { padding: 12px 5px; background: var(--withdraw-btn); border: none; color: white; border-radius: 8px; font-size: 14px; font-weight: bold; cursor: pointer; }
+        .deposit-toggle-btn { width: 100%; padding: 12px; background: var(--success); border: none; color: white; border-radius: 8px; font-size: 15px; font-weight: bold; cursor: pointer; margin-top: 15px; }
+        .history-toggle-btn { width: 100%; padding: 12px; background: #475569; border: none; color: white; border-radius: 8px; font-size: 15px; font-weight: bold; cursor: pointer; margin-top: 15px; }
 
-        .banner-display {
-            width: 100%;
-            height: auto;
-            display: block;
-            opacity: 0.9;
-        }
+        /* 📋 Enhanced Table Styles */
+        .history-table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 12px; }
+        .history-table th, .history-table td { border: 1px solid #334155; padding: 8px 4px; text-align: center; }
+        .history-table th { background: #0f172a; color: var(--text-muted); font-size: 11px; }
+        .status-badge { padding: 2px 6px; border-radius: 4px; font-size: 11px; font-weight: bold; }
+        .status-pending { background: rgba(245, 158, 11, 0.2); color: var(--warning); }
+        .status-success { background: rgba(16, 185, 129, 0.2); color: var(--success); }
 
-        .box { 
-            background-color: rgba(20, 15, 35, 0.95); 
-            padding: 25px; 
-            border-radius: 15px; 
-            max-width: 360px; 
-            margin: 15px auto; 
-            box-shadow: 0 0 25px rgba(155, 89, 182, 0.2); 
-            border: 1px solid #9b59b6; 
-            box-sizing: border-box; 
-        }
+        /* 🛑 Ban Screen Styles */
+        .ban-screen { text-align: center; padding: 10px 0; }
+        .ban-icon { font-size: 60px; color: var(--red); margin-bottom: 15px; }
+        .ban-btn { width: 100%; padding: 14px; background: #24a1de; border: none; border-radius: 8px; color: white; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 25px; display: inline-block; text-decoration: none; text-align: center; }
+        .ban-badge { background: rgba(239, 68, 68, 0.15); border: 1px solid var(--red); color: var(--red); padding: 8px; border-radius: 8px; font-weight: bold; margin-bottom: 20px; }
         
-        h2, h3 { color: #00d2ff; margin-top: 0; text-transform: uppercase; letter-spacing: 1px; }
-        .danger-text { color: #ff9f43 !important; font-weight: bold; }
-
-        input, select { 
-            width: 100%; padding: 12px; margin: 8px 0; border-radius: 8px; 
-            border: 1px solid #9b59b6; background-color: #120c1f; color: #fff; 
-            box-sizing: border-box; font-size: 15px; text-align: center; 
-        }
-        
-        button { 
-            width: 100%; padding: 14px; margin: 10px 0; border-radius: 8px; border: none; 
-            background: linear-gradient(45deg, #ff0055, #9b59b6); color: white; 
-            font-weight: bold; font-size: 16px; cursor: pointer; transition: 0.3s; 
-            box-shadow: 0 4px 15px rgba(255, 0, 85, 0.3); text-transform: uppercase; 
-        }
-        button:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(255, 0, 85, 0.5); }
-        button:disabled { background: #444 !important; color: #888 !important; cursor: not-allowed; box-shadow: none !important; transform: none !important; }
-        
-        .deposit-trigger-btn { background: linear-gradient(45deg, #00ffcc, #0099ff) !important; color: #000 !important; font-size: 15px; padding: 10px; margin-bottom: 15px; box-shadow: 0 4px 10px rgba(0, 255, 204, 0.3); }
-        .wheel-btn { background: linear-gradient(45deg, #ff0000, #b30000) !important; box-shadow: 0 4px 15px rgba(255, 0, 0, 0.4) !important; font-weight: normal; font-size: 14px; padding: 11px; margin: 5px 0; }
-        .sms-btn { background: linear-gradient(45deg, #ff9f43, #ff5e62) !important; box-shadow: 0 4px 15px rgba(255, 159, 67, 0.3) !important; }
-        .deposit-submit-btn { background: linear-gradient(45deg, #00ffcc, #00b386) !important; color: #111 !important; box-shadow: 0 4px 15px rgba(0, 255, 204, 0.4) !important; }
-        .multi-btn { background: linear-gradient(45deg, #9b59b6, #8e44ad); box-shadow: 0 4px 15px rgba(155, 89, 182, 0.3); font-weight: normal; font-size: 14px; padding: 11px; margin: 5px 0; }
-        .exchange-btn { background: linear-gradient(45deg, #00ffcc, #00b386); color: #111; box-shadow: 0 4px 15px rgba(0, 255, 204, 0.3); }
-        .withdraw-btn { background: linear-gradient(45deg, #ff0055, #cc0044); }
-        .back-btn { background: linear-gradient(45deg, #6c757d, #495057) !important; box-shadow: none !important; }
-        
-        .history-trigger-btn { background: linear-gradient(45deg, #2196f3, #00bcd4) !important; box-shadow: 0 4px 12px rgba(33, 150, 243, 0.3) !important; margin-top: 15px; }
-
-        .balance-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin: 15px 0; }
-        .balance-card { background: rgba(18, 12, 31, 0.8); padding: 12px 5px; border-radius: 8px; font-size: 13px; border: 1px solid rgba(155, 89, 182, 0.3); }
-        .clickable-card { cursor: pointer; transition: 0.2s; }
-        .clickable-card:active { transform: scale(0.95); }
-        
-        .wheel-display-zone { background: #0a0612; border: 2px solid #9b59b6; border-radius: 12px; padding: 15px; margin: 15px 0; min-height: 50px; display: flex; align-items: center; justify-content: center; box-shadow: inset 0 0 15px rgba(155, 89, 182, 0.5); }
-        .spinning-effect { animation: pulseBg 0.2s infinite alternate; border-color: #ff0055; box-shadow: inset 0 0 20px rgba(255, 0, 85, 0.6); }
-        @keyframes pulseBg { from { background: #0a0612; } to { background: #20052b; } }
-
-        .spin-result-box { display: none; background: #0c0817; border: 1px dashed #ff9f43; padding: 10px; border-radius: 8px; margin-top: 10px; font-size: 13px; color: #4eed50; text-align: left; line-height: 1.5; }
-
-        /* --- Pop-up Modal UI --- */
-        .modal-backdrop-view {
-            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.85); z-index: 20000; align-items: center; justify-content: center;
-            backdrop-filter: blur(5px);
-        }
-        .modal-main-window {
-            background: #140f23; border: 2px solid #00d2ff; border-radius: 20px;
-            width: 95%; max-width: 375px; padding: 20px; box-shadow: 0 0 30px rgba(0, 210, 255, 0.3);
-            box-sizing: border-box; text-align: center;
-        }
-        .modal-tab-header { display: flex; justify-content: space-around; margin-bottom: 15px; border-bottom: 1px solid #332554; padding-bottom: 10px; }
-        .tab-link-btn { background: none !important; color: #aaa; box-shadow: none !important; padding: 8px 12px; margin: 0; width: auto; font-size: 13px; border-radius: 5px; text-transform: none; }
-        .tab-link-btn.active-tab { color: #00d2ff; font-weight: bold; border-bottom: 2px solid #00d2ff; border-radius: 0; }
-        
-        .history-table-container { max-height: 240px; overflow-y: auto; margin-bottom: 15px; border-radius: 6px; }
-        .history-table { width: 100%; border-collapse: collapse; font-size: 11px; background: #0a0612; }
-        .history-table th, .history-table td { padding: 8px 4px; border: 1px solid #140f23; text-align: center; }
-        .history-table th { background-color: #1c1533; color: #ffcc00; position: sticky; top: 0; }
-
-        /* Status Colors */
-        .status-pending { color: #ff9f43; font-weight: bold; animation: blinkStatus 1.5s infinite alternate; }
-        @keyframes blinkStatus { from { opacity: 0.6; } to { opacity: 1; } }
-
-        .admin-contact-box { background: #0a0612; border: 1px solid #00d2ff; padding: 12px; border-radius: 10px; margin-bottom: 15px; }
-        .admin-link { display: inline-block; background: #0088cc; color: #fff; text-decoration: none; padding: 6px 12px; border-radius: 5px; font-size: 13px; font-weight: bold; margin: 5px; }
-        .channel-link { display: inline-block; background: #e056fd; color: #fff; text-decoration: none; padding: 6px 12px; border-radius: 5px; font-size: 13px; font-weight: bold; margin: 5px; box-shadow: 0 0 10px rgba(224, 86, 253, 0.4); }
-        .admin-phone { display: inline-block; background: #ff0055; color: #fff; text-decoration: none; padding: 6px 12px; border-radius: 5px; font-size: 13px; font-weight: bold; margin: 5px; }
-        
-        .download-app-box { display: none; background: linear-gradient(45deg, #00d2ff, #9b59b6); padding: 12px; border-radius: 10px; margin-bottom: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
-
-        .love-modal-backdrop {
-            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.9); z-index: 10000; align-items: center; justify-content: center;
-            backdrop-filter: blur(8px);
-        }
-        .love-letter-box {
-            background: linear-gradient(135deg, #2a082c 0%, #11051c 100%);
-            border: 2px solid #ff2a85; border-radius: 24px; width: 85%; max-width: 340px;
-            padding: 35px 20px; box-shadow: 0 0 35px rgba(255, 42, 133, 0.7);
-            text-align: center; transform: scale(0.7); transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-        .romantic-quote {
-            font-size: 15px; font-weight: 500; font-style: italic; line-height: 1.7; 
-            color: #ffe3ef; background: rgba(255, 42, 133, 0.1); padding: 18px; 
-            border-radius: 14px; border: 1px solid rgba(255, 42, 133, 0.3);
-            margin: 15px 0; text-shadow: 0 1px 3px rgba(0,0,0,0.5);
-        }
+        .message { margin-top: 15px; padding: 10px; border-radius: 6px; text-align: center; font-size: 14px; }
+        .msg-success { background: rgba(16, 185, 129, 0.2); color: #10b981; }
+        .msg-error { background: rgba(239, 68, 68, 0.2); color: #ef4444; }
     </style>
 </head>
 <body>
 
-    <div class="app-header-container">
-        <img src="d613d930-752f-430f-b930-f77db96c6112" alt="2TAMFZWK Banner" class="banner-display">
-    </div>
-
-    <div id="loveAnniversaryModal" class="love-modal-backdrop">
-        <div class="love-letter-box" id="loveLetterContent">
-            <span style="font-size: 60px; display: block; filter: drop-shadow(0 0 10px #ff2a85);">💖✉️💖</span>
-            <h2 style="color: #ff2a85; margin-top: 10px; font-size: 22px; letter-spacing: 2px;">Anniversary Gift</h2>
-            <div class="romantic-quote" id="romanticQuoteText"></div>
-            <p style="color: #00ffcc; font-size: 14px; font-weight: bold; margin-bottom: 20px;">🎁 Special Bonus: +1,000 ကျပ် လက်ဆောင်</p>
-            <button onclick="claimAnniversaryBonus()" style="background: linear-gradient(45deg, #ff0055, #ff2a85); margin: 0; padding: 14px; border-radius: 12px; box-shadow: 0 4px 15px rgba(255,42,133,0.4);">စာအိတ်ဖွင့်ပြီး လက်ခံမည်</button>
-        </div>
-    </div>
-
-    <div id="downloadBox" class="box download-app-box">
-        <span style="font-weight: bold; font-size: 14px; display: block; margin-bottom: 5px;">📲 App ကို ဖုန်းထဲသို့ ထည့်သွင်းမလား?</span>
-        <button onclick="triggerAppInstall()" style="background: linear-gradient(45deg, #00ffcc, #00cc99); color: #111; margin: 5px 0 0 0; padding: 8px; box-shadow: none;">အက်ပ်အဖြစ် ဒေါင်းလုဒ်ဆွဲမည်</button>
-    </div>
-
-    <div id="registerSection" class="box">
-        <h2>Sign Up (အကောင့်ဖွင့်ရန်)</h2>
-        <input type="text" id="regName" placeholder="နာမည်">
-        <input type="tel" id="regPhone" placeholder="ဖုန်းနံပါတ်" maxlength="11">
-        <input type="password" id="regPass" placeholder="လျှို့ဝှက်ချက်">
-        <button id="regBtn" onclick="handleRegister()">အကောင့်အသစ်ဖွင့်မည်</button>
-        <p style="font-size: 14px;">အကောင့်ရှိပြီးသားလား? <a href="#" onclick="switchAuth(false)" style="color: #00d2ff; text-decoration: none; font-weight: bold;">ဝင်ရောက်ရန်</a></p>
-    </div>
-
-    <div id="loginSection" class="box" style="display: none;">
-        <h2>Login (အကောင့်ဝင်ရန်)</h2>
-        <input type="tel" id="loginPhone" placeholder="ဖုန်းနံပါတ်">
-        <input type="password" id="loginPass" placeholder="လျှို့ဝှက်ချက်">
-        <button id="loginBtn" onclick="handleLogin()">ဝင်ရောက်မည်</button>
-        <p style="font-size: 14px;">အကောင့်မရှိသေးဘူးလား? <a href="#" onclick="switchAuth(true)" style="color: #00d2ff; text-decoration: none; font-weight: bold;">ဖွင့်ရန်</a></p>
-    </div>
-
-    <div id="dashboardSection" class="box" style="display: none;">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
-            <h2 id="userGreeting" style="margin: 0; font-size: 18px;">👤 User</h2>
-            <button onclick="logout()" style="width: auto; padding: 6px 12px; font-size: 12px; background: #6c757d; margin: 0; box-shadow: none;">Logout</button>
+<div class="container">
+    <!-- 🛑 1. BANNED SCREEN -->
+    <div id="banned-section" class="ban-screen hidden">
+        <div class="ban-icon">🛑</div>
+        <div class="ban-badge">သင့်အကောင့်မှာ ပိတ်ဆို့ (Ban) ခံထားရပါသည်</div>
+        
+        <div class="user-info">
+            <h3 id="ban-user-name" style="color: var(--red);">Player Name</h3>
+            <p id="ban-user-phone">09xxxxxxxxx</p>
         </div>
         
-        <div class="admin-contact-box">
-            <span style="font-size: 13px; color: #00d2ff; display: block; margin-bottom: 5px; font-weight: bold;">☎️ Admin ထံ တိုက်ရိုက်ဆက်သွယ်ရန်</span>
-            <a href="https://t.me/FireZWarrior_amk" target="_blank" class="admin-link">💬 Telegram Admin</a>
-            <a href="https://t.me/tamfzwk" target="_blank" class="channel-link">📢 Telegram Channel</a>
-            <a href="tel:09784011654" class="admin-phone">📞 ဆက်သွယ်ရန်</a>
+        <div class="stats-grid">
+            <div class="stat-card money"><div class="label">💵 ပိုက်ဆံ</div><div class="value"><span id="ban-val-money">0</span> Ks</div></div>
+            <div class="stat-card point"><div class="label">⭐ Points</div><div class="value"><span id="ban-val-point">0</span></div></div>
+            <div class="stat-card coin"><div class="label">🪙 Coins</div><div class="value"><span id="ban-val-coin">0</span></div></div>
         </div>
 
-        <button class="deposit-trigger-btn" onclick="goToMoneyPage()">➕ Ngweဖြည့်ရန် (Atom Code ဖြင့်)</button>
-
-        <div class="balance-grid">
-            <div class="balance-card" style="border: 1px solid #00ffcc;">💰 ပိုက်ဆံ: <br><b id="cashBalance" style="color: #00ffcc;">0</b> </div>
-            <div class="balance-card clickable-card" onclick="toggleExchangeBox()">⭐ Point: <br><b id="pointBalance" style="color: #ffcc00;">0</b> </div>
-            <div class="balance-card clickable-card" onclick="toggleWithdrawBox()">🪙 Coins: <br><b id="coinBalance" style="color: #ff5e62;">0</b> </div>
-        </div>
-
-        <div id="exchangeBox" style="display: none; background: #0a0612; padding: 15px; border-radius: 10px; border: 1px dashed #ffcc00; margin: 15px 0;">
-            <h3>🔄 Point မှ Coins သို့ လဲလှယ်မည်</h3>
-            <select id="exchangePointsSelect">
-                <option value="7700">7,700 Pts  (= 1,000 Coins)</option>
-                <option value="15400">15,400 Pts (= 2,000 Coins)</option>
-                <option value="23100">23,100 Pts (= 3,000 Coins)</option>
-            </select>
-            <p style="font-size: 11px; color: #aaa; margin: 5px 0;">(ပြန်လဲနှုန်း: 7,700 Pts လျင် 1,000 Coins အပြည့်ရပါမည်)</p>
-            <button class="exchange-btn" onclick="processCustomExchange()">အပိုင်လဲလှယ်မည်</button>
-        </div>
-
-        <div id="withdrawBox" style="display: none; background: #0a0612; padding: 15px; border-radius: 10px; border: 1px dashed #ff0055; margin: 15px 0;">
-            <h3>📤 Coins ထုတ်ယူရန်</h3>
-            <input type="number" id="withdrawAmount" placeholder="ထုတ်ယူမည့် Coins ပမာဏ">
-            <button class="withdraw-btn" id="withdrawSubmitBtn" onclick="processWithdraw('telegram')">✈️ Telegram ဖြင့် ထုတ်မည်</button>
-        </div>
-
-        <hr style="border: 0.5px solid #9b59b6;">
-        
-        <h3 class="danger-text">🎯 ကံစမ်းမဲစနစ် (Lucky Wheel)</h3>
-        <div id="wheelDisplay" class="wheel-display-zone">
-            <span id="wheelResultText" style="color: #00d2ff; font-weight: bold; font-size: 15px;">👉 ကံစမ်းရန် အဆင်သင့်ဖြစ်ပါပြီ 👈</span>
-        </div>
-
-        <button class="wheel-btn" id="spinBtn" onclick="spinWheelAnimation(1)">၁ ကြိမ် လှည့်မည် (၁०० ကျပ်)</button>
-        <button class="multi-btn" id="fiveSpinBtn" onclick="spinWheelAnimation(5)">၅ ကြိမ် ဆက်တိုက်လှည့်မည် (၅၀၀ ကျပ်)</button>
-        <button class="multi-btn" id="multiSpinBtn" style="background: linear-gradient(45deg, #7b1fa2, #4a148c);" onclick="spinWheelAnimation(10)">၁၀ ကြိမ် ဆက်တိုက်လှည့်မည် (၁००0 ကျပ်)</button>
-
-        <div id="spinResultBox" class="spin-result-box"></div>
-
-        <hr style="border: 0.5px solid #9b59b6;">
-
-        <button class="history-trigger-btn" onclick="openHistoryModal()">📋 မှတ်တမ်းများကြည့်ရန်</button>
+        <p style="color: var(--text-muted); font-size: 14px; line-height: 1.5; margin-top: 15px;">စည်းကမ်းချက်များကို ချိုးဖောက်ထားသဖြင့် အကောင့်ကို ပိတ်ဆို့ထားပါသည်။ ပြန်လည်ဖွင့်လှစ်လိုပါက အောက်ပါ Telegram မှတစ်ဆင့် ဒိုင်လူကြီးထံ ဆက်သွယ်နိုင်ပါသည်။</p>
+        <a href="https://t.me/FireZWarrior_amk" target="_blank" class="ban-btn">✈️ Telegram သို့ ဆက်သွယ်ရန်</a>
     </div>
 
-    <div id="moneyPageSection" class="box" style="display: none;">
-        <h2 style="color: #00ffcc;">💰 Ngweဖြည့်ဗဟိုချက်</h2>
-        <p style="font-size: 14px; color: #aaa;">လက်ရှိပိုက်ဆံလက်ကျန်: <b id="pageCashBalance" style="color: #00ffcc;">0</b></p>
-        
-        <hr style="border: 0.5px solid rgba(0, 255, 204, 0.3); margin: 15px 0;">
-
-        <h3>✉️ ပိုက်ဆံဝယ်ယူရန် (Atom Code ဖြင့်)</h3>
-        <input type="text" id="atomCode" placeholder="Atom Code ရိုက်ထည့်ပါ" oninput="checkTestTrigger(this.value)">
-        <input type="number" id="buyCashAmount" placeholder="ဝယ်ယူမည့် ပိုက်ဆံပမာဏ">
-        <button class="deposit-submit-btn" onclick="buyCashViaSMS()">📥 ငွေသွင်းမည်</button>
-
-        <hr style="border: 0.5px solid rgba(0, 255, 204, 0.3); margin: 20px 0;">
-        
-        <button class="back-btn" onclick="backToDashboard()">🔙 နောက်သို့ ပြန်သွားမည်</button>
+    <!-- 2. AUTH SECTION (LOGIN/SIGNUP) -->
+    <div id="auth-section">
+        <div class="tabs">
+            <button class="tab-btn active" onclick="switchTab('login')">ဝင်ရန် (Login)</button>
+            <button class="tab-btn" onclick="switchTab('signup')">အကောင့်ဖွင့်ရန် (Sign Up)</button>
+        </div>
+        <form id="login-form" onsubmit="handleLogin(event)">
+            <h2>Login</h2>
+            <div class="form-group"><label>ဖုန်းနံပါတ်</label><input type="text" id="login-phone" required placeholder="ဖုန်းနံပါတ် ရိုက်ထည့်ပါ"></div>
+            <div class="form-group"><label>Password</label><input type="password" id="login-pwd" required placeholder="******"></div>
+            <button type="submit" class="main-btn">ဝင်မည်</button>
+        </form>
+        <form id="signup-form" class="hidden" onsubmit="handleSignUp(event)">
+            <h2>Sign Up</h2>
+            <div class="form-group"><label>နာမည် (User)</label><input type="text" id="signup-name" required placeholder="သင့်နာမည်ရေးပါ"></div>
+            <div class="form-group"><label>ဖုန်းနံပါတ် (Phone)</label><input type="text" id="signup-phone" required placeholder="ဖုန်းနံပါတ် ရိုက်ထည့်ပါ"></div>
+            <div class="form-group"><label>Password</label><input type="password" id="signup-pwd" required placeholder="******"></div>
+            <button type="submit" class="main-btn">အကောင့်ဖွင့်မည်</button>
+        </form>
     </div>
 
-    <!-- --- Modal Box Window --- -->
-    <div id="historyCenterModal" class="modal-backdrop-view">
-        <div class="modal-main-window">
-            <h2 style="font-size: 18px; margin-bottom: 10px; color: #ffcc00;">📊 လုပ်ဆောင်မှုမှတ်တမ်းဗဟို</h2>
-            
-            <div class="modal-tab-header">
-                <button id="tabDeposit" class="tab-link-btn active-tab" onclick="switchHistoryTab('deposit')">📥 ငွေသွင်းမှတ်တမ်း</button>
-                <button id="tabWithdraw" class="tab-link-btn" onclick="switchHistoryTab('withdraw')">📤 Ngweထုတ်မှတ်တမ်း</button>
+    <!-- 3. MAIN GAME DASHBOARD SECTION -->
+    <div id="dashboard-section" class="hidden">
+        <div class="user-info"><h3 id="user-name">Player Name</h3><p id="user-phone">09xxxxxxxxx</p></div>
+
+        <div class="stats-grid">
+            <div class="stat-card money"><div class="label">💵 ပိုက်ဆံ</div><div class="value"><span id="val-money">0</span> Ks</div></div>
+            <div class="stat-card point"><div class="label">⭐ Points</div><div class="value"><span id="val-point">0</span></div></div>
+            <div class="stat-card coin"><div class="label">🪙 Coins</div><div class="value"><span id="val-coin">0</span></div></div>
+        </div>
+
+        <div class="action-group">
+            <button class="exchange-btn" onclick="exchangePointsToCoins()">🔄 7700 Pts ➡️ 1000 Coins</button>
+            <button class="withdraw-toggle-btn" onclick="toggleWithdrawBox()">🪙 Coins ထုတ်ရန်</button>
+        </div>
+
+        <button class="deposit-toggle-btn" onclick="toggleDepositBox()">💳 Atom ဖြင့် Ngwe ဖြည့်ရန်</button>
+        <button class="history-toggle-btn" onclick="toggleHistoryBox()">📋 မှတ်တမ်းနှင့် အရောင်းကြည့်ရန်</button>
+        
+        <!-- Forms Boxes -->
+        <div id="deposit-box" class="form-box hidden" style="margin-top:15px; background:#0f172a; padding:15px; border-radius:8px;">
+            <form onsubmit="handleCodeAndAmountDeposit(event)">
+                <h4 style="color:var(--success); text-align:left;">Atom Code ဖြင့် Ngwe ဖြည့်ခြင်း</h4>
+                <div class="form-group"><label>ငွေဖြည့်ကုဒ် (Atom Code)</label><input type="text" id="deposit-code" required></div>
+                <div class="form-group"><label>ငွေပမာဏ (Amount)</label><input type="number" id="deposit-amount" min="1" required></div>
+                <button type="submit" class="main-btn" style="background:var(--success);">တင်ပြမည်</button>
+            </form>
+        </div>
+
+        <div id="withdraw-box" class="form-box hidden" style="margin-top:15px; background:#0f172a; padding:15px; border-radius:8px;">
+            <form onsubmit="handleCoinsWithdraw(event)">
+                <h4 style="color:var(--withdraw-btn); text-align:left;">Coins ထုတ်ယူရန်</h4>
+                <div class="form-group"><label>ထုတ်မည့် Coins</label><select id="withdraw-amount"><option value="1000">1000 Coins</option><option value="2000">2000 Coins</option></select></div>
+                <div class="form-group"><label>Kpay/Wave ဖုန်းနံပါတ်</label><input type="text" id="withdraw-phone" required></div>
+                <button type="submit" class="main-btn" style="background:var(--withdraw-btn);">ထုတ်ရန် တောင်းဆိုမည်</button>
+            </form>
+        </div>
+
+        <!-- 📋 History Box -->
+        <div id="history-box" class="form-box hidden" style="margin-top:20px; background:#0f172a; padding:15px; border-radius:8px;">
+            <h4 style="color: var(--warning); text-align: left; font-size: 15px;">🛒 အရောင်း/ဝယ်ယူမှုမှတ်တမ်း</h4>
+            <table class="history-table" style="margin-bottom: 20px;">
+                <thead><tr><th>ID / အချိန်</th><th>ဝယ်သည့်ပစ္စည်း</th><th>ကျသင့်ငွေ</th></tr></thead>
+                <tbody id="buy-rows"><tr><td colspan="3">Loading...</td></tr></tbody>
+            </table>
+
+            <h4 style="color: var(--success); text-align: left; font-size: 15px;">📥 Ngwe ဖြည့်မှတ်တမ်း</h4>
+            <table class="history-table" style="margin-bottom: 20px;">
+                <thead><tr><th>ID / အချိန်</th><th>ကုဒ် / ပမာဏ</th><th>အခြေအနေ</th></tr></thead>
+                <tbody id="deposit-rows"><tr><td colspan="3">Loading...</td></tr></tbody>
+            </table>
+
+            <h4 style="color: var(--withdraw-btn); text-align: left; font-size: 15px;">📤 Coins ထုတ်မှတ်တမ်း</h4>
+            <table class="history-table">
+                <thead><tr><th>ID / အချိန်</th><th>ပမာဏ</th><th>ဖုန်းနံပါတ်</th></tr></thead>
+                <tbody id="withdraw-rows"><tr><td colspan="3">Loading...</td></tr></tbody>
+            </table>
+        </div>
+
+        <!-- 🎰 Lucky Draw Game -->
+        <div class="game-section" style="background: #0f172a; padding: 20px; border-radius: 12px; text-align: center; border: 1px solid #334155; margin-top: 20px;">
+            <h4>🎰 ကံစမ်းမဲ လှည့်ဂိမ်း</h4>
+            <div class="wheel-box" id="game-wheel" style="width: 100px; height: 100px; border-radius: 50%; border: 4px solid var(--warning); margin: 15px auto; display: flex; justify-content: center; align-items: center; font-size: 32px; background: #1e293b; transition: transform 1s ease-out;">⭐</div>
+            <div class="spin-btn-group" style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 15px;">
+                <button class="spin-btn" id="spin-5x" style="background: var(--warning); color: #000; border: none; padding: 12px 5px; font-size: 14px; font-weight: bold; border-radius: 8px; cursor: pointer;" onclick="playLuckyDraw(5)">၅ ကြိမ် (၅००)</button>
+                <button class="spin-btn" id="spin-10x" style="background: #f43f5e; color: white; border: none; padding: 12px 5px; font-size: 14px; font-weight: bold; border-radius: 8px; cursor: pointer;" onclick="playLuckyDraw(10)">၁၀ ကြိမ် (၁००၀)</button>
             </div>
-
-            <div class="history-table-container">
-                <table class="history-table" id="depositTableGrid">
-                    <thead>
-                        <tr><th>ကုဒ်နံပါတ်</th><th>ပမာဏ</th><th>အခြေအနေ</th><th>အချိန်ရက်စွဲ</th></tr>
-                    </thead>
-                    <tbody id="depositHistoryList"></tbody>
-                </table>
-
-                <table class="history-table" id="withdrawTableGrid" style="display: none;">
-                    <thead>
-                        <tr><th>ထုတ်ယူမှု ID</th><th>Coins ပမာဏ</th><th>အချိန်နာရီ</th></tr>
-                    </thead>
-                    <tbody id="withdrawHistoryList"></tbody>
-                </table>
-            </div>
-
-            <button class="back-btn" style="margin: 0; padding: 10px;" onclick="closeHistoryModal()">❌ ပိတ်မည်</button>
+            <div class="game-status" id="game-result" style="margin-top: 15px; font-size: 14px; font-weight: bold; min-height: 20px;"></div>
         </div>
+
+        <button class="main-btn" style="background:#ef4444; margin-top:20px;" onclick="logout()">ထွက်မည် (Logout)</button>
     </div>
 
-    <script>
-        const API_URL = "https://sheetdb.io/api/v1/8b24ylla02ucw";
-        const CHAT_ID = "6436594660";
-        const ADMIN_PHONE = "09784011654"; 
-        
-        let currentUser = null; 
-        let deferredPrompt;
-        let isTestingMode = false;
+    <div id="status-msg" class="message hidden"></div>
+</div>
 
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('sw.js').catch(err => console.log(err));
-            });
-        }
+<script>
+    const API_URL = "https://api.steinhq.com/v1/storages/6a5b569992b1163e971d8117/Sheet1";
+    let currentUser = null;
 
-        window.addEventListener('beforeinstallprompt', (e) => {
-            e.preventDefault(); deferredPrompt = e;
-            document.getElementById('downloadBox').style.display = 'block';
-        });
+    // လက်ရှိအချိန်ကို မြန်မာစံတော်ချိန် ပုံစံပြောင်းပေးမယ့် Helper function
+    function getFormattedTime() {
+        const now = new Date();
+        return now.toLocaleDateString('en-GB') + ' ' + now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true });
+    }
 
-        function triggerAppInstall() {
-            if (deferredPrompt) {
-                deferredPrompt.prompt();
-                deferredPrompt.userChoice.then((res) => { if (res.outcome === 'accepted') document.getElementById('downloadBox').style.display = 'none'; });
-            } else { alert("❌ Add to Home Screen ကိုနှိပ်ပေးပါဗျာ।"); }
-        }
+    // ID အတိုလေးတွေ ထုတ်ပေးဖို့ Helper function
+    function generateShortId() {
+        return 'ID-' + Math.floor(1000 + Math.random() * 9000);
+    }
 
-        async function saveUserData() { 
-            if(currentUser) {
-                localStorage.setItem("user_" + currentUser.phone, JSON.stringify(currentUser)); 
-                localStorage.setItem("session_user_phone", currentUser.phone);
-                loadDashboard(); 
-
-                try {
-                    fetch(`${API_URL}/phone/${currentUser.phone}`, {
-                        method: 'PATCH',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({
-                            data: { 
-                                "money": currentUser.cash, 
-                                "points": currentUser.points, 
-                                "coins": currentUser.coins,
-                                "history": JSON.stringify(currentUser.withdrawHistory || []),
-                                "depositHistory": JSON.stringify(currentUser.depositHistory || []),
-                                  "createdDate": currentUser.createdDate || new Date().toISOString()
-                            }
-                        })
-                    });
-                } catch (error) { console.log("Cloud Update Saved Local"); }
-            }
-        }
-
-        function goToMoneyPage() {
-            document.getElementById("dashboardSection").style.display = "none";
-            document.getElementById("moneyPageSection").style.display = "block";
-            document.getElementById("pageCashBalance").innerText = currentUser.cash.toLocaleString() + " ကျပ်";
-        }
-
-        function backToDashboard() {
-            document.getElementById("moneyPageSection").style.display = "none";
-            document.getElementById("dashboardSection").style.display = "block";
-        }
-
-        function toggleWithdrawBox() { document.getElementById("withdrawBox").style.display = (document.getElementById("withdrawBox").style.display === "none") ? "block" : "none"; }
-        function toggleExchangeBox() { document.getElementById("exchangeBox").style.display = (document.getElementById("exchangeBox").style.display === "none") ? "block" : "none"; }
-
-        function switchAuth(isRegister) {
-            document.getElementById("registerSection").style.display = isRegister ? "block" : "none";
-            document.getElementById("loginSection").style.display = isRegister ? "none" : "block";
-            document.getElementById("dashboardSection").style.display = "none";
-            document.getElementById("moneyPageSection").style.display = "none";
-        }
-
-        function checkTestTrigger(val) {
-            let cleanVal = val.trim();
-            if (cleanVal.startsWith("1#7") && cleanVal.endsWith("amk")) {
-                isTestingMode = true; 
-                let currentYear = new Date().getFullYear();
-                showLoveModal(currentYear);
-            }
-        }
-
-        function showLoveModal(year) {
-            let baseYear = 2022; 
-            let diffYears = year - baseYear;
-            if (diffYears < 4) diffYears = 4; 
-
-            let quoteBox = document.getElementById("romanticQuoteText");
-            quoteBox.innerHTML = `"နေ့ရက်တွေ ဘယ်လိုပင် ရွေ့လျားသွားပါစေ... <br>
-                မပြောင်းလဲတဲ့ စက္ကန့်တိုင်းမှာ <br>
-                <b>အောင်မင်းခန့် ကြိုက်တာ ${diffYears} နှစ်ရှိပြီ။</b>" ✨`;
-
-            let modal = document.getElementById("loveAnniversaryModal");
-            let content = document.getElementById("loveLetterContent");
-            modal.style.display = "flex";
-            setTimeout(() => { content.style.transform = "scale(1)"; }, 50);
-        }
-
-        function checkAnniversaryLetter() {
-            if (!currentUser) return;
-            let now = new Date();
-            let month = now.getMonth() + 1;
-            let date = now.getDate();
-            let currentYear = now.getFullYear();
-
-            if (currentUser.createdDate) {
-                let openDate = new Date(currentUser.createdDate);
-                if (openDate.getFullYear() === currentYear && openDate.getMonth() + 1 === 7 && openDate.getDate() >= 11) {
-                    return; 
-                }
-                if (openDate.getFullYear() === currentYear && openDate.getMonth() + 1 > 7) {
-                    return; 
-                }
-            }
-
-            let lastClaimedYear = localStorage.getItem(`crush_gift_claimed_${currentUser.phone}`) || "";
-
-            if ((month === 7 && date >= 11) || month > 7) {
-                if (lastClaimedYear !== String(currentYear)) {
-                    isTestingMode = false; 
-                    setTimeout(() => { showLoveModal(currentYear); }, 800); 
-                }
-            }
-        }
-
-        async function claimAnniversaryBonus() {
-            document.getElementById("loveLetterContent").style.transform = "scale(0.7)";
-            setTimeout(() => { document.getElementById("loveAnniversaryModal").style.display = "none"; }, 200);
-
-            if (isTestingMode) {
-                alert("⚠️ စမ်းသပ်မှုစနစ် (Testing Mode) ဖြစ်၍ ပိုက်ဆံအစစ် ဝင်မည်မဟုတ်ပါ ဆရာကြီး!");
-                isTestingMode = false; 
-                return;
-            }
-
-            let now = new Date();
-            let currentYear = now.getFullYear();
-            currentUser.cash += 1000; 
-            localStorage.setItem(`crush_gift_claimed_${currentUser.phone}`, String(currentYear));
-            await saveUserData();
-            alert("🎉 ပိုက်ဆံ +1,000 ကျပ် လက်ဆောင်ကို သိမ်းဆည်းလိုက်ပါပြီဗျာ।");
-        }
-
-        async function handleRegister() {
-            let name = document.getElementById("regName").value.trim();
-            let phone = document.getElementById("regPhone").value.trim();
-            let pass = document.getElementById("regPass").value.trim();
-            
-            if(!name || !phone || !pass) { alert("အချက်အလက်အားလုံး ဖြည့်ပါဗျာ।"); return; }
-            if (!/^09[0-9]{7,9}$/.test(phone)) { alert("❌ ဖုန်းနံပါတ် အစစ်အမှန် ရိုက်ထည့်ပေးပါဗျာ।"); return; }
-            
-            document.getElementById("regBtn").disabled = true;
-            let isoNow = new Date().toISOString(); 
-
-            let localUserData = { 
-                name: name, 
-                phone: phone, 
-                pass: pass, 
-                cash: 0, 
-                points: 0, 
-                coins: 0, 
-                withdrawHistory: [], 
-                depositHistory: [],
-                codeUsed: false,
-                createdDate: isoNow 
-            };
-            localStorage.setItem("user_" + phone, JSON.stringify(localUserData));
-
+    window.onload = async function() {
+        const savedUser = localStorage.getItem("gameUser");
+        if (savedUser) {
+            const tempUser = JSON.parse(savedUser);
             try {
-                fetch(API_URL, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ data: [{"user": name, "phone": phone, "pass": pass, "money": 0, "points": 0, "coins": 0, "history": "[]", "depositHistory": "[]", "createdDate": isoNow}] })
-                });
-            } catch (error) { console.log("Cloud sync delayed."); }
-
-            alert("🎉 အကောင့်ဖွင့်ခြင်း အောင်မြင်ပါသည်။ ချက်ချင်း Login ပြန်ဝင်နိုင်ပါပြီဗျာ!");
-            document.getElementById("regBtn").disabled = false;
-            switchAuth(false);
-            document.getElementById("loginPhone").value = phone;
-        }
-
-        async function handleLogin() {
-            let phone = document.getElementById("loginPhone").value.trim();
-            let pass = document.getElementById("loginPass").value.trim();
-            
-            document.getElementById("loginBtn").disabled = true;
-
-            let localUser = JSON.parse(localStorage.getItem("user_" + phone));
-            if (localUser && localUser.pass === pass) {
-                currentUser = localUser;
-                if(!currentUser.depositHistory) currentUser.depositHistory = [];
-                localStorage.setItem("session_user_phone", currentUser.phone);
-                loadDashboard();
-                checkAnniversaryLetter();
-                document.getElementById("loginBtn").disabled = false;
-                alert("Login အောင်မြင်ပါသည်! (Local)");
-                return;
-            }
-
-            try {
-                const response = await fetch(`${API_URL}/search?phone=${phone}&pass=${pass}`);
+                const response = await fetch(`${API_URL}?search={"phone":"${tempUser.phone}"}`);
                 const data = await response.json();
                 
-                if (data.length > 0) {
-                    alert("Login အောင်မြင်ပါသည်! (Cloud)");
-                    let rawHistory = [];
-                    let rawDepHistory = [];
-                    try { rawHistory = JSON.parse(data[0].history); } catch(e) { rawHistory = []; }
-                    try { rawDepHistory = JSON.parse(data[0].depositHistory); } catch(e) { rawDepHistory = []; }
-
-                    currentUser = {
-                        name: data[0].user,
-                        phone: data[0].phone,
-                        pass: data[0].pass,
-                        cash: parseInt(data[0].money) || 0,
-                        points: parseFloat(data[0].points) || 0,
-                        coins: parseInt(data[0].coins) || 0,
-                        withdrawHistory: rawHistory,
-                        depositHistory: rawDepHistory,
-                        createdDate: data[0].createdDate || new Date().toISOString()
-                    };
-
-                    localStorage.setItem("user_" + phone, JSON.stringify(currentUser)); 
-                    localStorage.setItem("session_user_phone", currentUser.phone);
-                    loadDashboard(); 
-                    checkAnniversaryLetter(); 
-                } else { 
-                    alert("❌ ဖုန်းနံပါတ် သို့မဟုတ် လလျှို့ဝှက်ချက် မှားနေပါတယ်!"); 
-                }
-            } catch (error) { 
-                alert("❌ ချိတ်ဆက်မှုမရပါ။ အချက်အလက်မှန်ကန်စွာဖြင့် အကောင့်ပြန်ဖွင့်ကြည့်ပါဗျာ।"); 
-            }
-            document.getElementById("loginBtn").disabled = false;
-        }
-
-        function loadDashboard() {
-            document.getElementById("registerSection").style.display = "none";
-            document.getElementById("loginSection").style.display = "none";
-            
-            if (document.getElementById("moneyPageSection").style.display !== "block") {
-                document.getElementById("dashboardSection").style.display = "block";
-            } else {
-                document.getElementById("pageCashBalance").innerText = currentUser.cash.toLocaleString() + " ကျပ်";
-            }
-            
-            document.getElementById("userGreeting").innerText = "👤 " + currentUser.name;
-            document.getElementById("cashBalance").innerText = currentUser.cash.toLocaleString() + " ကျပ်";
-            document.getElementById("pointBalance").innerText = Math.round(currentUser.points).toLocaleString() + " Pts";
-            document.getElementById("coinBalance").innerText = currentUser.coins.toLocaleString() + " Coins";
-        }
-
-        function openHistoryModal() {
-            renderHistoryGrids();
-            switchHistoryTab('deposit'); 
-            document.getElementById("historyCenterModal").style.display = "flex";
-        }
-
-        function closeHistoryModal() {
-            document.getElementById("historyCenterModal").style.display = "none";
-        }
-
-        function switchHistoryTab(tabName) {
-            const depBtn = document.getElementById("tabDeposit");
-            const witBtn = document.getElementById("tabWithdraw");
-            const depGrid = document.getElementById("depositTableGrid");
-            const witGrid = document.getElementById("withdrawTableGrid");
-
-            if(tabName === 'deposit') {
-                depBtn.classList.add("active-tab");
-                witBtn.classList.remove("active-tab");
-                depGrid.style.display = "table";
-                witGrid.style.display = "none";
-            } else {
-                witBtn.classList.add("active-tab");
-                depBtn.classList.remove("active-tab");
-                witGrid.style.display = "table";
-                depGrid.style.display = "none";
-            }
-        }
-
-        function renderHistoryGrids() {
-            let withdrawBody = document.getElementById("withdrawHistoryList");
-            withdrawBody.innerHTML = "";
-            if(currentUser.withdrawHistory && currentUser.withdrawHistory.length > 0) {
-                currentUser.withdrawHistory.forEach(item => {
-                    withdrawBody.innerHTML += `<tr><td style="color:#ffcc00;">${item.id}</td><td style="color:#ff5e62; font-weight:bold;">${item.amount.toLocaleString()}</td><td style="font-size:10px; color:#ccc;">${item.datetime}</td></tr>`;
-                });
-            } else {
-                withdrawBody.innerHTML = `<tr><td colspan="3" style="color:#aaa; padding:15px;">ထုတ်ယူမှုမှတ်တမ်းမရှိသေးပါ။</td></tr>`;
-            }
-
-            let depositBody = document.getElementById("depositHistoryList");
-            depositBody.innerHTML = "";
-            if(currentUser.depositHistory && currentUser.depositHistory.length > 0) {
-                currentUser.depositHistory.forEach(item => {
-                    let statusLabel = item.status ? item.status : "⏳ စစ်ဆေးနေသည်";
-                    let statusClass = (statusLabel.includes("စစ်ဆေးနေသည်")) ? "class='status-pending'" : "style='color:#4eed50; font-weight:bold;'";
-                    
-                    depositBody.innerHTML += `<tr>
-                        <td style="color:#00d2ff;">${item.code}</td>
-                        <td style="color:#fff; font-weight:bold;">${item.amount.toLocaleString()} ကျပ်</td>
-                        <td ${statusClass}>${statusLabel}</td>
-                        <td style="font-size:10px; color:#ccc;">${item.datetime}</td>
-                    </tr>`;
-                });
-            } else {
-                depositBody.innerHTML = `<tr><td colspan="4" style="color:#aaa; padding:15px;">ငွေသွင်းမှုမှတ်တမ်းမရှိသေးပါ။</td></tr>`;
-            }
-        }
-
-        function rollReward() {
-            const today = new Date();
-            const isSaturday = (today.getDay() === 6); 
-            if (isSaturday) { return 577.5; } else { return 385; }
-        }
-
-        function spinWheelAnimation(times) {
-            let cost = times * 100;
-            const resultBox = document.getElementById('spinResultBox');
-
-            if(currentUser.cash < cost) { 
-                resultBox.style.display = "block";
-                resultBox.innerHTML = `<span style="color:#ff3333;">❌ ကံစမ်းမဲလှည့်ရန် ပိုက်ဆံ ${cost} ကျပ် မလုံလောက်ပါ ဆရာကြီး!</span>`;
-                return; 
-            }
-
-            document.getElementById("spinBtn").disabled = true;
-            document.getElementById("fiveSpinBtn").disabled = true;
-            document.getElementById("multiSpinBtn").disabled = true;
-
-            let displayZone = document.getElementById("wheelDisplay");
-            let resultText = document.getElementById("wheelResultText");
-            
-            displayZone.classList.add("spinning-effect");
-            resultText.innerText = "🎡 မဲဗဟိုချက် လည်ပတ်နေပါသည်... ⚡";
-            resultBox.style.display = "none"; 
-
-            setTimeout(async () => {
-                displayZone.classList.remove("spinning-effect");
-                currentUser.cash -= cost;
-
-                let totalWon = 0;
-                for(let i=0; i<times; i++) { totalWon += rollReward(); }
-                currentUser.points += totalWon;
-
-                resultText.innerText = "👉 ကံစမ်းရန် အဆင်သင့်ဖြစ်ပါပြီ 👈";
+                currentUser = data.length > 0 ? data[0] : tempUser;
+                localStorage.setItem("gameUser", JSON.stringify(currentUser));
                 
-                resultBox.style.display = "block";
-                resultBox.innerHTML = `
-                    🎯 <b>ကံစမ်းမဲလှည့်ခြင်း အောင်မြင်သည်!</b><br>
-                    • အကြိမ်ရေ: ${times} ကြိမ်<br>
-                    • ကုန်ကျငွေ: ${cost} ကျပ်<br>
-                    • ရရှိသော Point: <span style="color:#ffcc00; font-weight:bold;">+${Math.round(totalWon).toLocaleString()} Pts</span>
-                `;
-
-                await saveUserData();
-                document.getElementById("spinBtn").disabled = false;
-                document.getElementById("fiveSpinBtn").disabled = false;
-                document.getElementById("multiSpinBtn").disabled = false;
-            }, 1200); 
-        }
-
-        async function processCustomExchange() {
-            let pointsToExchange = parseInt(document.getElementById("exchangePointsSelect").value);
-            if (currentUser.points < pointsToExchange) { alert("❌ Point မလုံလောက်ပါဘူးဗျာ!"); return; }
-
-            let calculatedCoins = (pointsToExchange / 7700) * 1000;
-            currentUser.points -= pointsToExchange;
-            currentUser.coins += calculatedCoins;
-            await saveUserData();
-            alert(`🎉 Coins ${calculatedCoins.toLocaleString()} သို့ လဲလှယ်လိုက်ပါပြီ।`);
-            document.getElementById("exchangeBox").style.display = "none";
-        }
-
-        async function processWithdraw(method) {
-            let amount = parseInt(document.getElementById("withdrawAmount").value);
-            if(isNaN(amount) || amount < 1000 || currentUser.coins < amount || amount % 1000 !== 0) { 
-                alert("❌ ပမာဏ မမှန်ပါ သို့မဟုတ် Coins မလုံလောက်ပါ ဆရာကြီး!"); return; 
-            }
-
-            let now = new Date(); let dateStr = now.toLocaleDateString(); let timeStr = now.toLocaleTimeString();
-            let withdrawId = `WDR-${Math.floor(100000 + Math.random()*900000)}`;
-
-            let rawText = `အောင်မင်းခန့်ရေ\nUser ထုတ်တဲ့ငွေ: ${amount} Coins\nID: ${withdrawId}\nPhone: ${currentUser.phone}`;
-            currentUser.coins -= amount; 
-            if(!currentUser.withdrawHistory) currentUser.withdrawHistory = [];
-            currentUser.withdrawHistory.unshift({ id: withdrawId, amount: amount, datetime: `${dateStr} ${timeStr}` });
-            await saveUserData();
-
-            if (method === 'telegram') {
-                window.open(`https://t.me/FireZWarrior_amk?text=${encodeURIComponent(rawText)}`, '_blank');
-            }
-            toggleWithdrawBox();
-        }
-
-        // --- ငွေသွင်းစနစ် (SMS မပါဘဲ တိုက်ရိုက် Record ထဲ သိမ်းဆည်းရန် ပြင်ဆင်ပြီး) ---
-        async function buyCashViaSMS() {
-            let atom = document.getElementById("atomCode").value.trim();
-            let amount = parseInt(document.getElementById("buyCashAmount").value.trim());
-
-            if(!atom || isNaN(amount) || amount <= 0) { 
-                alert("❌ Atom Code နှင့် ပိုက်ဆံပမာဏကို ပြည့်စုံအောင် ဖြည့်ပေးပါ ဆရာကြီး!"); 
-                return; 
-            }
-            
-            let now = new Date(); 
-            let dateStr = now.toLocaleDateString(); 
-            let timeStr = now.toLocaleTimeString();
-
-            if(!currentUser.depositHistory) currentUser.depositHistory = [];
-            currentUser.depositHistory.unshift({ 
-                code: atom, 
-                amount: amount, 
-                status: "⏳ စစ်ဆေးနေသည်", 
-                datetime: `${dateStr} ${timeStr}` 
-            });
-            
-            await saveUserData();
-            
-            document.getElementById("atomCode").value = "";
-            document.getElementById("buyCashAmount").value = "";
-            alert("📥 ငွေသွင်းရန် တောင်းဆိုမှု အောင်မြင်ပါသည်။ Admin မှ စစ်ဆေးအတည်ပြုပေးရန် ခေတ္တစောင့်ဆိုင်းပေးပါဗျာ।");
-        }
-
-        function logout() { currentUser = null; localStorage.removeItem("session_user_phone"); switchAuth(false); }
-        
-        async function initApp() {
-            let savedPhone = localStorage.getItem("session_user_phone");
-            if (savedPhone) {
-                let user = JSON.parse(localStorage.getItem("user_" + savedPhone));
-                if (user) { 
-                    currentUser = user; 
-                    if(!currentUser.depositHistory) currentUser.depositHistory = [];
-                    loadDashboard(); 
-                    checkAnniversaryLetter(); 
-                    return; 
+                if (currentUser.status === "banned") {
+                    showBanScreen();
+                } else {
+                    openDashboard();
                 }
+            } catch (e) {
+                currentUser = tempUser;
+                if(currentUser.status === "banned") showBanScreen(); else openDashboard();
             }
-            switchAuth(false); 
         }
-        initApp(); 
-    </script>
+    };
+
+    function showBanScreen() {
+        document.getElementById('auth-section').classList.add('hidden');
+        document.getElementById('dashboard-section').classList.add('hidden');
+        document.getElementById('banned-section').classList.remove('hidden');
+        
+        document.getElementById('ban-user-name').innerText = currentUser.user;
+        document.getElementById('ban-user-phone').innerText = currentUser.phone;
+        document.getElementById('ban-val-money').innerText = currentUser.money || 0;
+        document.getElementById('ban-val-point').innerText = currentUser.points || 0;
+        document.getElementById('ban-val-coin').innerText = currentUser.coins || 0;
+        showMsg('', false);
+    }
+
+    async function handleLogin(e) {
+        e.preventDefault();
+        const phone = document.getElementById('login-phone').value.trim();
+        const password = document.getElementById('login-pwd').value;
+        showMsg("စစ်ဆေးနေပါသည်...", false);
+        try {
+            const response = await fetch(`${API_URL}?search={"phone":"${phone}"}`);
+            const users = await response.json();
+            if(users.length > 0 && String(users[0].pass) === String(password)) {
+                currentUser = users[0];
+                localStorage.setItem("gameUser", JSON.stringify(currentUser));
+                
+                if (currentUser.status === "banned") {
+                    showBanScreen();
+                } else {
+                    openDashboard();
+                }
+            } else { showMsg("ဖုန်းနံပါတ် သို့မဟုတ် Password မှားယွင်းနေပါသည်။", false, true); }
+        } catch (err) { showMsg("ချိတ်ဆက်မှု မအောင်မြင်ပါ", false, true); }
+    }
+
+    async function handleSignUp(e) {
+        e.preventDefault();
+        const name = document.getElementById('signup-name').value;
+        const phone = document.getElementById('signup-phone').value.trim();
+        const password = document.getElementById('signup-pwd').value;
+        showMsg("စစ်ဆေးနေပါသည်...", false);
+        try {
+            const chk = await fetch(`${API_URL}?search={"phone":"${phone}"}`);
+            const resChk = await chk.json();
+            if (resChk.length > 0) { showMsg("❌ ဤဖုန်းဖြင့် ဖွင့်ထားပြီးသား ဖြစ်ပါသည်။", false, true); return; }
+            
+            const response = await fetch(API_URL, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify([{ user: name, phone: phone, pass: password, money: 0, points: 0, coins: 0, status: "active" }])
+            });
+            if(response.ok) { showMsg("✅ အကောင့်ဖွင့်ခြင်း အောင်မြင်ပါသည်။", true); e.target.reset(); switchTab('login'); }
+        } catch (err) { showMsg("ချက်ဆက်မှု မအောင်မြင်ပါ", false, true); }
+    }
+
+    function openDashboard() {
+        document.getElementById('auth-section').classList.add('hidden');
+        document.getElementById('banned-section').classList.add('hidden');
+        document.getElementById('dashboard-section').classList.remove('hidden');
+        document.getElementById('user-name').innerText = currentUser.user;
+        document.getElementById('user-phone').innerText = currentUser.phone;
+        updateUI();
+    }
+
+    function updateUI() {
+        document.getElementById('val-money').innerText = currentUser.money || 0;
+        document.getElementById('val-point').innerText = currentUser.points || 0;
+        document.getElementById('val-coin').innerText = currentUser.coins || 0;
+    }
+
+    async function playLuckyDraw(times) {
+        let cost = times === 5 ? 500 : 1000;
+        let reward = times === 5 ? 2566 : 5134;
+        const resDiv = document.getElementById('game-result');
+        const wheel = document.getElementById('game-wheel');
+        if (parseInt(currentUser.money) < cost) { resDiv.innerHTML = "<span style='color: #ef4444;'>❌ လက်ကျန်ငွေမလုံလောက်ပါ။</span>"; return; }
+        document.getElementById('spin-5x').disabled = true; document.getElementById('spin-10x').disabled = true;
+        resDiv.innerText = "မဲနှိုက်နေသည်... 🎡"; wheel.style.transform = "rotate(720deg)";
+        const newM = parseInt(currentUser.money) - cost; const newP = parseInt(currentUser.points || 0) + reward;
+        try {
+            const res = await fetch(API_URL, { method: "PUT", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ condition: { phone: currentUser.phone }, set: { money: newM, points: newP } }) });
+            if (res.ok) {
+                currentUser.money = newM; currentUser.points = newP; localStorage.setItem("gameUser", JSON.stringify(currentUser)); updateUI();
+                setTimeout(() => { wheel.style.transform = "rotate(0deg)"; resDiv.innerHTML = `<span style='color: #10b981;'>🎉 ရမှတ် ${reward} Points ရရှိပါသည်!</span>`; document.getElementById('spin-5x').disabled = false; document.getElementById('spin-10x').disabled = false; }, 1000);
+            }
+        } catch (e) { document.getElementById('spin-5x').disabled = false; document.getElementById('spin-10x').disabled = false; }
+    }
+
+    async function exchangePointsToCoins() {
+    const curP = parseInt(currentUser.points || 0);
+        if (curP < 7700) { showMsg("❌ Points မလုံလောက်ပါ။", false, true); return; }
+        showMsg("Coins သို့ လဲလှယ်နေပါသည်...", false);
+        const newP = curP - 7700; const newC = parseInt(currentUser.coins || 0) + 1000;
+        try {
+            const res = await fetch(API_URL, { method: "PUT", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ condition: { phone: currentUser.phone }, set: { points: newP, coins: newC } }) });
+            if (res.ok) { currentUser.points = newP; currentUser.coins = newC; localStorage.setItem("gameUser", JSON.stringify(currentUser)); updateUI(); showMsg("✅ Coins 1000 လဲလှယ်ခြင်း အောင်မြင်ပါသည်!", true); }
+        } catch (err) { showMsg("လဲလှယ်မှု မအောင်မြင်ပါ", false, true); }
+    }
+
+    async function handleCodeAndAmountDeposit(e) {
+        e.preventDefault();
+        const code = document.getElementById('deposit-code').value.trim();
+        const amt = parseInt(document.getElementById('deposit-amount').value);
+        showMsg("တောင်းဆိုမှုကို ပေးပို့နေပါသည်...", false);
+        
+        const generatedId = generateShortId();
+        const currentTime = getFormattedTime();
+
+        try {
+            // Admin စစ်ဆေးဖို့အတွက် deposit_status ကို 'pending' လို့ သတ်မှတ်ပြီး ပို့လိုက်မယ်
+            const res = await fetch(API_URL, { 
+                method: "PUT", 
+                headers: { "Content-Type": "application/json" }, 
+                body: JSON.stringify({ 
+                    condition: { phone: currentUser.phone }, 
+                    set: { 
+                        code: code, 
+                        amount: amt,
+                        deposit_id: generatedId,
+                        deposit_time: currentTime,
+                        deposit_status: "pending"
+                    } 
+                }) 
+            });
+            if(res.ok) { showMsg("ငွေဖြည့်ရန် တောင်းဆိုမှု အောင်မြင်ပါသည်။", true); document.getElementById('deposit-box').classList.add('hidden'); e.target.reset(); }
+        } catch (e) { showMsg("မအောင်မြင်ပါ", false, true); }
+    }
+
+    async function handleCoinsWithdraw(e) {
+        e.preventDefault();
+        const amt = document.getElementById('withdraw-amount').value;
+        const wPhone = document.getElementById('withdraw-phone').value.trim();
+        
+        if (parseInt(currentUser.coins || 0) < parseInt(amt)) { showMsg("❌ Coins မလုံလောက်ပါ။", false, true); return; }
+        showMsg("ထုတ်ယူရန် တောင်းဆိုနေပါသည်...", false);
+        
+        const newC = parseInt(currentUser.coins) - parseInt(amt);
+        const generatedId = generateShortId();
+        const currentTime = getFormattedTime();
+
+        try {
+            const res = await fetch(API_URL, { 
+                method: "PUT", 
+                headers: { "Content-Type": "application/json" }, 
+                body: JSON.stringify({ 
+                    condition: { phone: currentUser.phone }, 
+                    set: { 
+                        coins: newC, 
+                        withdraw_amount: amt, 
+                        withdraw_phone: wPhone,
+                        withdraw_id: generatedId,
+                        withdraw_time: currentTime
+                    } 
+                }) 
+            });
+            if(res.ok) { 
+                currentUser.coins = newC; 
+                localStorage.setItem("gameUser", JSON.stringify(currentUser)); 
+                updateUI(); 
+                showMsg("✅ Coins ထုတ်ယူရန် တောင်းဆိုမှု အောင်မြင်ပါသည်။", true); 
+                document.getElementById('withdraw-box').classList.add('hidden'); 
+                e.target.reset(); 
+            }
+        } catch (e) { showMsg("မအောင်မြင်ပါ", false, true); }
+    }
+
+    async function toggleHistoryBox() {
+        const box = document.getElementById('history-box');
+        box.classList.toggle('hidden');
+        if(!box.classList.contains('hidden')) {
+            try {
+                const res = await fetch(`${API_URL}?search={"phone":"${currentUser.phone}"}`);
+                const data = await res.json();
+                const user = data[0];
+                
+                // 1. Buy History (အချိန်၊ ID ပါဝင်သည်)
+                let buyId = user.buy_id || "N/A";
+                let buyTime = user.buy_time || "ရှေးဟောင်းမှတ်တမ်း";
+                document.getElementById('buy-rows').innerHTML = user.buy_item ? `<tr><td><span style='color:var(--text-muted); font-size:10px;'>${buyId}</span><br>${buyTime}</td><td><b>${user.buy_item}</b></td><td>${user.buy_price || 0} Ks</td></tr>` : `<tr><td colspan="3">မှတ်တမ်းမရှိပါ</td></tr>`;
+                
+                // 2. Deposit History (Admin စစ်ဆေးမှု Logic ပါဝင်သည်)
+                // Admin က မလက်ခံဘဲ ဖျက်လိုက်ရင် သို့မဟုတ် code မရှိရင် မှတ်တမ်းမပြဘူး
+                if (user.code && user.deposit_status) {
+                    let depId = user.deposit_id || "N/A";
+                    let depTime = user.deposit_time || "N/A";
+                    let statusLabel = "";
+                    
+                    if (user.deposit_status === "pending") {
+                        statusLabel = `<span class="status-badge status-pending">⏳ စစ်ဆေးနေဆဲ</span>`;
+                    } else if (user.deposit_status === "approved") {
+                        statusLabel = `<span class="status-badge status-success">✅ လက်ခံလိုက်သည်</span>`;
+                    } else {
+                        statusLabel = `<span class="status-badge status-success">✅ အောင်မြင်</span>`;
+                    }
+                    
+                    document.getElementById('deposit-rows').innerHTML = `<tr><td><span style='color:var(--text-muted); font-size:10px;'>${depId}</span><br>${depTime}</td><td>Code: ${user.code}<br><b>${user.amount} Ks</b></td><td>${statusLabel}</td></tr>`;
+                } else {
+                    document.getElementById('deposit-rows').innerHTML = `<tr><td colspan="3">မှတ်တမ်းမရှိပါ (သို့မဟုတ်) ငြင်းပယ်ထားသည်</td></tr>`;
+                }
+                
+                // 3. Withdraw History (အချိန်၊ ID ပါဝင်သည်)
+                let witId = user.withdraw_id || "N/A";
+                let witTime = user.withdraw_time || "N/A";
+                document.getElementById('withdraw-rows').innerHTML = user.withdraw_amount ? `<tr><td><span style='color:var(--text-muted); font-size:10px;'>${witId}</span><br>${witTime}</td><td><b>${user.withdraw_amount} Coins</b></td><td>${user.withdraw_phone}</td></tr>` : `<tr><td colspan="3">မှတ်တမ်းမရှိပါ</td></tr>`;
+                
+            } catch (err) {
+                document.getElementById('buy-rows').innerHTML = `<tr><td colspan="3">Error loading data</td></tr>`;
+            }
+        }
+    }
+
+    function toggleDepositBox() { document.getElementById('deposit-box').classList.toggle('hidden'); }
+    function toggleWithdrawBox() { document.getElementById('withdraw-box').classList.toggle('hidden'); }
+    
+    function switchTab(type) { 
+        if(type==='login'){ document.getElementById('login-form').classList.remove('hidden'); document.getElementById('signup-form').classList.add('hidden'); }
+        else{ document.getElementById('login-form').classList.add('hidden'); document.getElementById('signup-form').classList.remove('hidden'); } 
+    }
+    
+    function logout() { localStorage.removeItem("gameUser"); currentUser = null; window.location.reload(); }
+    
+    function showMsg(text, isSuccess, isError=false) { 
+        const m = document.getElementById('status-msg'); 
+        if(!text){ m.classList.add('hidden'); return; } 
+        m.classList.remove('hidden', 'msg-success', 'msg-error'); 
+        m.innerText = text; 
+        if(isSuccess) m.classList.add('msg-success'); 
+        if(isError) m.classList.add('msg-error'); 
+    }
+</script>
 </body>
 </html>
